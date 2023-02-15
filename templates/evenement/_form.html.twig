@@ -1,0 +1,39 @@
+
+
+ {{ form_start(form,{'attr':{'novalidate':'novalidate'}}) }}
+<center >
+
+{% form_theme form 'bootstrap_5_horizontal_layout.html.twig' %} 
+
+    <div class="my-custom-class-for-errors">
+        {{ form_errors(form) }}
+    </div>
+    <div class="col-lg-7">
+        {{ form_row(form.nom_event) }}
+    </div> 
+    <div class="col-lg-7">
+        {{ form_row(form.date_debut) }}
+    </div>
+    <div class="col-lg-7">
+        {{ form_row(form.date_fin) }}
+    </div>
+    <div class="col-lg-7">
+        {{ form_row(form.localisation) }}
+    </div>
+    
+    <div class="col-lg-7">
+
+        {{ form_row(form.categorie) }}
+    </div>
+    
+   
+    <div class="col-lg-7">
+        {{ form_row(form.Image_Event) }}
+    </div> 
+   
+        <button class="btn btn-outline-success" >{{ button_label|default('Save') }}</button>
+         <a href="{{ path('app_evenement_index') }}"><input type="button" class="btn btn-outline-success" value="retour"</a>
+       
+{{ form_end(form) }}
+
+</center>

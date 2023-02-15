@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+   
+
+
+ <table class="table table-striped">
+        <thead>
+            <tr>
+                
+                <th scope="col">Evenement</th>
+                <th scope="col">Date debut</th>
+                <th scope="col">Date fin</th>
+                <th scope="col">Adresse</th>
+                
+                <th scope="col">Categorie</th>
+                <th scope="col">image</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for evenement in resultOfSearch %}
+            <tr>
+                
+                <td> {{ evenement.NomEvent }}</td>
+                <td>{{ evenement.dateDebut ? evenement.dateDebut|date('d-m-Y') : '' }}</td>
+                <td>{{ evenement.dateFin ? evenement.dateFin|date('d-m-Y') : '' }}</td>
+                <td>{{ evenement.localisation }}</td>
+                
+                <td>{{ evenement.Categorie.nom_categ_event }}</td>
+                <td><img src="/uploads/{{ evenement.image_event }}" alt="image event" width="100" height="100"></td>
+
+
+              {#   {% if err == 1  %} #}
+
+                {# <td><a href="{{ path('remove_participation', {'id': evenement.id}) }}" title="" class="bid_now">Annuler la participation</a></td> #}
+                 {# {% else %} #}
+
+                <td><a href="{{ path('add_participation', {'id': evenement.id}) }}" title="" class="bid_now">Participer</a></td>
+                {#  {% endif %} #}
+
+
+
+
+                <td>
+                    <a href="{{ path('app_evenement_show', {'id': evenement.id}) }}"><input type="button" class="btn btn-outline-success" value="afficher"</a>
+                    
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    
+        <a href="{{ path('app_evenement_index') }}"><input type="button" class="btn btn-outline-success" value="Retour toute liste"</a>
+
+
+    <a href="{{ path('app_categorie_new') }}"><input type="button" class="btn btn-outline-success" value="nouvelle categorie"</a>
+    
+    
+
+{% endblock %} 
