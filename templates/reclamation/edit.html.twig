@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier reclamation{% endblock %}
+
+{% block body %}
+    <center>
+     <h2><i> Modifier une reclamation </i></h2>
+    </center>
+
+    {{ include('reclamation/_form.html.twig', {'button_label': 'Modifier'}) }}
+
+    <a href="{{ path('app_reclamation_index') }}">Retour</a>
+
+    {{ include('reclamation/_delete_form.html.twig') }}
+{% endblock %}
