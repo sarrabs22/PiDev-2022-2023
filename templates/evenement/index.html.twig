@@ -25,7 +25,7 @@
                 <h1 class="display-6 mb-5">Les événements</h1>
             </div>
              
-            <div class="row g-5 " style="display:inline-block;justify-content:center;" data-wow-delay="0.7s" >
+            <div class="row g-4 " style="display:inline-block;justify-content:center;" data-wow-delay="0.7s" >
                            {% for evenement in evenements %}
 
                 <div class="col-lg-3 col-md-5 wow fadeInUp"  style=" display: inline-block;justify-content:right;"    >
@@ -42,8 +42,15 @@
                             <p class="text-primary">{{ evenement.localisation }}</p>
                             
                             <div class="team-social text-center">
+                            
+                           
+                           {% if user in evenement.user %}
+                            <td><a href="{{ path('cancelP', {'id': evenement.id}) }}"><input type="button" class="btn btn-outline-success" value="Annuler participation"</a></td>
+                            {% else %}
                             <td><a href="{{ path('addParticipation', {'id': evenement.id}) }}"><input type="button" class="btn btn-outline-success" value="Participer"</a></td>
-                               
+                            {% endif %}
+                           
+
                             </div>
                         </div>
                     </div>
@@ -65,7 +72,7 @@
  <div class="d-flex justify-content-center">  
 
 
- {{ knp_pagination_render(evenements) }}
- 
+{#  {{ knp_pagination_render(evenements) }}
+ #} 
   </div>
  {% endblock %}

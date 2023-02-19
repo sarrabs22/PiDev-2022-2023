@@ -30,9 +30,14 @@
                 <td> <img src="/uploads/{{ evenement.image_event }}" alt="image event" width="100" height="100"> </td>
             </tr>
             <tr>
+                <th scope="col">Categorie</th>
+                <td> {{ evenement.categorie.nomcategevent }} </td>
+            </tr>
+            <tr>
                 <th scope="col">Nombre participant</th>
                 <td> {{ evenement.nbparticipants }} </td>
             </tr>
+            
         </tbody>
     </table>
 

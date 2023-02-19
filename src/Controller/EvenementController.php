@@ -4,10 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Evenement;
 use App\Entity\User;
-use App\Entity\Participation;
 use App\Form\EvenementType;
 use App\Repository\EvenementRepository;
-use App\Repository\ParticipationRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use App\Repository\UserRepository;
@@ -17,77 +15,56 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use MercurySeries\FlashyBundle\FlashyNotifier;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 #[Route('/evenement')]
 class EvenementController extends AbstractController
 {
-  /*   #[Route('/{id}/addparticipation', name: 'add_participation', methods: ['GET'])]
-    public function addParticipation(Request $request,EvenementRepository $eventRepository,$id, UserRepository $rep2,EntityManagerInterface $em
-    ): Response
-    {
-        $event=$eventRepository->find($id);
-      
-            $user= new User();
-            
-            $user=$em->getRepository(User::class)->find(1);
-            
-            
-
-    if ($event->isUserParticipating($user)) {
-        
-
-      
-    } else {
-        
-    }
-            $participation = new Participation();
-
-            $participation->setUser($user);
-            $participation->setDate(new \DateTime());
-
-            $event->setNbParticipants($event->getNbParticipants()+1);
-
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($participation);
-            $em->flush();
-
-            return $this->render('evenement/index.html.twig', [
-                
-               'id' => $event->getId(),
-                'evenements' => $eventRepository->findAll(),
-                'user' => $user,
-
-            ]);
-            
-
-    } */
-
-   
-
+  
      #[Route('/{id}/addParticipation', name: 'addParticipation', methods: ['GET'])]
-    public function addParticipation(Request $request,EvenementRepository $eventRepository,$id, UserRepository $rep2
+    public function addParticipation(Request $request,EvenementRepository $eventRepository,$id, UserRepository $rep2,SessionInterface $session
     ): Response
     {
         $event=$eventRepository->find($id);
       
             $user= new User();
             $user= $rep2->find(2);
-            $participation = new Participation();
-
-            $participation->setUser($user);
-            $participation->setDate(new \DateTime());
+            $event->addUser($user);
             $event->setNbParticipants($event->getNbParticipants()+1);
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($event);
+        $entityManager->flush();
 
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($participation);
-            $em->flush();
+        $this->addFlash('success', 'You have successfully participated in this event.');
 
-            
-      
         return $this->redirectToRoute('app_evenement_index');
        
         
     } 
+
+
+    #[Route('/{id}/cancelP', name: 'cancelP', methods: ['GET'])]
+    public function cancelP(Request $request,EvenementRepository $eventRepository,$id, UserRepository $rep2,SessionInterface $session
+    ): Response
+    {
+        $event=$eventRepository->find($id);
+      
+            $user= new User();
+            $user= $rep2->find(2);
+            $event->RemoveUser($user);
+            $event->setNbParticipants($event->getNbParticipants()-1);
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($event);
+            $entityManager->flush();
+    
+            $this->addFlash('success', 'You have successfully cancelled your participation in this event.');
+    
+            return $this->redirectToRoute('app_evenement_index');
+        
+    } 
+
+
+
 
 
     #[Route('/search', name: 'app_evenement_recherche')]
@@ -116,19 +93,26 @@ class EvenementController extends AbstractController
     }
 
     #[Route('/', name: 'app_evenement_index' , methods: ['GET'])]
-    public function index(EvenementRepository $evenementRepository , Request $request, PaginatorInterface $paginator): Response
+    public function index(EvenementRepository $evenementRepository , Request $request, PaginatorInterface $paginator,SessionInterface $session,UserRepository $rep2): Response
     {
         $evenements=$evenementRepository->findAll();
+        $user= $rep2->find(2);
+       
+        
 
-        $evenements = $paginator->paginate(
+
+       /*  $evenements = $paginator->paginate(
             $evenements, // Requête contenant les données à paginer (ici nos articles)
             $request->query->getInt('page', 1), // Numéro de la page en cours, passé dans l'URL, 1 si aucune page
             3 // Nombre de résultats par page
         );
+ */
+        
 
 
         return $this->render('evenement/index.html.twig', [
             'evenements' => $evenements,
+            'user' => $user,
         ]);
     }
    
