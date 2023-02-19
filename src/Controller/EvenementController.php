@@ -9,64 +9,74 @@ use App\Form\EvenementType;
 use App\Repository\EvenementRepository;
 use App\Repository\ParticipationRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use App\Repository\UserRepository;
 use App\Form\SearchType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use MercurySeries\FlashyBundle\FlashyNotifier;
 
 #[Route('/evenement')]
 class EvenementController extends AbstractController
 {
-    #[Route('/{id}/addparticipation', name: 'add_participation', methods: ['GET'])]
+  /*   #[Route('/{id}/addparticipation', name: 'add_participation', methods: ['GET'])]
     public function addParticipation(Request $request,EvenementRepository $eventRepository,$id, UserRepository $rep2,EntityManagerInterface $em
     ): Response
     {
         $event=$eventRepository->find($id);
-      $err=0;
+      
             $user= new User();
             
-            $user= $rep2->find(2);
+            $user=$em->getRepository(User::class)->find(1);
             
+            
+
+    if ($event->isUserParticipating($user)) {
+        
+
+      
+    } else {
+        
+    }
             $participation = new Participation();
 
             $participation->setUser($user);
             $participation->setDate(new \DateTime());
 
             $event->setNbParticipants($event->getNbParticipants()+1);
-            $utilsiateur= $em->getRepository(User::class)
-            ->find(1);
-            if($utilsiateur !== null){
-                $err=1;
-                $event->setNbParticipants($event->getNbParticipants()-1);
-            }
-            else {
 
-                return $this->redirectToRoute('app_evenement_index');
-            }
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($participation);
+            $em->flush();
 
             return $this->render('evenement/index.html.twig', [
                 
-                'erreur' => $err,
+               'id' => $event->getId(),
+                'evenements' => $eventRepository->findAll(),
+                'user' => $user,
+
             ]);
             
 
-    }
+    } */
 
-    /* #[Route('/{id}/removeparticipation', name: 'remove_participation', methods: ['GET'])]
-    public function removeParticipation(Request $request,EvenementRepository $eventRepository,$id, UserRepository $rep2
+   
+
+     #[Route('/{id}/addParticipation', name: 'addParticipation', methods: ['GET'])]
+    public function addParticipation(Request $request,EvenementRepository $eventRepository,$id, UserRepository $rep2
     ): Response
     {
         $event=$eventRepository->find($id);
       
             $user= new User();
-            $user= $rep2->find(1);
+            $user= $rep2->find(2);
             $participation = new Participation();
 
             $participation->setUser($user);
             $participation->setDate(new \DateTime());
-            $event->setNbParticipants($event->getNbParticipants()-1);
+            $event->setNbParticipants($event->getNbParticipants()+1);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($participation);
@@ -74,10 +84,10 @@ class EvenementController extends AbstractController
 
             
       
-            return $this->redirectToRoute('app_evenement_index');
+        return $this->redirectToRoute('app_evenement_index');
        
         
-    } */
+    } 
 
 
     #[Route('/search', name: 'app_evenement_recherche')]
@@ -106,11 +116,19 @@ class EvenementController extends AbstractController
     }
 
     #[Route('/', name: 'app_evenement_index' , methods: ['GET'])]
-    public function index(EvenementRepository $evenementRepository , Request $request): Response
+    public function index(EvenementRepository $evenementRepository , Request $request, PaginatorInterface $paginator): Response
     {
+        $evenements=$evenementRepository->findAll();
+
+        $evenements = $paginator->paginate(
+            $evenements, // Requête contenant les données à paginer (ici nos articles)
+            $request->query->getInt('page', 1), // Numéro de la page en cours, passé dans l'URL, 1 si aucune page
+            3 // Nombre de résultats par page
+        );
+
 
         return $this->render('evenement/index.html.twig', [
-            'evenements' => $evenementRepository->findAll(),
+            'evenements' => $evenements,
         ]);
     }
    
@@ -121,7 +139,7 @@ class EvenementController extends AbstractController
    
 
     #[Route('/new', name: 'app_evenement_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EvenementRepository $evenementRepository): Response
+    public function new(Request $request, EvenementRepository $evenementRepository, FlashyNotifier $flashy ): Response
     {
         $evenement = new Evenement();
         $form = $this->createForm(EvenementType::class, $evenement);
@@ -142,6 +160,7 @@ class EvenementController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($evenement);
         $entityManager->flush();
+        $flashy->success('Evenement crée!', 'http://your-awesome-link.com');
             return $this->redirectToRoute('app_evenement_index', [], Response::HTTP_SEE_OTHER);
         }
         
@@ -161,7 +180,7 @@ class EvenementController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_evenement_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Evenement $evenement, EvenementRepository $evenementRepository): Response
+    public function edit(Request $request, Evenement $evenement, EvenementRepository $evenementRepository,FlashyNotifier $flashy): Response
     {
         $form = $this->createForm(EvenementType::class, $evenement);
         $form->handleRequest($request);
@@ -180,6 +199,7 @@ class EvenementController extends AbstractController
             $evenement->setImageEvent($newFilename);
 
             $this->getDoctrine()->getManager()->flush();
+            
 
             return $this->redirectToRoute('app_evenement_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -199,4 +219,8 @@ class EvenementController extends AbstractController
 
         return $this->redirectToRoute('app_evenement_index', [], Response::HTTP_SEE_OTHER);
     }
+    
+
+
+
 }

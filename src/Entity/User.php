@@ -21,7 +21,7 @@ class User
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Participation::class)]
     private Collection $participations;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Evenement::class)]
+    #[ORM\ManyToMany(targetEntity: Evenement::class, mappedBy: 'user' )]
     private Collection $events;
 
     public function __construct()
@@ -89,7 +89,7 @@ class User
     {
         if (!$this->events->contains($event)) {
             $this->events->add($event);
-            $event->setUser($this);
+            
         }
 
         return $this;
@@ -97,13 +97,8 @@ class User
 
     public function removeEvent(Evenement $event): self
     {
-        if ($this->events->removeElement($event)) {
-            // set the owning side to null (unless already changed)
-            if ($event->getUser() === $this) {
-                $event->setUser(null);
-            }
-        }
-
+        $this->events->removeElement($event);
+            
         return $this;
     }
 }
