@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Don index
+{% endblock %}
+
+{% block body %}
+
+<div class="container-xxl py-5">
+	<div class="container">
+		<div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s">
+			<h1 class="display-6 mb-5">Les Dons</h1>
+		</div>
+
+		<div class="row" data-inline="true" style="display:inline-block;;justify-content:right" data-wow-delay="0.7s">
+			{% for don in dons %}
+
+				<div class="col-lg-3 col-md-2 wow fadeInUp" style=" display: inline-block ">
+					<div class="team-item position-relative rounded overflow-hidden">
+						<div class="overflow-hidden">
+							<a href="{{ path('app_don_showclient', {'id': don.id}) }}">
+								<img class="img-fluid" src="/uploads/{{ don.Image }}" height="1000" width="1000">
+							</a>
+						</div>
+						<div class="team-text bg-light text-center p-4">
+							<a href="{{ path('app_don_showclient', {'id': don.id}) }}">
+								<h5>{{ don.NameD }}</h5>
+							</a>
+							<p class="text-primary">{{ don.localisation }}</p>
+							<div class="team-social text-center">
+								<td>
+									<a>
+										<input</td type="button" class="btn btn-outline-success" value="claim" </a> claim</div> </div> </td> </div> </div> {% endfor %} </div> </div> </div> {% endblock %}
