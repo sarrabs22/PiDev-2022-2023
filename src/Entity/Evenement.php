@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Entity;
-
+use App\Entity\User;
 use App\Repository\EvenementRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -18,21 +18,21 @@ class Evenement
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message:"Nom is required") ]
+    #[Assert\NotBlank(message:"Il faut insérer le nom") ]
     public ?string $Nom_event = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE) ]
     
-    #[Assert\GreaterThanOrEqual("today")]
+    #[Assert\GreaterThanOrEqual("today", message: "Veuillez saisir une date supérieure à la date d'aujourd'hui ")]
     private ?\DateTimeInterface $date_debut = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    #[Assert\GreaterThanOrEqual(propertyPath:"date_debut")]
+    #[Assert\GreaterThanOrEqual(propertyPath:"date_debut", message: "Veuillez saisir une date supérieure à la date debut ")]
    
     private ?\DateTimeInterface $date_fin = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message:"adresse is required") ]
+    #[Assert\NotBlank(message:"Il faut insérer l'adresse") ]
     private ?string $localisation = null;
 
     #[ORM\Column(length: 255)]
@@ -42,21 +42,26 @@ class Evenement
     private ?Categorie $categorie = null;
 
     #[ORM\Column(length: 255)]
+   /*  #[Assert\NotBlank(message:"Il faut insérer une image") ] */
     public ?string $image_event = null;
 
     #[ORM\Column]
     #[Assert\GreaterThanOrEqual(0)]
     private ?int $nbParticipants =0;
 
-    #[ORM\OneToMany(mappedBy: 'event', targetEntity: Participation::class)]
-    private Collection $participations;
+    
 
-    #[ORM\ManyToOne(inversedBy: 'events')]
-    private ?User $user = null;
+    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'events')]
+    private Collection $user ;
 
     public function __construct()
     {
-        $this->participations = new ArrayCollection();
+       
+    }
+
+    public function isUserParticipating(User $user): bool
+    {
+        return $this->user->contains($user);
     }
 
     public function getId(): ?int
@@ -160,45 +165,29 @@ class Evenement
         return $this;
     }
 
-    /**
-     * @return Collection<int, Participation>
-     */
-    public function getParticipations(): Collection
-    {
-        return $this->participations;
-    }
+    
 
-    public function addParticipation(Participation $participation): self
-    {
-        if (!$this->participations->contains($participation)) {
-            $this->participations->add($participation);
-            $participation->setEvent($this);
-        }
-
-        return $this;
-    }
-
-    public function removeParticipation(Participation $participation): self
-    {
-        if ($this->participations->removeElement($participation)) {
-            // set the owning side to null (unless already changed)
-            if ($participation->getEvent() === $this) {
-                $participation->setEvent(null);
-            }
-        }
-
-        return $this;
-    }
-
-    public function getUser(): ?User
+    public function getUser(): Collection
     {
         return $this->user;
     }
 
-    public function setUser(?User $user): self
+    public function addUser(User $user): self
     {
-        $this->user = $user;
+        if (!$this->user->contains($user)) {
+            $this->user->add($user);
+            $user->addEvent($this);
+        }
 
         return $this;
     }
+
+    public function RemoveUser(User $user): self
+    {
+        $this->user->removeElement($user);
+
+        return $this;
+    }
+
+
 }

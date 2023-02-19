@@ -18,15 +18,14 @@ class User
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Participation::class)]
-    private Collection $participations;
+    
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Evenement::class)]
+    #[ORM\ManyToMany(targetEntity: Evenement::class, mappedBy: 'user' )]
     private Collection $events;
 
     public function __construct()
     {
-        $this->participations = new ArrayCollection();
+       
         $this->events = new ArrayCollection();
     }
 
@@ -47,35 +46,7 @@ class User
         return $this;
     }
 
-    /**
-     * @return Collection<int, Participation>
-     */
-    public function getParticipations(): Collection
-    {
-        return $this->participations;
-    }
-
-    public function addParticipation(Participation $participation): self
-    {
-        if (!$this->participations->contains($participation)) {
-            $this->participations->add($participation);
-            $participation->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeParticipation(Participation $participation): self
-    {
-        if ($this->participations->removeElement($participation)) {
-            // set the owning side to null (unless already changed)
-            if ($participation->getUser() === $this) {
-                $participation->setUser(null);
-            }
-        }
-
-        return $this;
-    }
+   
 
     /**
      * @return Collection<int, Evenement>
@@ -89,7 +60,7 @@ class User
     {
         if (!$this->events->contains($event)) {
             $this->events->add($event);
-            $event->setUser($this);
+            
         }
 
         return $this;
@@ -97,13 +68,8 @@ class User
 
     public function removeEvent(Evenement $event): self
     {
-        if ($this->events->removeElement($event)) {
-            // set the owning side to null (unless already changed)
-            if ($event->getUser() === $this) {
-                $event->setUser(null);
-            }
-        }
-
+        $this->events->removeElement($event);
+            
         return $this;
     }
 }

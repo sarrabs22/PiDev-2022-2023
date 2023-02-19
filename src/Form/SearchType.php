@@ -18,12 +18,15 @@ class SearchType extends AbstractType
     {
         $builder
             ->add('Nom_event' , TextType::class, [
+                'label' => 'Nom evenement',
                 'required' => false,
             ] )
             ->add('localisation' ,TextType::class, [
+                'label' => 'Adresse',
                 'required' => false,
             ] )
             ->add('categorie' ,EntityType::class, [
+                'label' => 'Categorie',
                 'class' => Categorie::class ,
                 'required' => false,
                 'choice_label'=>'nom_categ_event'

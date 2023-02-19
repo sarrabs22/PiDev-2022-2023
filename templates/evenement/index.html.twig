@@ -1,63 +1,78 @@
-{% extends 'base.html.twig' %}
+ 
+ {% extends 'base.html.twig' %}
+
+{% block title %}Evenement index{% endblock %}
+
+
+
 {% block body %}
+ <!-- Load Flashy default CSS -->
+    <link rel="stylesheet" href="{{ asset('bundles/mercuryseriesflashy/css/flashy.css') }}">
+ <!-- Flashy depends on jQuery -->
+    <script src="//code.jquery.com/jquery.js"></script>
+    <!-- Load Flashy default JavaScript -->
+    <script src="{{ asset('bundles/mercuryseriesflashy/js/flashy.js') }}"></script>
+    <!-- Include Flashy default partial -->
+    <link href="//fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700' rel='stylesheet'>
+    {{ include('@MercurySeriesFlashy/flashy.html.twig') }}
 
 
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                
-                <th scope="col">Evenement</th>
-                <th scope="col">Date debut</th>
-                <th scope="col">Date fin</th>
-                <th scope="col">Adresse</th>
-                
-                <th scope="col">Categorie</th>
-                <th scope="col">image</th>
-                <th scope="col"></th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for evenement in evenements %}
-            <tr>
-                
-                <td> {{ evenement.NomEvent }}</td>
-                <td>{{ evenement.dateDebut ? evenement.dateDebut|date('d-m-Y') : '' }}</td>
-                <td>{{ evenement.dateFin ? evenement.dateFin|date('d-m-Y') : '' }}</td>
-                <td>{{ evenement.localisation }}</td>
-                
-                <td>{{ evenement.Categorie.nom_categ_event }}</td>
-                <td><img src="/uploads/{{ evenement.image_event }}" alt="image event" width="100" height="100"></td>
+ <div class="container-xxl py-5">
+        <div class="container p-5 my-5 "  >
+            <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" >
+                <div class="d-inline-block rounded-pill bg-secondary text-primary py-1 px-3 mb-3">♥</div>
+                <h1 class="display-6 mb-5">Les événements</h1>
+            </div>
+             
+            <div class="row g-4 " style="display:inline-block;justify-content:center;" data-wow-delay="0.7s" >
+                           {% for evenement in evenements %}
 
+                <div class="col-lg-3 col-md-5 wow fadeInUp"  style=" display: inline-block;justify-content:right;"    >
+                    <div class="team-item position-relative rounded overflow-hidden">
+                        <div class="overflow-hidden">
+                         <a href="{{ path('app_evenement_show', {'id': evenement.id}) }}" >
+                            <img class="img-fluid" src="/uploads/{{ evenement.image_event }}"  >
+                             </a>
+                        </div>
+                        <div class="team-text bg-light text-center p-4">
+                        <a href="{{ path('app_evenement_show', {'id': evenement.id}) }}" >
+                            <h5>{{ evenement.NomEvent }}</h5>
+                            </a>
+                            <p class="text-primary">{{ evenement.localisation }}</p>
+                            
+                            <div class="team-social text-center">
+                            
+                           
+                           {% if user in evenement.user %}
+                            <td><a href="{{ path('cancelP', {'id': evenement.id}) }}"><input type="button" class="btn btn-outline-success" value="Annuler participation"</a></td>
+                            {% else %}
+                            <td><a href="{{ path('addParticipation', {'id': evenement.id}) }}"><input type="button" class="btn btn-outline-success" value="Participer"</a></td>
+                            {% endif %}
+                           
 
-              {#   {% if err == 1  %} #}
+                            </div>
+                        </div>
+                    </div>
+                  
+                </div>
+             
+              {% endfor %}
+            </div>
+         </div>
 
-                {# <td><a href="{{ path('remove_participation', {'id': evenement.id}) }}" title="" class="bid_now">Annuler la participation</a></td> #}
-                 {# {% else %} #}
-
-                <td><a href="{{ path('add_participation', {'id': evenement.id}) }}" title="" class="bid_now">Participer</a></td>
-                {#  {% endif %} #}
-
-
-
-
-                <td>
-                    <a href="{{ path('app_evenement_show', {'id': evenement.id}) }}"><input type="button" class="btn btn-outline-success" value="afficher"</a>
-                    
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="7">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
+    </div>
+        
+   
+            
+                 
     <a href="{{ path('app_evenement_new') }}"><input type="button" class="btn btn-outline-success" value="nouveau evenement"</a>
+     <a href="{{ path('app_evenement_recherche') }}"><input type="button" class="btn btn-outline-success" value="Recherche"</a>
 
-    <a href="{{ path('app_categorie_new') }}"><input type="button" class="btn btn-outline-success" value="nouvelle categorie"</a>
-        <a href="{{ path('app_evenement_recherche') }}"><input type="button" class="btn btn-outline-success" value="Recherche"</a>
+ <div class="d-flex justify-content-center">  
 
-    
-    
-{% endblock %}
+
+{#  {{ knp_pagination_render(evenements) }}
+ #} 
+  </div>
+ {% endblock %}

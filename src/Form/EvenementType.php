@@ -53,7 +53,20 @@ class EvenementType extends AbstractType
                 'data_class' => null,
                 'label' => 'Image' ,
                 'attr' => ['placeholder' => 'image.jpg',
-                'class'=>"form-control-file"]
+                'class'=>"form-control-file"],
+                'constraints' => [
+                    new \Symfony\Component\Validator\Constraints\File([
+                        'maxSize' => '1024k',
+                        'mimeTypes' => [
+                            'image/jpeg',
+                            'image/jpg',
+                            'image/png',
+                            'image/gif'
+                        ],
+                        'mimeTypesMessage' => 'veuillez ajouter une image (jpeg, jpg, png, gif)',
+                    ])
+                ]
+
                 ]) 
             ->add('categorie' , EntityType::class,[
                 'class' => Categorie::class ,
