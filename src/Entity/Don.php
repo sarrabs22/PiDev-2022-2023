@@ -41,7 +41,7 @@ class Don
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: "Email is required")]
-    #[Assert\Email(message: "The email address  '{{email}}'  is not a valid email address")]
+    #[Assert\Email(message: "the email '{{ value }}'is not a valid email")]
     private ?string $email = null;
 
 

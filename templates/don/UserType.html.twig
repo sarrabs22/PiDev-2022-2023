@@ -4,6 +4,7 @@
 	<select id="myselect">
 		<option value="donneur">Donneur</option>
 		<option value="receveur">Receveur</option>
+		<option value="admin">Admin</option>
 	</select>
 	<button onclick="test()" class="btn btn-outline-danger">Valider</button>
 
@@ -15,6 +16,8 @@ if (value == "donneur") {
 window.location.href = "http://127.0.0.1:8000/don/new";
 } else if (value == "receveur") {
 window.location.href = "http://127.0.0.1:8000/don/client"
+} else if (value == "admin") {
+window.location.href = "http://127.0.0.1:8000/category/d/"
 } else {
 alert("Please fill the field with valid information")
 }
