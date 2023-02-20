@@ -1,0 +1,50 @@
+{% extends 'adminbase.html.twig' %}
+
+{% block body %}
+
+<h1>Tableau des utilisateurs</h1>
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Nom</th>
+				<th>Prenom</th>
+                <th>Email</th>
+                <th>Score</th>
+                <th>Nombre Etoile</th>
+                 <th>Supprimer</th>
+                 <th>Photo de profile</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for user in user_tab %}
+				<tr>
+					<td>{{ user.id }}</td>
+					<td>{{ user.nom }}</td>
+					<td>
+                         {{ user.prenom }}
+
+						
+						{#<a href="{{ path('app_category_d_edit', {'id': category_d.id}) }}">
+							<button type="button" class="btn btn-outline-danger">Edit</button>
+						</a> #}
+					</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.score }}</td>
+                    <td>{{ user.nbetoile }}</td>
+                    <td><a href="{{ path('app_admin_delete', {'id': user.id}) }}">
+							<button type="button" class="btn btn-outline-success">Supprimer</button>
+						</a></td>
+                  <td> <img src="{{ asset('uploads/' ~ user.image)}}" class="img-fluid img-thumbnail mt-4 mb-2" style="width: 150px;height:150px;"></td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="3">no records found</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	<a href="{{ path('app_test')}}" type="button"  class="btn btn-outline-success" > Retour a la page d'acceuil </a>
+
+{% endblock %}

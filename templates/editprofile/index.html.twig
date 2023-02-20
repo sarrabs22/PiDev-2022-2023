@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+	<div class="container-xl px-4 mt-4">
+    <!-- Account page navigation-->
+    <nav class="nav nav-borders">
+        <a class="nav-link active ms-0" href="https://www.bootdey.com/snippets/view/bs5-edit-profile-account-details" target="__blank">Profile</a>
+        {# <a class="nav-link" href="https://www.bootdey.com/snippets/view/bs5-profile-billing-page" target="__blank">Billing</a>
+        <a class="nav-link" href="https://www.bootdey.com/snippets/view/bs5-profile-security-page" target="__blank">Security</a>
+        <a class="nav-link" href="https://www.bootdey.com/snippets/view/bs5-edit-notifications-page"  target="__blank">Notifications</a> #}
+    </nav>
+    <hr class="mt-0 mb-4">
+    {% if message is not empty %}
+    <div class="alert alert-success">{{ message }}</div>
+{% endif %}
+	
+    <div class="row">
+        <div class="col-xl-4">
+            <!-- Profile picture card-->
+            <div class="card mb-4 mb-xl-0">
+                <div class="card-header">Photo de profile</div>
+                <div class="card-body text-center">
+                    <!-- Profile picture image-->
+              <img class="img-account-profile rounded-circle mb-2" src="{{ asset('uploads/' ~ app.user.image) }}" >
+
+                    <!-- Profile picture help block-->
+                   {#  <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div> #}
+                    <!-- Profile picture upload button-->
+					 {{ form_start(UserImageForm, {'attr': {'novalidate': 'novalidate'}}) }}
+                    {{form_row(UserImageForm.image, {'attr': {'value': user.nom}})}}
+                    <button class="btn btn-primary mt-4" type="submit">Sauvegarder l'image</button>
+                    {{ form_end(UserImageForm) }}
+    
+
+                   
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-8">
+            <!-- Account details card-->
+            <div class="card mb-4">
+                <div class="card-header">Information sur votre compte</div>
+                <div class="card-body">
+                 {{ form_start(UpdateForm, {'attr': {'novalidate': 'novalidate'}}) }}
+                  {{form_row(UpdateForm.nom, {'attr': {'value': user.nom}})}}
+				  {{form_row(UpdateForm.prenom, {'attr': {'value': user.prenom}})}}
+				  {{form_row(UpdateForm.NumTelephone, {'attr': {'value': user.NumTelephone}})}}
+
+
+					
+					 <button class="btn btn-primary mt-4" type="submit">Save changes</button>
+					
+                       
+                  
+                </div>
+            </div>
+        </div>
+    </div>
+	{{ form_end(UpdateForm) }}
+    <a class="btn btn-primary mt-4" type="button" href="{{ path('app_test') }}">retourner a la page d'acceuil</a>
+    <a class="btn btn-primary mt-6" type="button" href="{{ path('app_userprofile') }}">Votre Profile</a>
+    
+</div>
+
+{% endblock %}

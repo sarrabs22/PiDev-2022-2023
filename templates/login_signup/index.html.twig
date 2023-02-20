@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	{% for label, messages in app.session.flashBag.all %}
+		{% for message in messages %}
+			<div class="alert alert-{{ label }}">{{ message }}</div>
+		{% endfor %}
+	{% endfor %}
+	<section class="h-100 gradient-form" style="background-color: #eee;">
+		<div class="container py-5 h-100">
+			<div class="row d-flex justify-content-center align-items-center h-100">
+				<div class="col-xl-10">
+					<div class="card rounded-3 text-black">
+						<div class="row g-0">
+							<div class="col-lg-6">
+								<div class="card-body p-md-5 mx-md-4">
+
+									<div class="text-center">
+										<img src="img/logoequipe.png" style="width: 185px;" alt="logo">
+										<h4 class="mt-1 mb-5 pb-1"> Nous sommes ScaredToCompile</h4>
+									</div>
+									
+
+									
+										<p>Connectez vous !</p>
+{% if error %}
+        <div class="alert alert-danger">{{ error }}</div>
+		{% if showRefresh == 1 %}
+		<button  class="btn btn-outline-danger" onclick="location.reload()">Rafraichir la page</button>
+		 {% endif %}
+    {% endif %}
+				 {% if (remaining_attempts > 0) or (form_appear == 1) %}							<form action="{{ path('app_login_signup') }}" method="post">
+								<label for="username">Email:</label>
+								<input type="text" id="email" name="email" value="{{ email }} "class= 'form-control'>
+
+								<label for="password">Password:</label>
+								<input type="password" id="password" name="password" class= 'form-control'>
+
+								{# If you want to control the URL the user is redirected to on success#}
+								  <input type="hidden" name="app_login_signup" value="{{ path('app_login_signup') }}">   
+
+								<button type="submit"  class="btn btn-outline-danger mt-3">login</button>
+							</form>
+			{# <p>{{ remaining_attempts  }} of {{ max_attempts }} attempts remaining.</p> #}
+    			{% else %}
+       {#  <p>You have exceeded the maximum number of login attempts. Please try again later.</p> #}
+    			{% endif %}
+
+					 
+										
+										
+									
+<div class="d-flex align-items-center justify-content-center pb-4">
+											<p class="mb-0 me-2">Vous n'avez  pas un compte </p>
+											<a href="{{ path('app_register') }}" class="btn btn-outline-danger">Cree Votre Compte  </a>
+										</div>
+								</div>
+							</div>
+							<div class="col-lg-6 d-flex align-items-center gradient-custom-2">
+								 <div class="text-black px-3 py-4 p-md-5 mx-md-4">
+									<h4 class="mb-4" style="color: black;">Nous sommes plus que développeurs</h4>
+
+
+									<p class="small mb-0" style="color: black;">
+										Notre équipe vise à faire de la Terre un meilleur endroit en permettant aux gens d'échanger des objets et des matériaux usagés. Cela donne également la possibilité aux gens de contacter des associations et de leur donner des plastiques à recycler.</p>
+								</div> 
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+{% endblock %}

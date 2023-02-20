@@ -5,15 +5,43 @@ security:
         Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
     providers:
-        users_in_memory: { memory: null }
+        # used to reload user from session & other features (e.g. switch_user)
+        app_user_provider:
+            entity:
+                class: App\Entity\User
+                property: email
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
             lazy: true
-            provider: users_in_memory
+            provider: app_user_provider
+            # by default, the feature allows 5 login attempts per minute
+           # login_throttling: null
 
+            # configure the maximum login attempts
+            #login_throttling:
+              #  max_attempts: 3          # per minute ...
+                # interval: '10 seconds' # ... or in a custom period
+               # rate: { interval: '3 seconds', amount: 10 }
+            # use a custom rate limiter via its service ID
+            #login_throttling:
+              #  limiter: app.my_login_rate_limiter
+            form_login:
+                # "app_login" is the name of the route created previously
+                login_path: app_login_signup
+                check_path: app_login_signup
+                username_parameter: email
+                password_parameter: password
+                target_path_parameter: app_login_signup
+            # custom_authenticator: App\Security\AppCustomAthenticatorAuthenticator
+            logout:
+                path: app_logout
+                target: app_test
+                # where to redirect after logout
+                # target: app_any_route
+              #  failure_handler: App\Security\LoginFailureHandler
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
 
@@ -25,6 +53,7 @@ security:
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
+
 
 when@test:
     security:
