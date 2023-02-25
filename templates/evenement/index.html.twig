@@ -18,61 +18,81 @@
     {{ include('@MercurySeriesFlashy/flashy.html.twig') }}
 
 
- <div class="container-xxl py-5">
-        <div class="container p-5 my-5 "  >
-            <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" >
-                <div class="d-inline-block rounded-pill bg-secondary text-primary py-1 px-3 mb-3">♥</div>
-                <h1 class="display-6 mb-5">Les événements</h1>
+<div class="product-container">
+  <div class="container" >
+   
+    <div class="row" style="display:inline-block;"  >
+      {% for evenement in evenements %}
+      <div class="col-lg-3  col-sm-7" style="display:inline-block">
+        <div class="product-card">
+          <div class="card-thumbnail">
+          <a href="{{ path('app_evenement_show', {'id': evenement.id}) }}">
+            <img class="img-responsive" src="/uploads/{{ evenement.image_event }}" width="50" height="300">
+            </a>
+          </div>
+          <div class="card-content">
+            <div class="send">
+              <i class="fa fa-send fa-2x"></i>
             </div>
-             
-            <div class="row g-4 " style="display:inline-block;justify-content:center;" data-wow-delay="0.7s" >
-                           {% for evenement in evenements %}
-
-                <div class="col-lg-3 col-md-5 wow fadeInUp"  style=" display: inline-block;justify-content:right;"    >
-                    <div class="team-item position-relative rounded overflow-hidden">
-                        <div class="overflow-hidden">
-                         <a href="{{ path('app_evenement_show', {'id': evenement.id}) }}" >
-                            <img class="img-fluid" src="/uploads/{{ evenement.image_event }}"  >
-                             </a>
-                        </div>
-                        <div class="team-text bg-light text-center p-4">
-                        <a href="{{ path('app_evenement_show', {'id': evenement.id}) }}" >
-                            <h5>{{ evenement.NomEvent }}</h5>
-                            </a>
-                            <p class="text-primary">{{ evenement.localisation }}</p>
-                            
-                            <div class="team-social text-center">
-                            
-                           
-                           {% if user in evenement.user %}
+            <h1 class="card-title">
+              {{ evenement.NomEvent }}
+            </h1>
+            <h2 class="card-sub-title">
+             {{ evenement.localisation }}
+            </h2>
+            <p class="description">
+              debut: {{ evenement.dateDebut ? evenement.dateDebut|date('Y-m-d') : '' }} fin: {{ evenement.datefin ? evenement.datefin|date('Y-m-d') : '' }}
+            </p>
+             {% if user in evenement.user %}
                             <td><a href="{{ path('cancelP', {'id': evenement.id}) }}"><input type="button" class="btn btn-outline-success" value="Annuler participation"</a></td>
                             {% else %}
                             <td><a href="{{ path('addParticipation', {'id': evenement.id}) }}"><input type="button" class="btn btn-outline-success" value="Participer"</a></td>
                             {% endif %}
-                           
 
-                            </div>
-                        </div>
-                    </div>
-                  
-                </div>
-             
-              {% endfor %}
-            </div>
-         </div>
-
+            
+          </div>
+        </div>
+      </div>
+      {% endfor %}
     </div>
+  </div>
+</div>
         
    
             
                  
-    <a href="{{ path('app_evenement_new') }}"><input type="button" class="btn btn-outline-success" value="nouveau evenement"</a>
-     <a href="{{ path('app_evenement_recherche') }}"><input type="button" class="btn btn-outline-success" value="Recherche"</a>
+    <a href="{{ path('app_evenement_new') }}"><input type="button" class="btn btn-outline-success" value="nouveau evenement"></a>
+
+ <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+Recherche</button>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Recherche</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+       
+    {{ include('evenement/search.html.twig') }}
+
+
+
+ </div>
+     
+    </div>
+  </div>
+</div>
+</div>
+
+
 
  <div class="d-flex justify-content-center">  
 
 
-{#  {{ knp_pagination_render(evenements) }}
- #} 
+ {{ knp_pagination_render(evenements) }}
+ 
   </div>
  {% endblock %}

@@ -5,21 +5,16 @@ cols    1     2      3      4      5      6      7      8
 px      68    160    252    344    436    528    620    712    */
 
 @media only screen and (min-width: 1201px) and (max-width: 50000px) {
-
     .navbar-header {
         display: none;
     }
-
-
     header nav#navbar {
         padding: 0;
         margin-right: -30px;
         display: block;
     }
-
-
-
 }
+
 
 /*		medium Layout: 992px.
 		Inherits styles from: Default Layout.
@@ -28,8 +23,6 @@ cols    1     2      3      4      5      6      7      8
 px      68    160    252    344    436    528    620    712    */
 
 @media only screen and (min-width: 992px) and (max-width: 1200px) {
-
-
     /* ===============================================
         Preview-page Start
      ================================================= */
@@ -58,7 +51,7 @@ px      68    160    252    344    436    528    620    712    */
     .homeImg {
         padding: 109.5px 40px 109px 0;
     }
-    header nav#navbar ul > li > a {
+    header nav#navbar ul>li>a {
         padding: 0 7px;
     }
     .homeContent {
@@ -77,8 +70,6 @@ px      68    160    252    344    436    528    620    712    */
         font-size: 13px;
         width: 110px;
     }
-
-
     .homeContent span.h2 {
         padding: 0;
     }
@@ -91,10 +82,10 @@ px      68    160    252    344    436    528    620    712    */
     .ctaCol {
         padding: 0 30px
     }
-    .domainTop > input[type="search"] {
+    .domainTop>input[type="search"] {
         width: 75%;
     }
-    .domainTop > input[type="submit"] {
+    .domainTop>input[type="submit"] {
         width: 24%;
     }
     .ctaTwo .ctaTxtTwo {
@@ -104,13 +95,9 @@ px      68    160    252    344    436    528    620    712    */
     header a.cart .count {
         margin-left: 10px
     }
-
-
     .navbar-header {
         display: none;
     }
-
-
     header nav#navbar {
         padding: 0;
         margin-right: -30px;
@@ -119,10 +106,10 @@ px      68    160    252    344    436    528    620    712    */
     header nav#navbar {
         margin-right: -15px
     }
-    .v2 .domainTop > input[type="search"] {
+    .v2 .domainTop>input[type="search"] {
         width: 270px
     }
-    .v2 .domainTop > input[type="submit"] {
+    .v2 .domainTop>input[type="submit"] {
         width: 150px
     }
     .aboutTxt br {
@@ -131,14 +118,14 @@ px      68    160    252    344    436    528    620    712    */
     .aboutArea .aboutContent {
         height: 475px;
     }
-    .aboutTxt > p {
+    .aboutTxt>p {
         line-height: 24px;
         margin-bottom: 15px;
     }
     .aServiceTxt p br {
         display: none;
     }
-    .contactForm > div {
+    .contactForm>div {
         margin-right: 13px
     }
     #googleMap {
@@ -147,7 +134,7 @@ px      68    160    252    344    436    528    620    712    */
     .contactTxt br {
         display: none;
     }
-    .stepContent > p br {
+    .stepContent>p br {
         display: none;
     }
     .domainCta .h2 {
@@ -164,10 +151,9 @@ px      68    160    252    344    436    528    620    712    */
     .tstSlider .owl-nav div.owl-next {
         right: -30px
     }
-    header nav#navbar ul > li.dropdown-megamenu .mega-menu {
+    header nav#navbar ul>li.dropdown-megamenu .mega-menu {
         right: -65px
     }
-
     .postExcerpt br {
         display: none;
     }
@@ -180,11 +166,8 @@ px      68    160    252    344    436    528    620    712    */
         margin-bottom: 35px;
         padding-bottom: 35px;
     }
-
-
     /*	end1000*/
 }
-
 
 
 /*		tablet Layout: 768px.
@@ -194,7 +177,6 @@ cols    1     2      3      4      5      6      7      8
 px      68    160    252    344    436    528    620    712    */
 
 @media only screen and (min-width: 768px) and (max-width: 991px) {
-
     /* ===============================================
         Preview-page Start
      ================================================= */
@@ -265,10 +247,10 @@ px      68    160    252    344    436    528    620    712    */
         width: 70%;
         padding-right: 0
     }
-    .domainTop > input[type="search"] {
+    .domainTop>input[type="search"] {
         width: 65%
     }
-    .domainTop > input[type="submit"] {
+    .domainTop>input[type="submit"] {
         width: 34%;
         font-size: 13px
     }
@@ -387,7 +369,7 @@ px      68    160    252    344    436    528    620    712    */
     .aboutArea .aboutContent br {
         display: none;
     }
-    .aboutTxt > p {
+    .aboutTxt>p {
         line-height: 24px;
         margin-bottom: 15px;
     }
@@ -449,7 +431,7 @@ px      68    160    252    344    436    528    620    712    */
     .stepContent .h4 {
         margin-bottom: 5px
     }
-    .stepContent > p {
+    .stepContent>p {
         font-size: 13px
     }
     .hosting .pricingArea {
@@ -474,7 +456,6 @@ px      68    160    252    344    436    528    620    712    */
     header a.cart {
         display: inline-block
     }
-
     .cartTotal,
     .checkout .cartTotal {
         margin-left: 0;
@@ -497,7 +478,6 @@ px      68    160    252    344    436    528    620    712    */
         margin-top: 30px;
         text-align: center;
     }
-
     .errRow {
         position: relative
     }
@@ -506,13 +486,12 @@ px      68    160    252    344    436    528    620    712    */
         right: 0;
         top: 0
     }
-    .contactForm > div {
+    .contactForm>div {
         width: 100%;
     }
     .contactForm .contactMsg {
         width: 100%;
     }
-
     /*	end800*/
     /*	==================================== */
     /* Home3 domainArea Start */
@@ -551,8 +530,6 @@ cols    1     2      3      4      5      6      7      8
 px      68    160    252    344    436    528    620    712    */
 
 @media only screen and (min-width: 0px) and (max-width: 767px) {
-
-
     /* ========================================= 
         Preview-area Start 
     ============================================ */
@@ -582,7 +559,6 @@ px      68    160    252    344    436    528    620    712    */
         font-size: 36px;
         line-height: 40px;
     }
-
     .preview-area {
         padding: 75px 0;
         background: #fff;
@@ -617,7 +593,6 @@ px      68    160    252    344    436    528    620    712    */
         width: 320px;
         position: relative
     }
-
     header .headerBottomArea {
         padding: 20px 0
     }
@@ -638,7 +613,7 @@ px      68    160    252    344    436    528    620    712    */
         left: auto;
         top: 50px
     }
-    .clientLogin > form {
+    .clientLogin>form {
         top: 100px;
         left: auto
     }
@@ -692,13 +667,13 @@ px      68    160    252    344    436    528    620    712    */
         width: 100%;
         text-align: center
     }
-    .domainTop > input[type="search"] {
+    .domainTop>input[type="search"] {
         width: 100%;
         margin-bottom: 10px;
         height: 40px;
         text-align: center
     }
-    .domainTop > input[type="submit"] {
+    .domainTop>input[type="submit"] {
         width: auto;
         padding: 0 20px;
         float: none;
@@ -748,7 +723,6 @@ px      68    160    252    344    436    528    620    712    */
     .singlePrice {
         border-color: #e8e8e8;
     }
-
     .ctaCol {
         padding: 0 15px;
     }
@@ -794,7 +768,7 @@ px      68    160    252    344    436    528    620    712    */
     .ctaTwo {
         padding: 40px 0;
     }
-    footer .col-md-3 > div {
+    footer .col-md-3>div {
         margin-bottom: 30px;
         text-align: center;
     }
@@ -808,10 +782,10 @@ px      68    160    252    344    436    528    620    712    */
     .contactInfo .h4 {
         margin-bottom: 15px;
     }
-    .footerLink > li a {
+    .footerLink>li a {
         line-height: 27px;
     }
-    footer .col-md-3:last-child > div {
+    footer .col-md-3:last-child>div {
         margin-bottom: 0;
     }
     .contactBtn.Btn {
@@ -829,11 +803,10 @@ px      68    160    252    344    436    528    620    712    */
     .v2 .domainContent {
         margin: 0px 0 0
     }
-
     .v2 .domainArea {
         text-align: center;
     }
-    .v2 .domainTop > input[type="search"] {
+    .v2 .domainTop>input[type="search"] {
         float: none;
     }
     .v2 .domainTxt {
@@ -852,13 +825,13 @@ px      68    160    252    344    436    528    620    712    */
     .v2 .langTxt {
         display: none;
     }
-    .v2 .domainTop > input[type="search"] {
+    .v2 .domainTop>input[type="search"] {
         width: 280px
     }
-    .v2 .domainTop > input[type="submit"] {
+    .v2 .domainTop>input[type="submit"] {
         width: 150px
     }
-    .v2 .domainContent > p br {
+    .v2 .domainContent>p br {
         display: none;
     }
     .aboutImg {
@@ -887,7 +860,6 @@ px      68    160    252    344    436    528    620    712    */
     .col-md-3:first-child .singleAboutService {
         margin-top: 0
     }
-
     .teamImg {
         height: 60px;
         width: 60px;
@@ -906,7 +878,7 @@ px      68    160    252    344    436    528    620    712    */
         border-radius: 0;
         text-align: center
     }
-    .inputWrep > input[type="email"] {
+    .inputWrep>input[type="email"] {
         width: 100%;
         margin-bottom: 10px;
         border: 2px solid #288feb;
@@ -915,7 +887,7 @@ px      68    160    252    344    436    528    620    712    */
         text-align: center;
         padding: 0
     }
-    .inputWrep > input[type="submit"] {
+    .inputWrep>input[type="submit"] {
         width: 150px;
         float: none;
         display: inline-block;
@@ -924,13 +896,12 @@ px      68    160    252    344    436    528    620    712    */
         padding: 20px 0;
         text-align: center;
     }
-
     .aServiceIcon {
         display: inline-block;
         float: none;
         text-align: center;
     }
-    .aServiceIcon > img {
+    .aServiceIcon>img {
         display: inline-block;
     }
     .aServiceContent {
@@ -964,7 +935,6 @@ px      68    160    252    344    436    528    620    712    */
     .accountInput .h5 {
         margin-top: 30px
     }
-
     ul.regDomains .domainName {
         display: block;
         line-height: 25px;
@@ -974,11 +944,11 @@ px      68    160    252    344    436    528    620    712    */
         float: none;
         padding-left: 20px;
     }
-    .regDomains > li {
+    .regDomains>li {
         border-left: 5px solid #288feb;
         padding: 20px 0;
     }
-    .editDomain > li {
+    .editDomain>li {
         line-height: 25px;
     }
     .regDomains {
@@ -987,7 +957,7 @@ px      68    160    252    344    436    528    620    712    */
     .contactTxt {
         text-align: center
     }
-    .contactForm > div {
+    .contactForm>div {
         width: 100%;
         margin-right: 0
     }
@@ -1065,7 +1035,6 @@ px      68    160    252    344    436    528    620    712    */
         line-height: 60px;
         width: 70px;
     }
-
     .faqArea .col-md-12 .singleFaq,
     .singleFaq:nth-child(2n) {
         width: 100%;
@@ -1083,7 +1052,6 @@ px      68    160    252    344    436    528    620    712    */
         margin-left: 10px;
         line-height: 40px
     }
-
     .tstSlider .owl-nav div {
         bottom: 25px;
         left: auto;
@@ -1093,9 +1061,7 @@ px      68    160    252    344    436    528    620    712    */
     .tstSlider .owl-nav div.owl-next {
         right: 50px;
     }
-
-
-    .cartTable > li.cartHead div {
+    .cartTable>li.cartHead div {
         padding-left: 10px;
         width: 33.33%;
     }
@@ -1108,7 +1074,7 @@ px      68    160    252    344    436    528    620    712    */
         text-align: left;
         width: 100%;
     }
-    .cartTable li > div {
+    .cartTable li>div {
         border: medium none;
         padding-left: 0;
         text-align: center;
@@ -1120,22 +1086,22 @@ px      68    160    252    344    436    528    620    712    */
     .cartTable li div.product div::before {
         left: 13px;
     }
-    .cartTable > li {
+    .cartTable>li {
         border: 2px solid #288feb;
         margin-bottom: 20px;
     }
-    .duration > span {
+    .duration>span {
         text-align: left
     }
     .cartOpt {
         left: 8px;
-        box-shadow: #0 0 8px rgba(0, 0, 0, 0.1)
+        box-shadow: 0 8px rgba(0, 0, 0, 0.1)
     }
-    .cartOpt > li {
+    .cartOpt>li {
         text-align: left;
         padding-left: 20px
     }
-    .couponForm > input {
+    .couponForm>input {
         width: 100%;
         border: 1px solid #288feb;
         margin-bottom: 10px;
@@ -1145,7 +1111,7 @@ px      68    160    252    344    436    528    620    712    */
     .couponForm {
         text-align: center
     }
-    .couponForm > button {
+    .couponForm>button {
         margin: 0
     }
     .cartTotal {
@@ -1167,7 +1133,6 @@ px      68    160    252    344    436    528    620    712    */
     .checkout .cartTotal {
         margin-top: 30px
     }
-
     .postExcerpt br {
         display: none;
     }
@@ -1192,7 +1157,6 @@ px      68    160    252    344    436    528    620    712    */
     article.singleBlog {
         padding: 0
     }
-
     .postTitle.h3 {
         font-size: 21px;
         margin-bottom: 5px;
@@ -1229,10 +1193,10 @@ px      68    160    252    344    436    528    620    712    */
         margin-top: 45px;
         padding-right: 0;
     }
-    .commentInput > input:first-child {
+    .commentInput>input:first-child {
         margin-right: 0;
     }
-    .commentInput > input {
+    .commentInput>input {
         display: block;
         float: none;
         width: 100%;
@@ -1242,17 +1206,16 @@ px      68    160    252    344    436    528    620    712    */
         margin-bottom: 35px;
         padding-bottom: 35px;
     }
-
-    .serachForm > input[type="search"] {
+    .serachForm>input[type="search"] {
         font-size: 12px;
         margin-bottom: 40px;
     }
-    .supportInput > input:first-child,
+    .supportInput>input:first-child,
     .supportInput .supportSelect {
         margin-right: 0;
     }
-    .supportInput > input,
-    .supportInput > .supportSelect {
+    .supportInput>input,
+    .supportInput>.supportSelect {
         padding-left: 15px;
         width: 100%;
     }
@@ -1262,7 +1225,7 @@ px      68    160    252    344    436    528    620    712    */
     .supportInput .supportSelect {
         padding-left: 0;
     }
-    .supportInput > textarea {
+    .supportInput>textarea {
         height: 100px;
         padding-left: 15px;
     }
@@ -1280,10 +1243,9 @@ px      68    160    252    344    436    528    620    712    */
         margin-left: 0;
         width: 100%;
     }
-    .supportInput > input[type="submit"] {
+    .supportInput>input[type="submit"] {
         width: 100%;
     }
-
     .comingContent {
         padding-top: 0;
         text-align: center;
@@ -1299,14 +1261,14 @@ px      68    160    252    344    436    528    620    712    */
     .comingContent span br {
         display: none;
     }
-    .subsForm > input,
-    .eSearchForm > input {
+    .subsForm>input,
+    .eSearchForm>input {
         float: none;
         margin: 0 0 20px;
         width: 100%;
     }
-    .eSearchForm > input[type="submit"],
-    .subsForm > input[type="submit"] {
+    .eSearchForm>input[type="submit"],
+    .subsForm>input[type="submit"] {
         display: inline-block;
         float: none;
         margin: 0 0 20px;
@@ -1319,7 +1281,6 @@ px      68    160    252    344    436    528    620    712    */
         height: auto;
         margin-right: 0;
     }
-
     .h1.errorTitle {
         font-size: 40px;
         line-height: 30px;
@@ -1332,16 +1293,15 @@ px      68    160    252    344    436    528    620    712    */
     .eSearchImg {
         display: none;
     }
-    .errorContent > a {
+    .errorContent>a {
         display: block;
         margin-top: 0;
         text-align: center;
     }
-    .contactForm .contactSubmit + div {
+    .contactForm .contactSubmit+div {
         display: block;
         margin-left: 0
     }
-
     /*	end320*/
     /*	==================================== */
     /* Home3 Page Start */
@@ -1349,11 +1309,9 @@ px      68    160    252    344    436    528    620    712    */
     .homeArea.home3Area {
         height: 500px !important;
     }
-
     .home3 .domainArea {
         margin-bottom: 345px;
     }
-
     /*	==================================== */
     /* Home3 Page End */
     /*	==================================== */
@@ -1363,12 +1321,10 @@ px      68    160    252    344    436    528    620    712    */
     .home4 .homeContent {
         text-align: left;
     }
-
     /*	==================================== */
     /* Home4 Page End */
     /*	==================================== */
 }
-
 
 
 /*		Wide Mobile Layout: 480px.
@@ -1378,7 +1334,6 @@ cols    1     2      3      4      5      6      7      8
 px      68    160    252    344    436    528    620    712    */
 
 @media only screen and (min-width: 480px) and (max-width: 767px) {
-
     /* ===============================================
         Preview-page Start
      ================================================= */

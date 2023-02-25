@@ -67,9 +67,10 @@ class EvenementController extends AbstractController
 
 
 
-    #[Route('/search', name: 'app_evenement_recherche')]
-    public function index2(EvenementRepository $evenementRepository , Request $request): Response
+  /*   #[Route('/search', name: 'app_evenement_recherche')]
+    public function index2(EvenementRepository $evenementRepository , Request $request,UserRepository $rep2): Response
     {
+        $user= $rep2->find(2);
 
         $evenements = $evenementRepository->findAll();
         $form=$this->createForm(SearchType::class);
@@ -82,37 +83,46 @@ class EvenementController extends AbstractController
                 'evenement/resultatRech.html.twig', array(
                    
                     "resultOfSearch" => $result,
-                    "formSearch" => $form->createView() 
+                    
+                    'user' => $user,
                     ));
         }
-        return $this->render('evenement/search.html.twig', [
+        return $this->render('evenement/index.html.twig', [
             "evenements" => $evenements,
             "formSearch" => $form->createView() 
              
         ]);
-    }
+    } */
 
     #[Route('/', name: 'app_evenement_index' , methods: ['GET'])]
     public function index(EvenementRepository $evenementRepository , Request $request, PaginatorInterface $paginator,SessionInterface $session,UserRepository $rep2): Response
     {
         $evenements=$evenementRepository->findAll();
         $user= $rep2->find(2);
-       
+        $form=$this->createForm(SearchType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+                      
+            $result = $evenementRepository->findByNom($form->getData());
+            return $this->render(
+                'evenement/resultatRech.html.twig', array(
+                    "resultOfSearch" => $result,
+                    'user' => $user,
+                    ));
+        }
         
-
-
-       /*  $evenements = $paginator->paginate(
+         $evenements = $paginator->paginate(
             $evenements, // Requête contenant les données à paginer (ici nos articles)
             $request->query->getInt('page', 1), // Numéro de la page en cours, passé dans l'URL, 1 si aucune page
             3 // Nombre de résultats par page
         );
- */
+ 
         
-
-
         return $this->render('evenement/index.html.twig', [
             'evenements' => $evenements,
             'user' => $user,
+            "formSearch" => $form->createView() 
         ]);
     }
    

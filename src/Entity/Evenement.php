@@ -42,7 +42,7 @@ class Evenement
     private ?Categorie $categorie = null;
 
     #[ORM\Column(length: 255)]
-   /*  #[Assert\NotBlank(message:"Il faut insérer une image") ] */
+    #[Assert\NotBlank(message:"Il faut insérer une image") ] 
     public ?string $image_event = null;
 
     #[ORM\Column]
