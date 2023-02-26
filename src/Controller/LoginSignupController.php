@@ -69,7 +69,13 @@ class LoginSignupController extends AbstractController
        
          
             if(!$user->get('userid')==null)
+            {
+
+                $session->set('userid', $user);
+                $session->save();
             return $this->redirectToRoute('app_test');
+
+        }
          
       
      
@@ -77,10 +83,26 @@ class LoginSignupController extends AbstractController
        
     }
     if ($this->isGranted('ROLE_ADMIN')) {
+        $user = $entityManager
+        ->getRepository(User::class)
+        ->findOneBy(['email' => $email]);
+
+    $session->set('userid', $user);
+    $session->save();
         return $this->redirectToRoute('app_admin');
+        $session->set('userid', $user);
+        $session->save();
     }
     if ($this->isGranted('ROLE_USER')) {
+        $user = $entityManager
+        ->getRepository(User::class)
+        ->findOneBy(['email' => $email]);
+
+    $session->set('userid', $user);
+    $session->save();
         return $this->redirectToRoute('app_test');
+        $session->set('userid', $user);
+        $session->save();
     }
         // check if the user has exceeded the maximum number of login attempts
         $maxAttempts = 3;

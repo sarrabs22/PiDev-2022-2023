@@ -17,7 +17,7 @@ class UserprofileController extends AbstractController
         //getting user
          $session = $request->getSession();
          $userid = $session->get('userid');
-         //dd($userid);
+        // dd($userid);
         /////
         // Retrieve the user entity from the database
             $user = $entityManager
