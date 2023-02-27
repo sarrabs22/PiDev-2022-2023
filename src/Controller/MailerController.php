@@ -23,18 +23,33 @@ class MailerController extends AbstractController
 
         $email->from('genereux.scaredtocompile@gmail.com');
         $email->to(
-            'benromdhane.aziz@esprit.tn'
-
+            'ghofrane.benrhaiem@esprit.tn'
         );
         $email->subject('C est scared to compile');
         $email->text('Mon message');
 
         $email->html('
-        <h1> SIUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU </h1>
+        <h1> GOfiiiii bou zinek asl :D  </h1>
         ');
+        /* $this->renderView(
+            // templates/hello/email.txt.twig
+            'hello/email.txt.twig',
+            ['name' => $name]
+        ) */
 
         $mailer->send($email);
         return $this->render('mailer/index.html.twig', [
+            'controller_name' => 'MailerController',
+        ]);
+    }
+    #[Route('/verifieremail', name: 'app_verifieremail')]
+    public function index2(): Response
+    {
+
+
+      
+        
+        return $this->render('mailer/verifier.html.twig', [
             'controller_name' => 'MailerController',
         ]);
     }

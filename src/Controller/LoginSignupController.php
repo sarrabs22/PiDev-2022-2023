@@ -48,7 +48,7 @@ class LoginSignupController extends AbstractController
         $email = $authenticationUtils->getLastUsername();
        
         // get the number of login attempts from the session
-        $session = $request->getSession();
+       
         $loginAttempts = $session->get('login_attempts', 0);
         // increment the login attempts count
         $loginAttempts++;
@@ -57,27 +57,41 @@ class LoginSignupController extends AbstractController
         $session->set('login_attempts', $loginAttempts);
         
 
-       
-        if(!$error && $email && !$session->get('userid')==null )
+        $user = $entityManager
+        ->getRepository(User::class)
+        ->findOneBy(['email' => $email]);
+        
+        if(!$error && $email )
         {
         $user = $entityManager
             ->getRepository(User::class)
             ->findOneBy(['email' => $email]);
 
-        $session->set('userid', $user);
-        $session->save();
+            $user = $entityManager
+            ->getRepository(User::class)
+            ->findOneBy(['email' => $email]);
+    
+            $session->set('userid', $user);
+            $session->save();
        
          
-            if(!$user->get('userid')==null)
-            {
+           
+          
 
-                $session->set('userid', $user);
-                $session->save();
-            return $this->redirectToRoute('app_test');
-
-        }
+        
          
-      
+        if($user->isVerified())
+        {
+            $session = $request->getSession();
+            $session->set('userid', $user);
+            $session->save();
+           
+            return $this->redirectToRoute('app_test');
+            
+        }
+        else{
+            return $this->redirectToRoute('app_verifieremail');
+        }
      
          
        
@@ -93,6 +107,7 @@ class LoginSignupController extends AbstractController
         $session->set('userid', $user);
         $session->save();
     }
+    
     if ($this->isGranted('ROLE_USER')) {
         $user = $entityManager
         ->getRepository(User::class)
@@ -100,9 +115,9 @@ class LoginSignupController extends AbstractController
 
     $session->set('userid', $user);
     $session->save();
-        return $this->redirectToRoute('app_test');
-        $session->set('userid', $user);
-        $session->save();
+    
+       
+       
     }
         // check if the user has exceeded the maximum number of login attempts
         $maxAttempts = 3;
