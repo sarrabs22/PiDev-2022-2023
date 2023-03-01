@@ -65,6 +65,14 @@ class EvenementRepository extends ServiceEntityRepository
     return $qb->getQuery()->getResult();
 }
 
+public function getEventOrdredByName()
+{
+    $qb =  $this->createQueryBuilder('x')
+        ->orderBy('x.Nom_event', 'ASC');
+    return $qb->getQuery()
+        ->getResult();
+}
+
     }
     
 

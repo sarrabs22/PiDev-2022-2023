@@ -40,15 +40,7 @@ class EvenementType extends AbstractType
                     'class' => '',
                 ],
               ])
-           /* ->add('materiel' , TextType::class, [
-            'label' => ' ',
-            'attr' => [
-                'placeholder' => 'Materiel',
-            ],
-            'row_attr' => [
-                'class' => '',
-            ],
-          ]) */
+           
             ->add('Image_Event', FileType::class ,[
                 'data_class' => null,
                 'label' => 'Image' ,

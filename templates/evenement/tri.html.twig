@@ -19,17 +19,10 @@
 
 
 <div class="product-container">
-<div style="display:inline-block d-center">
-<a href="{{ path('app_evenement_tri') }}">
-<h4><i class="fas fa-caret-up"></i></h4>
-</a>
-<h4><i class="fas fa-caret-down"></i></h4>
-
-</div>
   <div class="container" >
    
     <div class="row" style="display:inline-block;"  >
-      {% for evenement in evenements %}
+      {% for evenement in tri %}
       <div class="col-lg-3  col-sm-6" style="display:inline-block">
         <div class="product-card">
           <div class="card-thumbnail">
@@ -70,7 +63,7 @@
                  
     <a href="{{ path('app_evenement_new') }}"><input type="button" class="btn btn-outline-success" value="nouveau evenement"></a>
 
- <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+{#  <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
 Recherche</button>
 
 
@@ -94,12 +87,12 @@ Recherche</button>
 </div>
 </div>
 
+ #}
 
-
- <div class="d-flex justify-content-center">  
+ {# <div class="d-flex justify-content-center">  
 
 
  {{ knp_pagination_render(evenements) }}
  
-  </div>
+  </div> #}
  {% endblock %}

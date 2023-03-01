@@ -18,6 +18,10 @@ class Categorie
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message:"Il faut insérer une categorie") ]
+    #[Assert\Type([
+        'type' => 'String',
+        'message' => 'la valeur {{ value }} n pas valide {{ type }}.',
+    ])]
     public ?string $nom_categ_event = null;
 
     #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: Evenement::class)]

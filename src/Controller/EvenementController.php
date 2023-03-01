@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Controller;
-
+use App\Service\EventCanceledNotificatione;
+use App\Controller\EventCanceledNotification;
 use App\Entity\Evenement;
 use App\Entity\User;
 use App\Form\EvenementType;
@@ -16,10 +17,39 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use MercurySeries\FlashyBundle\FlashyNotifier;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
-
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Symfony\Component\Serializer\SerializerInterface;
 #[Route('/evenement')]
 class EvenementController extends AbstractController
 {
+
+     /**
+     * @Route("{id}/cancel", name="event_cancel", methods={"POST"})
+     */
+    public function cancel(Evenement $event, Request $request, EvenementRepository $repo): Response
+    {
+        $token = $request->request->get('token');
+        if (!$this->isCsrfTokenValid('event_cancel', $token)) {
+            throw $this->createAccessDeniedException('Invalid CSRF token');
+        }
+
+        $eventName = $event->getNomEvent();
+        $this->$repo->delete($event);
+
+        foreach ($event->getUser() as $participant) {
+            $notification = new EventCanceledNotification($eventName);
+            $this->get('app.email_notifier')->send($notification, $participant);
+        }
+
+        return $this->redirectToRoute('event_list');
+    }
+
+
+
+
+
+
+
   
      #[Route('/{id}/addParticipation', name: 'addParticipation', methods: ['GET'])]
     public function addParticipation(Request $request,EvenementRepository $eventRepository,$id, UserRepository $rep2,SessionInterface $session
@@ -41,6 +71,8 @@ class EvenementController extends AbstractController
        
         
     } 
+
+
 
 
     #[Route('/{id}/cancelP', name: 'cancelP', methods: ['GET'])]
@@ -68,11 +100,11 @@ class EvenementController extends AbstractController
 
 
   /*   #[Route('/search', name: 'app_evenement_recherche')]
-    public function index2(EvenementRepository $evenementRepository , Request $request,UserRepository $rep2): Response
+    public function index2(ReclamationRepository $repo , Request $request): Response
     {
-        $user= $rep2->find(2);
+       
 
-        $evenements = $evenementRepository->findAll();
+        $rec = $repo->findAll();
         $form=$this->createForm(SearchType::class);
         $form->handleRequest($request);
 
@@ -84,20 +116,21 @@ class EvenementController extends AbstractController
                    
                     "resultOfSearch" => $result,
                     
-                    'user' => $user,
+                    
                     ));
         }
         return $this->render('evenement/index.html.twig', [
-            "evenements" => $evenements,
+            
             "formSearch" => $form->createView() 
              
         ]);
     } */
 
     #[Route('/', name: 'app_evenement_index' , methods: ['GET'])]
-    public function index(EvenementRepository $evenementRepository , Request $request, PaginatorInterface $paginator,SessionInterface $session,UserRepository $rep2): Response
+    public function index(EvenementRepository $evenementRepository  ,NormalizerInterface $normalizer, Request $request, PaginatorInterface $paginator,SessionInterface $session,UserRepository $rep2): Response
     {
         $evenements=$evenementRepository->findAll();
+        
         $user= $rep2->find(2);
         $form=$this->createForm(SearchType::class);
         $form->handleRequest($request);
@@ -125,8 +158,94 @@ class EvenementController extends AbstractController
             "formSearch" => $form->createView() 
         ]);
     }
-   
+    #[Route('/tri', name: 'app_evenement_tri' , methods: ['GET'])]
+    public function tri(EvenementRepository $evenementRepository  ,NormalizerInterface $normalizer, Request $request, PaginatorInterface $paginator,SessionInterface $session,UserRepository $rep2): Response
+    {
+        $ns= $evenementRepository->getEventOrdredByName() ;
+        $evenements=$evenementRepository->findAll();
+        $user= $rep2->find(2);
+        return $this->render('evenement/tri.html.twig', [
+            'tri' => $ns,
+            'user' => $user,
+            'evenements' => $evenements,
+           
+        ]);
 
+
+    }
+   
+    #[Route('/Alldons', name: 'app_don_indexAll', methods: ['GET'])]
+    public function indexAll(EvenementRepository $repo, NormalizerInterface $normaliser): Response
+    {
+        $don = $repo->findAll();
+        $donNormaliser = $normaliser->normalize($don, "json", ['groups' => "event"]);
+        $json = json_encode($donNormaliser);
+        return new Response($json);
+    }
+
+
+ #[Route('/addEventJson', name: 'app_evenement_newJson', methods: ['GET', 'POST'])]
+    public function newJson(Request $req, EvenementRepository $evenementRepository,NormalizerInterface $normaliser ): Response
+    {
+        $event = new Evenement();
+        $entityManager = $this->getDoctrine()->getManager();
+        $event->setNomEvent($req->get('Nom_event'));
+        $event->setDateDebut((new \DateTime($req->get('date_debut'))));
+        $event->setDateFin((new \DateTime($req->get('date_fin'))));
+        $event->setLocalisation($req->get('localisation'));
+        $event->setCategorie($req->get('categorie'));
+        $event->setImageEvent($req->get('image_event'));
+        $event->setNbParticipants($req->get('nbParticipant'));
+
+        
+        $entityManager->persist($event);
+        $entityManager->flush();
+        $donNormaliser = $normaliser->normalize($event, "json", ['groups' => "event"]);
+        return new Response(json_encode($donNormaliser));
+
+
+    }
+
+    #[Route('/events/{id}', name: 'app_don_ShowDon', methods: ['GET'])]
+    public function showDon($id, EvenementRepository $donRepository, NormalizerInterface $normaliser): Response
+    {
+        $don = $donRepository->find($id);
+        $donNormaliser = $normaliser->normalize($don, "json", ['groups' => "event"]);
+        $json = json_encode($donNormaliser);
+        return new Response($json);
+    }
+
+    #[Route('/deleteJson/{id}', name: 'app_evenement_deleteJson')]
+    public function deleteJson(Request $request,$id, EvenementRepository $donRepository, SerializerInterface $serializer): Response
+    {
+       
+        $entityManager = $this->getDoctrine()->getManager();
+        $don = $entityManager->getRepository(Evenement::class)->find($id);
+        $donRepository->remove($don);
+        $entityManager->flush();
+
+        $json = $serializer->serialize($don, "json", ["groups" => "event"]);
+        return new Response("event deleted" . json_encode($json));
+       
+    }
+
+    #[Route('/modifjson/{id}', name: 'app_don_ShowDon', methods: ['GET'])]
+    public function ModifDon(Request $req, $id, Evenement $donRepository, NormalizerInterface $normaliser): Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $don = $entityManager->getRepository(Evenement::class)->find($id);
+        $don->setNomEvent($req->get('Nom_event'));
+        $don->setDateDebut($req->get('date_debut'));
+        $don->setDateFin($req->get('date_fin'));
+        $don->setLocalisation($req->get('localisation'));
+        $don->setCategorie($req->get('categorie'));
+        $don->setImageEvent($req->get('image_event'));
+        
+        $entityManager->persist($don);
+        $entityManager->flush();
+        $donNormaliser = $normaliser->normalize($don, "json", ['groups' => "event"]);
+        return new Response(json_encode($donNormaliser));
+    }
 
 
 
