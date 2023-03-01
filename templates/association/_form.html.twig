@@ -38,6 +38,11 @@
 <div class="col-lg-7">
 	{{ form_row(form.categorie) }}
 </div>
+
+{# heda mta3 ell captcha #}
+
+	{{form_widget(form.captcha) }}
+
     <button class="btn btn-outline-success" >{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
 

@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Association;
 use App\Entity\Categorie;
+use Captcha;
 use Doctrine\DBAL\Types\TextType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -12,6 +13,9 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 
+
+use Captcha\Bundle\CaptchaBundle\Validator\Constraints\ValidCaptcha;
+use Gregwar\CaptchaBundle\Type\CaptchaType;
 
 class AssociationType extends AbstractType
 {
@@ -38,7 +42,7 @@ class AssociationType extends AbstractType
                     ],
                     'constraints' => [
                         new \Symfony\Component\Validator\Constraints\File([
-                            'maxSize' => '1024k',
+                           
                             'mimeTypes' => [
                                 'image/jpeg',
                                 'image/jpg',
@@ -57,8 +61,21 @@ class AssociationType extends AbstractType
             ->add('categorie', EntityType::class, [
                 'class' => Categorie::class,
                 'choice_label' => 'nom'
-            ]);
-        ;
+            ])
+            
+            ->add('captcha', CaptchaType::class,[
+            'attr' => [
+               
+                'class' => "form-control"
+            ],
+            ]
+        );
+            
+            ;
+
+          
+
+        
     }
 
     public function configureOptions(OptionsResolver $resolver): void

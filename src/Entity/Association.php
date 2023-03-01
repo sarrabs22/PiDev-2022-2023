@@ -6,6 +6,8 @@ use App\Repository\AssociationRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Mime\Message;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 
 #[ORM\Entity(repositoryClass: AssociationRepository::class)]
 class Association
@@ -13,32 +15,40 @@ class Association
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups("association")]
+
     private ?int $id = null;
 
     #[ORM\Column(length: 100)]
     #[Assert\NotBlank(message:" le champ est vide")]
+    #[Groups("association")]
     private ?string $nom = null;
 
     #[ORM\Column]
     #[Assert\NotBlank(message:" le champ est vide")]
     #[Assert\Length(max:8,min:8,maxMessage:"le numero  doit etre composé de 8 chiffres")]
+    #[Groups("association")]
     private ?int $numero = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message:"le champ est vide")]
+    #[Groups("association")]
     #[Assert\Email(message:"the email '{{ value }}'is not a valid email")]
     private ?string $mail = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups("association")]
     #[Assert\NotBlank(message:"le champ est vide")]
     private ?string $adresse = null;
 
     #[ORM\Column]
+    #[Groups("association")]
     #[Assert\NotBlank(message:"le champ est vide")]
     #[Assert\Length(max:4,min:4,maxMessage:"le numero du code postal doit etre composé de 4 chiffres")]
     private ?int $CodePostal = null;
 
     #[ORM\Column(length: 80)]
+    #[Groups("association")]
     #[Assert\NotBlank(message:"le champ est vide")]
     private ?string $ville = null;
 
@@ -48,6 +58,9 @@ class Association
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message:" le champ est vide")]
     private ?string $Image = null;
+
+
+    protected $captchaCode;
 
         
     public function getId(): ?int
@@ -149,5 +162,16 @@ class Association
         $this->Image = $Image;
 
         return $this;
+    }
+
+
+    public function getCaptchaCode()
+    {
+      return $this->captchaCode;
+    }
+
+    public function setCaptchaCode($captchaCode)
+    {
+      $this->captchaCode = $captchaCode;
     }
 }
