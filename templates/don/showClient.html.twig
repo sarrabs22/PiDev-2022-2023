@@ -5,7 +5,6 @@
 
 {% block body %}
 	<h1>Don</h1>
-
 	<table class="table">
 		<tbody>
 
@@ -22,7 +21,7 @@
 				<td>{{ don.Description }}</td>
 			</tr>
 			<tr>
-				<th>Localisation</th>
+				<th>Address</th>
 				<td>{{ don.Localisation }}</td>
 			</tr>
 			<tr>
@@ -39,5 +38,6 @@
 			</tr>
 		</tbody>
 	</table>
-	<a href="{{ path('show_map') }}">Show Map</a>
+
+	<a href="{{ path('show_map2', {'id': don.id}) }}">Show Map</a>
 {% endblock %}

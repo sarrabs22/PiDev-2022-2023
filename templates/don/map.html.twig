@@ -33,6 +33,22 @@
 	<body>
 		<div id="map"></div>
 		<script>
+			var myIcon = L.icon({
+iconUrl: '{{ asset('img/search.png') }}',
+iconSize: [
+38, 95
+],
+iconAnchor: [
+22, 94
+],
+popupAnchor: [
+-3, -76
+],
+shadowSize: [
+68, 95
+],
+shadowAnchor: [22, 94]
+});
 const coordsParis = {
 lat: 50,
 lng: 10
@@ -69,6 +85,7 @@ searchControl.on("results", function (data) {
 markers = [];
 console.log("data", data);
 results.clearLayers();
+
 // several results as several towns with same name (like)
 for (var i = data.results.length - 1; i >= 0; i--) {
 const result = data.results[i];
@@ -82,7 +99,9 @@ marker.on("click", addRadius);
 console.log("markers", markers);
 }
 });
-
+L.marker([
+coordsFromBrowser.lat, coordsFromBrowser.lng
+], {icon: myIcon}).addTo(map);
 function addRadius(marker, radius = 1000) {
 console.log("marker clicked", marker);
 const circle = L.circle([
@@ -94,7 +113,6 @@ setTimeout(() => {
 map.setZoom(15);
 }, 1000);
 }
-
 		</script>
 	</body>
 </html>

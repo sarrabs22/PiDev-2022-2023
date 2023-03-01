@@ -7,46 +7,56 @@ use Symfony\Component\Validator\Constraints as Assert;
 use App\Repository\DonRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: DonRepository::class)]
 class Don
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
+    #[Groups("dons")]
     #[ORM\Column]
     private ?int $id = null;
 
     #[ORM\Column(length: 100)]
+    #[Groups("dons")]
     #[Assert\NotBlank(message: "name is required")]
     private ?string $NameD = null;
 
     #[ORM\Column]
+    #[Groups("dons")]
     #[Assert\NotBlank(message: "Quantity is required")]
     private ?int $quantite = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Groups("dons")]
     #[Assert\NotBlank(message: "Description is required")]
     private ?string $Description = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups("dons")]
     #[Assert\NotBlank(message: "Localisation is required")]
     private ?string $Localisation = null;
 
     #[ORM\ManyToOne(inversedBy: 'Dons')]
+    #[Groups("dons")]
     private ?CategoryD $categoryD = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups("dons")]
     #[Assert\NotBlank(message: "Please fill this Image")]
     private ?string $Image = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: "Email is required")]
+    #[Groups("dons")]
     #[Assert\Email(message: "the email '{{ value }}'is not a valid email")]
     private ?string $email = null;
 
 
     #[ORM\Column]
     #[Assert\NotBlank(message: "Number is required")]
+    #[Groups("dons")]
     #[Assert\Length(
         min: 8,
         max: 8,
