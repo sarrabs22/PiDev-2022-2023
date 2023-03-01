@@ -23,33 +23,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 class EvenementController extends AbstractController
 {
 
-     /**
-     * @Route("{id}/cancel", name="event_cancel", methods={"POST"})
-     */
-    public function cancel(Evenement $event, Request $request, EvenementRepository $repo): Response
-    {
-        $token = $request->request->get('token');
-        if (!$this->isCsrfTokenValid('event_cancel', $token)) {
-            throw $this->createAccessDeniedException('Invalid CSRF token');
-        }
-
-        $eventName = $event->getNomEvent();
-        $this->$repo->delete($event);
-
-        foreach ($event->getUser() as $participant) {
-            $notification = new EventCanceledNotification($eventName);
-            $this->get('app.email_notifier')->send($notification, $participant);
-        }
-
-        return $this->redirectToRoute('event_list');
-    }
-
-
-
-
-
-
-
+   
   
      #[Route('/{id}/addParticipation', name: 'addParticipation', methods: ['GET'])]
     public function addParticipation(Request $request,EvenementRepository $eventRepository,$id, UserRepository $rep2,SessionInterface $session
