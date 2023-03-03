@@ -11,6 +11,7 @@
                 <th>Id</th>
                 <td>{{ annonce.id }}</td>
             </tr> #}
+            
             <tr>
                 <th>Description</th>
                 <td>{{ annonce.Description }}</td>
@@ -19,10 +20,7 @@
                 <th>Image</th>
                 <td><img src="/uploads/{{ annonce.image }}" alt="Pas d'image" width="100" height="100"></td>
             </tr>
-            <tr>
-                <th>Quantité</th>
-                <td>{{ annonce.Quantite }}</td>
-            </tr>
+            
              <tr>
                 <th>adresse</th>
                 <td>{{ annonce.adresse }}</td>
@@ -37,10 +35,12 @@
 
         </tbody>
     </table>
+<a href="{{ path('app_annonce_crud_index') }}"><button type="button" class="btn btn-outline-success" >Retour</button></a>
+<a href="{{ path('app_annonce_crud_edit', {'id': annonce.id}) }}"><button type="button" class="btn btn-outline-success" >Modifier</button></a>
 
-    <a href="{{ path('app_annonce_crud_index') }}">back to list</a>
 
-    <a href="{{ path('app_annonce_crud_edit', {'id': annonce.id}) }}">edit</a>
+
+    
 
     {{ include('annonce_crud/_delete_form.html.twig') }}
 {% endblock %}

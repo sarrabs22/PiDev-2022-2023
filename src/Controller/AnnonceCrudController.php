@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Annonces;
 use App\Form\AnnoncesType;
+use  App\Form\SearchType;
 use App\Repository\AnnoncesRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,15 +13,47 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Doctrine\ORM\EntityManagerInterface;
 #use Doctrine\Common\Persistence\ObjectRepository;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
-
+use function PHPUnit\Framework\stringContains;
 
 #[Route('/annonce/crud')]
 class AnnonceCrudController extends AbstractController
 {
+    #[Route('/search', name: 'app_annonce_recherche')]
+    public function index2(AnnoncesRepository $repo, Request $request): Response
+    {
+
+        $rec = $repo->findAll();
+        $form = $this->createForm(SearchType::class);
+        $form->handleRequest($request);
+        if ($form->isSubmitted()) {
+
+            $result = $repo->findByNom($form->getData());
+            return $this->render(
+                'annonce_crud/resultatRech.html.twig',
+                array(
+
+                    "resultOfSearch" => $result,
+
+
+                )
+            );
+        }
+        return $this->render('annonce_crud/search.html.twig', [
+
+            "formSearch" => $form->createView()
+
+        ]);
+    }
+
+
+
     #[Route('/', name: 'app_annonce_crud_index', methods: ['GET'])]
     public function index(AnnoncesRepository $annoncesRepository): Response
     {
+
+
         return $this->render('annonce_crud/index.html.twig', [
             'annonces' => $annoncesRepository->findAll(),
         ]);
@@ -32,6 +65,41 @@ class AnnonceCrudController extends AbstractController
             'annonces' => $annoncesRepository->findAll(),
         ]);
     }
+
+    #[Route('/affich', name: 'app_affich', methods: ['GET'])]
+    public function app_affich(AnnoncesRepository $annoncesRepository): Response
+    {
+        return $this->render('annonce_crud/affichage1.html.twig', ['annonces' => $annoncesRepository->findAll(),]);
+    }
+
+
+    #[Route("/Allannonce", name: 'list')]
+    public function getannone(AnnoncesRepository $repo, NormalizerInterface $normalizer)
+    {
+        $annonce = $repo->findAll();
+        $annonceNormalises = $normalizer->normalize($annonce, 'json', ['groups' => "annonce/crud"]);
+
+        $json = json_encode($annonceNormalises);
+        return new Response($json);
+    }
+
+
+
+    #[Route("/addAnnonceJSON", name: 'addAnnonceJson')]
+    public function addannonce(Request $req, NormalizerInterface $normalizer)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $annonce = new Annonces();
+        $annonce->setDescription($req->get('Description'));
+        $annonce->setImage($req->get('Image'));
+        //$annonce->setDatePublication((new \DateTime($req->get('DatePublication'))));
+        $annonce->setadresse($req->get('adresse'));
+        $em->persist($annonce);
+        $em->flush();
+        $jsonContent = $normalizer->normalize($annonce, 'json', ['groups' => "annonce/crud"]);
+        return new Response(json_encode($jsonContent));
+    }
+
 
     #[Route('/new', name: 'app_annonce_crud_new', methods: ['GET', 'POST'])]
     public function new(Request $request, AnnoncesRepository $annoncesRepository, EntityManagerInterface $entityManager): Response
@@ -79,6 +147,43 @@ class AnnonceCrudController extends AbstractController
         return $this->render('annonce_crud/show.html.twig', [
             'annonce' => $annonce,
         ]);
+    }
+
+    #[Route("/annonce/{id}", name: 'annonce')]
+    public function annonceId($id, NormalizerInterface $normalizer, AnnoncesRepository $repo)
+    {
+        $annonce = $repo->find($id);
+
+        $annonceNormalises = $normalizer->normalize($annonce, 'json', ['groups' => "annonce/crud"]);
+        return new Response(json_encode($annonceNormalises));
+    }
+
+
+    #[Route("/UpdateAnnonceJSON/{id}", name: 'UpdateAnnonceJson')]
+    public function Updateannonce(Request $req, $id, NormalizerInterface $normalizer)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+        $annonce = $em->getRepository(annonce::class)->find($id);
+
+        $annonce->setDescription($req->get('Description'));
+        $annonce->setImage($req->get('Image'));
+        $annonce->setDatePublication($req->get('DatePublication'));
+        $annonce->setadresse($req->get('adresse'));
+
+        $em->flush();
+        $jsonContent = $normalizer->normalize($annonce, 'json', ['groups' => "annonce/crud"]);
+        return new Response("Annonce updated successfully" . json_encode($jsonContent));
+    }
+    #[Route("/deleteannonceJSON/{id}", name: 'deleteannonceJson')]
+    public function deleteannonce(Request $req, $id, NormalizerInterface $normalizer)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $annonce = $em->getRepository(annonce::class)->find($id);
+        $em->remove($annonce);
+        $em->flush();
+        $jsonContent = $normalizer->normalize($annonce, 'json', ['groups' => "annonce"]);
+        return new Response("annonce deleted successfully" . json_encode($jsonContent));
     }
 
     #[Route('/{id}/edit', name: 'app_annonce_crud_edit', methods: ['GET', 'POST'])]

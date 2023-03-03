@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+
+{{ form_start(formSearch,{'attr':{'novalidate':'novalidate'}}) }}
+<center >
+<h2>Recherche</h2>
+
+{% form_theme formSearch 'bootstrap_5_horizontal_layout.html.twig' %} 
+
+    <div class="my-custom-class-for-errors">
+        {{ form_errors(formSearch) }}
+    </div>
+  
+        {{ form_row(formSearch.adresse) }}
+    </div>
+    <div class="col-lg-7">
+        {{ form_row(formSearch.categorie) }}
+    </div>
+    
+    
+    
+   
+        
+         <a href="{{ path('app_annonce_crud_index') }}"><input type="button" class="btn btn-outline-success" value="retour"</a>
+       
+{{ form_end(formSearch) }}
+
+</center>
+{% endblock %}
+

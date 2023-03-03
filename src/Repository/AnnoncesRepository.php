@@ -39,28 +39,46 @@ class AnnoncesRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Annonces[] Returns an array of Annonces objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('a.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function findByNom(Annonces $event): array
+    {
+        $qb = $this->createQueryBuilder('p');
 
-//    public function findOneBySomeField($value): ?Annonces
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        if ($event->getadresse()) {
+            $qb->andWhere('p.adresse LIKE :adresse')
+                ->setParameter('adresse', '%' . $event->getadresse() . '%');
+        }
+
+
+        if ($event->getCategorie()) {
+            $qb->andWhere('p.categorie = :categorie')
+                ->setParameter('categorie', $event->getCategorie());
+        }
+
+        return $qb->getQuery()->getResult();
+    }
+
+    //    /**
+    //     * @return Annonces[] Returns an array of Annonces objects
+    //     */
+    //    public function findByExampleField($value): array
+    //    {
+    //        return $this->createQueryBuilder('a')
+    //            ->andWhere('a.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->orderBy('a.id', 'ASC')
+    //            ->setMaxResults(10)
+    //            ->getQuery()
+    //            ->getResult()
+    //        ;
+    //    }
+
+    //    public function findOneBySomeField($value): ?Annonces
+    //    {
+    //        return $this->createQueryBuilder('a')
+    //            ->andWhere('a.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->getQuery()
+    //            ->getOneOrNullResult()
+    //        ;
+    //    }
 }

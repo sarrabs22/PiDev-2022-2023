@@ -15,7 +15,7 @@
             </div>
              
             <div class="row g-4 " style="display:inline-block;justify-content:center;" data-wow-delay="0.7s" >
-                           {% for annonce in annonces %}
+                           {% for annonce in resultOfSearch %}
 
                 <div class="col-lg-3 col-md-5 wow fadeInUp"  style=" display: inline-block;justify-content:right;"    >
                     <div class="team-item position-relative rounded overflow-hidden">
@@ -49,19 +49,5 @@
          </div>
 
     </div>
-<a href="{{ path('app_annonce_crud_new') }}"><button type="button" class="btn btn-outline-success" >Ajouter annonce</button></a>
-<a href="{{ path('app_annonce_recherche') }}"><button type="button" class="btn btn-outline-success" >Recherche</button></a>
 
-    <a href="/categorie">Create Categorie</a>
-    <div class="grix xs2 sm3 gutter-0 card">
-			<div class="col-xs2 col-sm3">
-				<center>
-                {#      <h2><i> Liste des commentaires </i></h2>
-                </center>
-                {% for commentaire in annonce.commentaires %}
-                   {% if commentaire.parent == null %}
-                       <h4>commentaire de {{commentaire.pseudo}}</h4>
-                       <p>Publié le {{commentaire.dateCreation|date("d/m/Y H:i:s")}}</p>
-                       <div>{{commentaire.contenu|raw}}</div>
-                       <p><a href="#ajout-commentaire" data-reply data-id="{{commentaire.id}}" class="btn btn-outline-success">Répondre</a></p> #}
-{% endblock %}
+    {% endblock %}

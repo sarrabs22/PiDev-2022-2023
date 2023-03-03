@@ -21,6 +21,7 @@ class AnnoncesType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+
             ->add('Description')
             ->add('Image', FileType::class, [
                 'data_class' => null,
@@ -38,13 +39,14 @@ class AnnoncesType extends AbstractType
                             'image/jpeg',
                             'image/png',
                             'image/gif',
-                            'image/jpg'
+                            'image/jpg',
+                            'image/avif'
                         ],
-                        'mimeTypesMessage' => 'Please upload a valid image file (jpeg, png, gif, jpg)',
+                        'mimeTypesMessage' => 'Veuillez ajouter un type d image valide  (jpeg, png, gif, jpg, avif)',
                     ])
                 ],
             ])
-            ->add('Quantite')
+            
             ->add('adresse')
             #->add('Categorie', ChoiceType::class, [
             #'choices' => [
