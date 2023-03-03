@@ -37,6 +37,16 @@
                 <th scope="col">Nombre participant</th>
                 <td> {{ evenement.nbparticipants }} </td>
             </tr>
+            <tr>
+            {% if user in evenement.user %}
+                           <th>  <a href="{{ path('download_pdf', {'id': evenement.id}) }}"><input type="button"  class="btn btn-outline-success" value="Imprimé ticket"</a></th>
+                            {% else %}
+             <th><input type="button" class="btn btn-outline-success" disabled value="Imprimé ticket">   </th>                    
+                {% endif %}
+               
+
+            </tr>
+            
             
         </tbody>
     </table>

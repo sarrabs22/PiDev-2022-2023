@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Controller;
-use App\Service\EventCanceledNotificatione;
-use App\Controller\EventCanceledNotification;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 use App\Entity\Evenement;
 use App\Entity\User;
 use App\Form\EvenementType;
@@ -19,10 +19,46 @@ use MercurySeries\FlashyBundle\FlashyNotifier;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\SerializerInterface;
+
+
 #[Route('/evenement')]
 class EvenementController extends AbstractController
 {
+    #[Route('/pdf/{id}', name: 'download_pdf', methods: ['GET'])]
+    public function pdf($id): Response
+    {
+        
+        $entityManager = $this->getDoctrine()->getManager();
+        $order = $entityManager->getRepository(Evenement::class)->find($id);
+      
+        // Configure Dompdf according to your needs
+        $pdfOptions = new Options();
+        $pdfOptions->set('defaultFont', 'Arial');
 
+        // Instantiate Dompdf with our options
+        $dompdf = new Dompdf($pdfOptions);
+
+        // Retrieve the HTML generated in our twig file
+        $html = $this->renderView('evenement/pdf.html.twig', [
+            'evenement' => $order
+        ]);
+
+        // Load HTML to Dompdf
+        $dompdf->loadHtml($html);
+
+        // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
+        $dompdf->setPaper('A4', 'portrait');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        // Output the generated PDF to Browser (force download)
+        $dompdf->stream("ticket.pdf", [
+            "Attachment" => true
+        ]);
+
+        return $this->redirectToRoute("app_evenement_index");
+    }
    
   
      #[Route('/{id}/addParticipation', name: 'addParticipation', methods: ['GET'])]
@@ -132,6 +168,8 @@ class EvenementController extends AbstractController
             "formSearch" => $form->createView() 
         ]);
     }
+
+   
     #[Route('/tri', name: 'app_evenement_tri' , methods: ['GET'])]
     public function tri(EvenementRepository $evenementRepository  ,NormalizerInterface $normalizer, Request $request, PaginatorInterface $paginator,SessionInterface $session,UserRepository $rep2): Response
     {
@@ -164,12 +202,12 @@ class EvenementController extends AbstractController
         $event = new Evenement();
         $entityManager = $this->getDoctrine()->getManager();
         $event->setNomEvent($req->get('Nom_event'));
+        $event->setLocalisation($req->get('localisation'));
+        $event->setImageEvent($req->get('image_event'));
         $event->setDateDebut((new \DateTime($req->get('date_debut'))));
         $event->setDateFin((new \DateTime($req->get('date_fin'))));
-        $event->setLocalisation($req->get('localisation'));
-        $event->setCategorie($req->get('categorie'));
-        $event->setImageEvent($req->get('image_event'));
-        $event->setNbParticipants($req->get('nbParticipant'));
+      //  $event->setCategorie($req->get('categorie'));
+        
 
         
         $entityManager->persist($event);
@@ -184,6 +222,14 @@ class EvenementController extends AbstractController
     public function showDon($id, EvenementRepository $donRepository, NormalizerInterface $normaliser): Response
     {
         $don = $donRepository->find($id);
+        $donNormaliser = $normaliser->normalize($don, "json", ['groups' => "event"]);
+        $json = json_encode($donNormaliser);
+        return new Response($json);
+    }
+    #[Route('/', name: 'app_don_ShowDon', methods: ['GET'])]
+    public function showAll( EvenementRepository $donRepository, NormalizerInterface $normaliser): Response
+    {
+        $don = $donRepository->findAll();
         $donNormaliser = $normaliser->normalize($don, "json", ['groups' => "event"]);
         $json = json_encode($donNormaliser);
         return new Response($json);
@@ -259,10 +305,12 @@ class EvenementController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_evenement_show', methods: ['GET'])]
-    public function show(Evenement $evenement): Response
+    public function show(Evenement $evenement, UserRepository $rep2): Response
     {
+        $user= $rep2->find(2);
         return $this->render('evenement/show.html.twig', [
             'evenement' => $evenement,
+            'user' =>$user
         ]);
     }
 

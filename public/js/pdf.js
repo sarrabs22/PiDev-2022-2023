@@ -1,0 +1,1 @@
+// The QR code links to the petition, SIGN IT - https://www.change.org/p/renew-warrior-nun-for-season-3
