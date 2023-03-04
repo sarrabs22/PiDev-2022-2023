@@ -1,0 +1,111 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des reclamations{% endblock %}
+
+
+{% block body %}
+<body>
+    
+    <center>
+     <h2><i> Liste des reclamations </i></h2>
+    </center>
+    
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Contenu</th>
+                <th>Nom_d_utilisateur</th>
+                <th>Date_reclamation</th>
+                <th>Etat</th>
+                <th>Motif De Reclamation</th>
+                <th>Image</th>
+                <th>NumTelephone</th>
+                <th>Email</th>
+                <th>CategorieRec</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ reclamation.contenu }}</td>
+                {% if reclamation.User %}
+                <td>{{ reclamation.User.Nom }}</td>
+                {% endif %}
+                <td>{{ reclamation.dataReclamation }}</td>
+                <td>{{ reclamation.etat }}</td>
+                <td>{{ reclamation.MotifDeReclamation }}</td>
+                <td><img src="/uploads/{{ reclamation.Image }}" alt="image reclamation" width="100" height="100"></td>
+                <td>{{ reclamation.NumTelephone }}</td>
+                <td>{{ reclamation.Email }}</td>
+                <td>{{ reclamation.CategorieRec.Nom }}</td>
+                
+          
+        
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_reclamation_new') }}"><button type="button" class="btn btn-outline-success">Créer une réclamation</button></a>
+     <div class="grix xs2 sm3 gutter-0 card">
+			<div class="col-xs2 col-sm3">
+				<center>
+                     <h2><i> Liste des commentaires </i></h2>
+                </center>
+                {% for comment in reclamation.comments %}
+                    {% for message in app.flashes('message') %}
+       		<div class="p-3 my-2 rounded-2 success">{{ message }}</div>
+    	{% endfor %}
+                   {% if comment.parent == null %}
+                       <h4>commentaire de {{comment.nickname}}</h4>
+                       <p>Publié le {{comment.createdAt|date("d/m/Y H:i:s")}}</p>
+                       <div>{{comment.content|raw}}</div>
+                       <p><a href="#ajout-commentaire" data-reply data-id="{{comment.id}}" class="btn btn-outline-success">Répondre</a></p>
+                       {# Partie reponses #}
+                       {% for reply in comment.replies %}
+                          <p>Réponse publiée par {{reply.nickname}} le {{reply.createdAt|date("d/m/Y H:i:s")}}</p>
+                          <div>{{reply.content|raw}}</div>
+                        {% endfor %}
+
+                    {% endif %}
+
+                {% endfor %}
+            </div>
+            <div class="col-xs2 col-sm3" id="ajout-commentaire">
+				<center>
+                     <h2><i> Ajouter un commentaire </i></h2>
+                </center>
+                {{ form(commentForm) }}
+            </div>
+    </div>
+    </body>
+{% endblock %}
+
+{% block JavaScript %}
+
+	
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/wow/wow.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="lib/parallax/parallax.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
+<script>
+		window.onload = () => {
+			// On met un écouteur d'évènements sur tous les boutons répondre
+document.querySelectorAll("[data-reply]").forEach(element => {
+    element.addEventListener("click", function(){
+        // Set the parent_id field of the form to the ID of the comment being replied to
+       document.querySelector("#comments_parentid").value = this.dataset.id;
+				});
+    });
+
+
+		}
+		let caroulix = new Caroulix('#carousel');
+		let modal = new Modal('#modale-contact');
+	</script>
+{% endblock %}
