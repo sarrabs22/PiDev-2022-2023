@@ -79,4 +79,16 @@ class DonRepository extends ServiceEntityRepository
             ->getQuery()
             ->execute();
     }
+    public function orderByName()
+    {
+        return $this->createQueryBuilder('s')
+            ->orderBy('s.NameD', 'ASC')
+            ->getQuery()->getResult();
+    }
+    public function orderQuantite()
+    {
+        return $this->createQueryBuilder('s')
+            ->orderBy('s.quantite', 'ASC')
+            ->getQuery()->getResult();
+    }
 }

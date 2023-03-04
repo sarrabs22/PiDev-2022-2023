@@ -13,6 +13,7 @@
         "doctrine/orm": "^2.14",
         "http-interop/http-factory": "^0.4.1",
         "knplabs/knp-paginator-bundle": "*",
+        "knplabs/knp-snappy-bundle": "^1.9",
         "php-http/client-implementation": "*",
         "php-http/guzzle6-adapter": "^2.0",
         "phpdocumentor/reflection-docblock": "^5.3",
@@ -46,6 +47,7 @@
         "symfony/yaml": "5.4.*",
         "twig/extra-bundle": "^2.12|^3.0",
         "twig/twig": "^2.12|^3.0",
+        "twilio/sdk": "^6.44",
         "willdurand/geocoder-bundle": "^5.19"
     },
     "config": {

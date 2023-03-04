@@ -18,10 +18,31 @@ use willdurand\Geocoder\Provider\OpenStreetMap;
 use willdurand\Geocoder\StatefulGeocoder;
 use Symfony\Component\Notifier\Notification\Notification;
 use Symfony\Component\Notifier\NotifierInterface;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Message;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Range;
+use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
+use Knp\Snappy\Pdf;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Twilio\Rest\Client;
+
+
+
 
 #[Route('/don')]
 class DonController extends AbstractController
 {
+    private $pdfService;
+
+    public function __construct(Pdf $pdfService)
+    {
+        $this->pdfService = $pdfService;
+    }
+
     #[Route('/', name: 'app_don_index', methods: ['GET'])]
     public function index(DonRepository $donRepository, Request $request, NormalizerInterface $normaliser): Response
     {
@@ -31,6 +52,21 @@ class DonController extends AbstractController
             'dons' => $donRepository->findAll(),
         ]);
     }
+    #[Route('/Chart', name: 'app_don_chart', methods: ['GET'])]
+    public function chartAction(EntityManagerInterface $em): Response
+    {
+        $query = $em->createQuery('SELECT c.NameCa ,COUNT(d.id) as donation_count 
+        FROM App\Entity\Don d
+        JOIN d.categoryD c
+        GROUP BY c.id
+        ');
+        $results = $query->getResult();
+        $data = [];
+        foreach ($results as $row) {
+            $data[$row['NameCa']] = $row['donation_count'];
+        }
+        return $this->render('don/stat.html.twig', ['data' => $data]);
+    }
     #[Route('/Alldons', name: 'app_don_indexAll', methods: ['GET'])]
     public function indexAll(DonRepository $donRepository, NormalizerInterface $normaliser): Response
     {
@@ -39,7 +75,6 @@ class DonController extends AbstractController
         $json = json_encode($donNormaliser);
         return new Response($json);
     }
-
 
     #[Route('/client', name: 'app_don_Client', methods: ['GET'])]
     public function client(Request $request, DonRepository $donRepository, PaginatorInterface $paginator): Response
@@ -62,8 +97,47 @@ class DonController extends AbstractController
             'dons' => $donRepository->findAll(),
         ]);
     }
+    #[Route('/trieN', name: 'app_don_trie', methods: ['GET'])]
+    public function trierDonsAction(Request $request, DonRepository $donRepository)
+    {
+        $VoyageByDest = $donRepository->orderByName();
+
+        return $this->render('don/index.html.twig', [
+            'dons' => $VoyageByDest,
+        ]);
+    }
+    #[Route('/trie/Quantite', name: 'app_don_Quantite', methods: ['GET'])]
+    public function trierQuantite(Request $request, DonRepository $donRepository)
+    {
+        $VoyageByDest = $donRepository->orderQuantite();
+
+        return $this->render('don/index.html.twig', [
+            'dons' => $VoyageByDest,
+        ]);
+    }
+    #[Route('/adddonjson', name: 'app_don_newJson', methods: ['GET', 'POST'])]
+    public function addDonJson(Request $req, SerializerInterface $serializer): Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
 
 
+        $don = new Don();
+
+        $don->setNameD($req->get('NameD'));
+        $don->setQuantite($req->get('quantite'));
+        $don->setDescription($req->get('Description'));
+        $don->setLocalisation($req->get('Localisation'));
+        $don->setCategoryD($req->get('categoryD'));
+        $don->setImage($req->get('Image'));
+        $don->setEmail($req->get('email'));
+        $don->setNumero($req->get('Numero'));
+
+        $entityManager->persist($don);
+        $entityManager->flush();
+
+        $json = $serializer->serialize($don, "json", ["groups" => "event:read"]);
+        return new Response("Event added" . json_encode($json));
+    }
     #[Route('/new', name: 'app_don_new', methods: ['GET', 'POST'])]
     public function new(Request $request, DonRepository $donRepository, NotifierInterface $notifier,): Response
     {
@@ -96,29 +170,7 @@ class DonController extends AbstractController
             'form' => $form,
         ]);
     }
-    #[Route('/adddonjson', name: 'app_don_newJson', methods: ['GET', 'POST'])]
-    public function addDonJson(Request $req, SerializerInterface $serializer): Response
-    {
-        $entityManager = $this->getDoctrine()->getManager();
 
-
-        $don = new Don();
-
-        $don->setNameD($req->get('NameD'));
-        $don->setQuantite($req->get('quantite'));
-        $don->setDescription($req->get('Description'));
-        $don->setLocalisation($req->get('Localisation'));
-        $don->setCategoryD($req->get('categoryD'));
-        $don->setImage($req->get('Image'));
-        $don->setEmail($req->get('email'));
-        $don->setNumero($req->get('Numero'));
-
-        $entityManager->persist($don);
-        $entityManager->flush();
-
-        $json = $serializer->serialize($don, "json", ["groups" => "event:read"]);
-        return new Response("Event added" . json_encode($json));
-    }
     #[Route('/search', name: 'app_don_search')]
     public function listDonWithSearch(Request $request, DonRepository $DonRepository)
     {
@@ -165,6 +217,75 @@ class DonController extends AbstractController
     {
         return $this->render('don/show.html.twig', [
             'don' => $don,
+        ]);
+    }
+
+    #[Route('/claim/{id}', name: 'app_don_claim', methods: ['GET', 'POST'])]
+    public function claim($id, DonRepository $donRepository, Request $request, SessionInterface $session): Response
+    {
+        $don = $donRepository->find($id);
+        $form = $this->createFormBuilder()
+            ->add('userType', ChoiceType::class, ['choices' => ['Receiver' => 'receiver', 'Association' => 'association']])
+            ->add('quantite', IntegerType::class, [
+                'label' => 'Quantité',
+                'constraints' => [
+                    new NotBlank(['message' => 'Veuillez saisir une quantité.']),
+                ]
+            ])
+            ->getForm();
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $quantite = $data['quantite'];
+            $userType = $data['userType'];
+            if ($userType == 'receiver') {
+                if ($quantite == 1) {
+                    $don->setQuantite($don->getQuantite() - 1);
+                } else {
+                    $this->addFlash('Error', 'It needs to be 1');
+                }
+            } elseif ($userType == 'association') {
+                if ($quantite <= 4) {
+                    $don->setQuantite($don->getQuantite() - $quantite);
+                } else {
+                    $this->addFlash('Error', 'It needs to be max 3');
+                }
+            }
+            if ($don->getQuantite() == 0) {
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->remove($don);
+                $entityManager->flush();
+
+                return $this->redirectToRoute('app_don_index');
+            }
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($don);
+            $entityManager->flush();
+        }
+        $Num = $don->getNumero();
+        $accountSid = 'AC904d482ced22b4c1943dfa6f347bc92b';
+        $authToken = 'c42c0871db757e108e1a4f504d792345';
+        $client = new Client($accountSid, $authToken);
+        $message = $client->messages->create(
+            '+216' . $Num, // replace with admin's phone number
+            [
+                'from' => '+15673717088
+                ', // replace with your Twilio phone number
+                'body' => 'Your Donnation has been Claimed By a user', // replace with your message
+            ]
+        );
+
+        return $this->render('don/claim.html.twig', [
+            'form' => $form->createView(),
+            'don' => $don,
+        ]);
+    }
+    #[Route('/pdf/{id}', name: 'app_don_pdf')]
+    public function downloadPdf($id): Response
+    {
+        $dons = $this->getDoctrine()->getRepository(Don::class)->find($id);
+        return $this->render('don/pdf.html.twig', [
+            'don' => $dons,
         ]);
     }
 

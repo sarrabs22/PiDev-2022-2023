@@ -25,6 +25,7 @@
 							<h1 class="card-title">
 								{{ don.NameD }}
 							</h1>
+
 							<h2 class="card-sub-title">
 								{{ don.Description }}
 							</h2>
@@ -47,6 +48,9 @@
 									</a>
 								</li>
 							</ul>
+							<a href="{{ path('app_don_claim', {'id': don.id}) }}">
+								<button type="button" class="btn btn-outline-primary">Claim</button>
+							</a>
 						</div>
 					</div>
 				</div>
