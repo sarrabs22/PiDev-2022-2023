@@ -21,6 +21,8 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 use function PHPUnit\Framework\stringContains;
 
+
+// **************************recherche **************************
 #[Route('/annonce/crud')]
 class AnnonceCrudController extends AbstractController
 {
@@ -51,7 +53,7 @@ class AnnonceCrudController extends AbstractController
         ]);
     }
 
-
+    // **************************liste des annonces **************************
 
     #[Route('/', name: 'app_annonce_crud_index', methods: ['GET'])]
     public function index(AnnoncesRepository $annoncesRepository): Response
@@ -62,6 +64,23 @@ class AnnonceCrudController extends AbstractController
             'annonces' => $annoncesRepository->findAll(),
         ]);
     }
+
+
+    // ******************affichage de la liste des annonces (back) **************************
+
+    #[Route('/affichback', name: 'affichback', methods: ['GET'])]
+    public function indexback(AnnoncesRepository $annoncesRepository): Response
+    {
+
+
+        return $this->render('annonce_crud/affichback.html.twig', [
+            'annonces' => $annoncesRepository->findAll(),
+        ]);
+    }
+
+
+    // **************************affichage d'une annonce **************************
+
     #[Route('/admin', name: 'app_annonce_crud_admin', methods: ['GET'])]
     public function admin(AnnoncesRepository $annoncesRepository): Response
     {
@@ -70,11 +89,11 @@ class AnnonceCrudController extends AbstractController
         ]);
     }
 
-    #[Route('/affich', name: 'app_affich', methods: ['GET'])]
+    /* #[Route('/affich', name: 'app_affich', methods: ['GET'])]
     public function app_affich(AnnoncesRepository $annoncesRepository): Response
     {
         return $this->render('annonce_crud/affichage1.html.twig', ['annonces' => $annoncesRepository->findAll(),]);
-    }
+    } */
 
 
     #[Route("/Allannonce", name: 'list')]
@@ -233,6 +252,20 @@ class AnnonceCrudController extends AbstractController
     }
 
 
+
+    #[Route('/map2/{id}', name: 'show_map2')]
+    public function map2($id, AnnoncesRepository $annoncesRepository)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $annonce = $entityManager->getRepository(Annonces::class)->find($id);
+
+
+        return $this->render('annonce_crud/test2.html.twig', [
+            'annonce' => $annonce,
+        ]);
+    }
+
+
     #[Route('/detail/{id}', name: 'detail')]
     public function detail(ManagerRegistry $mg, AnnoncesRepository $X, Request $request, $id): Response
     {
@@ -278,6 +311,10 @@ class AnnonceCrudController extends AbstractController
             'annonces' => $resultat,
             'commentairesForm' => $commentairesForm->createView()
         ]);
+
+
+
+
 
         /*
      * @Route("/api/objects/{id}", name="api_objects_delete", methods={"DELETE"})
