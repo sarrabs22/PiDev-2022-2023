@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Categorie;
 use App\Entity\Membre;
 use App\Form\MembreType;
 use App\Repository\MembreRepository;
@@ -10,7 +11,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\AssociationRepository;
-
+use App\Repository\CategorieRepository;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 
 #[Route('/membre')]
 class MembreController extends AbstractController
@@ -24,22 +27,45 @@ class MembreController extends AbstractController
     }
 
     #[Route('/new', name: 'app_membre_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, MembreRepository $membreRepository,AssociationRepository $associationRepository): Response
+    public function new(Request $request, MembreRepository $membreRepository,AssociationRepository $associationRepository,CategorieRepository $categorieRepository, EntityManagerInterface $entityManager): Response
     {
         $membre = new Membre();
         $form = $this->createForm(MembreType::class, $membre);
         $form->handleRequest($request);
 
+            $data[]= $form->getData();
+            if ($data && isset($data['yesExperience']) && !$data['yesExperience']) {
+                $form->remove('experience');
+            }
         if ($form->isSubmitted() && $form->isValid()) {
             $membreRepository->save($membre, true);
 
             return $this->redirectToRoute('app_membre_index', [], Response::HTTP_SEE_OTHER);
         }
+        
+        $images = [];
+
+        if ($request->isMethod('POST')) {
+            $categoryId = $request->request->get('Categorie');
+            $category = $entityManager->getRepository(Categorie::class)->find($categoryId);
+
+            $query = $entityManager->createQuery(
+                'SELECT a.Image FROM App\Entity\Association a
+                JOIN a.categorie c
+                WHERE c.id = :categoryId'
+            )->setParameter('categoryId', $categoryId);
+
+            $images = $query->getResult();
+        }
+
+        // $categorie = $categorieRepository->findAll();
 
         return $this->renderForm('membre/new.html.twig', [
             'membre' => $membre,
             'form' => $form,
             'associations' => $associationRepository->findAll(),
+            'categorie'=>$categorieRepository->findAll(),
+            'images'=>$images,
         ]);
     }
 

@@ -9,6 +9,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 class MembreType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -31,25 +32,35 @@ class MembreType extends AbstractType
                 ])
  */
 
-          ->add('YesExperience', ChoiceType::class, [
-                'choices' => [
-                    '' => [
-                        'No' => 'no',
-                        'Yes' => 'yes',
+/*  $builder->add('name', null, [
+    'required'   => false,
+    'empty_data' => 'John Doe',
+]); */
+
+     
+
+
+
+
+        //   ->add('YesExperience', ChoiceType::class, [
+        //         'choices' => [
+        //             '' => [
+        //                 'No' => 'no',
+        //                 'Yes' => 'yes',
                         
-                    ],
-                ]]) 
+        //             ],
+        //         ]]) 
  
 // ->add('pYesExperience', CheckboxType::class, [
 //     'label_attr' => ['class' => 'switch-custom'],
 // ])
 
-            ->add('experience', HiddenType::class, [
-                'mapped' => false,
-                'attr' => ['class' => 'hidden-field', 'value' => 'YesExperience']
-                ]
-            
-            )
+
+
+->add('experience', TextType::class, [
+    'label' => 'Hidden Field',
+    'required' => false,
+])
             ->add('ClubEntendu')
             ->add('actions')
         ;

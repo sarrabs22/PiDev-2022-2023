@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Associations</h1>
+
+    <form method="get" action="{{ path('app_association_filter') }}">
+        {% for categorie in categories %}
+            <div>
+                <input type="radio" id="categorie_{{ categorie.id }}" name="categorie" value="{{ categorie.id }}" {% if app.request.query.get('categorie') == categorie.id %}checked{% endif %}>
+                <label for="categorie_{{ categorie.id }}">{{ categorie.nom }}</label>
+            </div>
+        {% endfor %}
+
+        <button type="submit">Filtrer</button>
+    </form>
+
+    <hr>
+
+    <ul>
+        {% for association in associations %}
+            <li>
+                <h2>{{ association.nom }}</h2>
+                <p>{{ association.adresse }}, {{ association.codepostal }} {{ association.ville }}</p>
+                <img      src="{{ asset('uploads/' ~ association.image) }}" alt="{{ association.nom }}">
+            <p>Catégorie : {{ association.categorie.nom }}</p>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}

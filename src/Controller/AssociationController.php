@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Association;
+use App\Entity\Categorie;
 use App\Form\AssociationType;
+use App\Form\FilterAssociationsType;
 use App\Repository\AssociationRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\Entity;
@@ -16,6 +18,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Twilio\Rest\Client;
+use Doctrine\ORM\EntityManagerInterface;
+use phpDocumentor\Reflection\Types\Null_;
 
 #[Route('/association')]
 class AssociationController extends AbstractController
@@ -28,6 +32,8 @@ class AssociationController extends AbstractController
         ]);
     }
 
+
+    
     #[Route('/choix', name: 'app_association_choix', methods: ['GET'])]
     public function choix(AssociationRepository $associationRepository): Response
     {
@@ -36,6 +42,28 @@ class AssociationController extends AbstractController
         ]);
     }
 
+
+
+    #[Route('/filter', name: 'app_association_filter', methods: ['GET'])]
+public function filterAssociations(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $categorie = $request->query->get('categorie');
+        $categories = $this->getDoctrine()->getRepository(Categorie::class)->findAll();
+
+        if ($categorie) {
+            $associations = $this->getDoctrine()->getRepository(Association::class)->findBy([
+                'categorie' => $categorie,
+            ]);
+        } else {
+            $associations = $this->getDoctrine()->getRepository(Association::class)->findAll();
+        }
+
+        return $this->render('association/hmed.html.twig', [
+            'associations' => $associations,
+            'categories' => $categories,
+        ]);
+    }
+    
 
     #[Route("/Allassociation", name: 'list')]
     public function getassociation(AssociationRepository $repo , NormalizerInterface $normalizer)
@@ -95,7 +123,7 @@ class AssociationController extends AbstractController
 
         //    code ell sms 
             $accountSid = 'AC7baee01e459dc347a9e9f0a9b8f744c5';
-            $authToken = '540d3d9a523e52858a374904405b92fb';
+            $authToken = 'cbbf773bfa09a7a0cac0990c74ae071c';
             $client = new Client($accountSid, $authToken);
             $message = $client->messages->create(
                 '+21698773438', // replace with admin's phone number
@@ -119,6 +147,14 @@ class AssociationController extends AbstractController
     public function show(Association $association): Response
     {
         return $this->render('association/show.html.twig', [
+            'association' => $association,
+        ]);
+    }
+
+    #[Route('/show2/{id}', name: 'show2', methods: ['GET'])]
+    public function show2(Association $association): Response
+    {
+        return $this->render('association/show2.html.twig', [
             'association' => $association,
         ]);
     }
