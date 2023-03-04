@@ -10,16 +10,22 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Gregwar\CaptchaBundle\Type\CaptchaType;
 class MembreType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('nom')
-            ->add('prenom')
-            ->add('mail')
-            ->add('age')
-            ->add('passions')
+            ->add('nom', TextType::class, [
+                'label' => ' ' ])
+            ->add('prenom', TextType::class, [
+                'label' => ' ' ])
+            ->add('mail', TextType::class, [
+                'label' => ' ' ])
+            ->add('age', TextType::class, [
+                'label' => ' ' ])
+            ->add('passions' , TextType::class, [
+                'label' => ' ' ])
 
             /* ->add('ajaxString', HiddenType::class, [
                 'mapped' => false,
@@ -58,12 +64,23 @@ class MembreType extends AbstractType
 
 
 ->add('experience', TextType::class, [
-    'label' => 'Hidden Field',
+    'label' => ' ' ,
     'required' => false,
 ])
-            ->add('ClubEntendu')
-            ->add('actions')
-        ;
+            ->add('ClubEntendu', TextType::class, [
+                'label' => ' ' ])
+            ->add('actions', TextType::class, [
+                'label' => ' ' ])
+
+
+                ->add('captcha', CaptchaType::class,[
+                    'attr' => [
+                       
+                        'class' => "form-control"
+                    ],
+                    ]
+                );
+        
     }
 
     public function configureOptions(OptionsResolver $resolver): void

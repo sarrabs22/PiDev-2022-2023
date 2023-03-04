@@ -14,7 +14,7 @@
                 <th>Mail</th>
                 <th>Age</th>
                 <th>peux-tu nous parler de tes passions ?</th>
-                <th>Avez vous une expérience dans la vie associative ?</th>
+               
                 <th>Experience</th>
                 <th>ClubEntendu</th>
                 <th>Actions</th>
@@ -30,7 +30,7 @@
                 <td>{{ membre.mail }}</td>
                 <td>{{ membre.age }}</td>
                 <td>{{ membre.passions }}</td>
-                <td>{{ membre.YesExperience }}</td>
+                
                 <td>{{ membre.experience }}</td>
                 <td>{{ membre.ClubEntendu }}</td>
                 <td>{{ membre.actions }}</td>
@@ -47,5 +47,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_membre_new') }}">Create new</a>
+    <a  class="btn btn-success" href="{{ path('app_membre_new') }}">Create new</a>
 {% endblock %}

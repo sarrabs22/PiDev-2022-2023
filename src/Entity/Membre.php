@@ -28,8 +28,7 @@ class Membre
     #[ORM\Column(length: 500)]
     private ?string $passions = null;
 
-    #[ORM\Column(length: 50)]
-    private ?string $YesExperience = null;
+
 
     #[ORM\Column(length: 10000)]
     private ?string $experience = null;
@@ -40,6 +39,12 @@ class Membre
     #[ORM\Column(length: 255)]
     private ?string $actions = null;
 
+
+
+    protected $captchaCode;
+
+
+    
     public function getId(): ?int
     {
         return $this->id;
@@ -105,17 +110,8 @@ class Membre
         return $this;
     }
 
-    public function getYesExperience(): ?string
-    {
-        return $this->YesExperience;
-    }
-
-    public function setYesExperience(string $YesExperience): self
-    {
-        $this->YesExperience = $YesExperience;
-
-        return $this;
-    }
+   
+  
 
     public function getExperience(): ?string
     {

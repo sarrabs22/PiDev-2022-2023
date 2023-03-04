@@ -18,10 +18,12 @@
 
     <ul>
         {% for association in associations %}
-            <li>
+            <li   data-inline="true" >
                 <h2>{{ association.nom }}</h2>
                 <p>{{ association.adresse }}, {{ association.codepostal }} {{ association.ville }}</p>
-                <img      src="{{ asset('uploads/images/' ~ association.image) }}" alt="{{ association.nom }}">
+                
+                <img      src="{{ asset('uploads/images/' ~ association.image) }}" alt="{{ association.nom }}" data-inline="true">
+                </div>
             <p>Catégorie : {{ association.categorie.nom }}</p>
         </li>
     {% endfor %}
