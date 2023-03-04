@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Annonces index{% endblock %}
+
+{% block body %}
+  
+
+
+
+    <div class="grix xs2 sm3 gutter-0 card">
+			<div class="col-xs2 col-sm3">
+				<center>
+                      <h2><i> Liste des commentaires </i></h2>
+                </center>
+                {% for commentaires in annonces.commentaires %}
+                {% if commentaires.parent == null %}
+                       <h4>commentaire de {{commentaires.pseudo}}</h4>
+                       <p>Publié le {{commentaires.dateCreation|date("d/m/Y H:i:s")}}</p>
+                       <div>{{commentaires.contenu|raw}}</div>
+                       <p><a href="#ajout-commentaire" data-reply data-id="{{commentaires.id}}" class="btn btn-outline-success">Répondre</a></p>
+                       {# Partie reponses #}
+                       {% for reply in commentaires.réponses %}
+                          <p>Réponse publiée par {{reply.pseudo}} le {{reply.dateCreation|date("d/m/Y H:i:s")}}</p>
+                          <div>{{reply.contenu|raw}}</div>
+                        {% endfor %}
+
+                    {% endif %}
+
+
+{% endfor %}
+            </div>
+            <div class="col-xs2 col-sm3" id="ajout-commentaire">
+				<center>
+                     <h2><i> Ajouter un commentaire </i></h2>
+                </center>
+                {{ form(commentairesForm) }}
+            </div>
+    </div>
+
+                       
+<a href="{{ path('app_annonce_crud_show',{'id':annonces.id}) }}">Retour</a>
+
+
+
+
+{% endblock %}
+
+{% block JavaScript %}
+
+	
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/wow/wow.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="lib/parallax/parallax.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
+<script>
+		window.onload = () => {
+			// On met un écouteur d'évènements sur tous les boutons répondre
+document.querySelectorAll("[data-reply]").forEach(element => {
+    element.addEventListener("click", function(){
+        // Set the parent_id field of the form to the ID of the comment being replied to
+       document.querySelector("#commentaires_parentid").value = this.dataset.id;
+				});
+    });
+
+
+		}
+		let caroulix = new Caroulix('#carousel');
+		let modal = new Modal('#modale-contact');
+	</script>
+{% endblock %}

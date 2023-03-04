@@ -3,19 +3,18 @@
 namespace App\Form;
 
 use App\Entity\Commentaires;
-use App\Entity\Comments;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use FOS\CKEditorBundle\Form\Type\CKEditorType;
+// use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Validator\Constraints\IsTrue;
 
-class CommentsType extends AbstractType
+class CommentairesType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -32,7 +31,7 @@ class CommentsType extends AbstractType
                     'class' => 'form-control'
                 ]
             ])
-            ->add('contenu', CKEditorType::class, [
+            ->add('contenu', TextType::class, [
                 'label' => 'Votre Commentaire',
                 'attr' => []
             ])

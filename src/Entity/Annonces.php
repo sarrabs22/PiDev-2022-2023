@@ -55,6 +55,10 @@ class Annonces
     #[ORM\OneToMany(mappedBy: 'annonces', targetEntity: Commentaires::class, orphanRemoval: true)]
     private Collection $commentaires;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $nombreEtoiles = 0;
+
+    
     public function __construct()
     {
         $this->commentaires = new ArrayCollection();
@@ -164,4 +168,18 @@ class Annonces
 
         return $this;
     }
+
+    public function getNombreEtoiles(): ?int
+    {
+        return $this->nombreEtoiles;
+    }
+
+    public function setNombreEtoiles(?int $nombreEtoiles): self
+    {
+        $this->nombreEtoiles = $nombreEtoiles;
+
+        return $this;
+    }
+
+    
 }

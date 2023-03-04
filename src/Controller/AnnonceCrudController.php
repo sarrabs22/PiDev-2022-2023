@@ -3,15 +3,19 @@
 namespace App\Controller;
 
 use App\Entity\Annonces;
+use App\Entity\Commentaires;
 use App\Form\AnnoncesType;
+use App\Form\CommentairesType;
 use  App\Form\SearchType;
 use App\Repository\AnnoncesRepository;
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
 #use Doctrine\Common\Persistence\ObjectRepository;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
@@ -125,6 +129,7 @@ class AnnonceCrudController extends AbstractController
                 $newFile
             );
             $annonce->setImage($newFile);
+            $annonce->setNombreEtoiles(0);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($annonce);
             $entityManager->flush();
@@ -228,7 +233,53 @@ class AnnonceCrudController extends AbstractController
     }
 
 
-    /*
+    #[Route('/detail/{id}', name: 'detail')]
+    public function detail(ManagerRegistry $mg, AnnoncesRepository $X, Request $request, $id): Response
+    {
+
+        $repo = $mg->getRepository(Annonces::class);
+        $resultat = $repo->find($id);
+
+
+        //Partie commentaires 
+        // On crée le commentaire "vierge"
+
+        $commentaires = new Commentaires();
+
+        // On génére le formulaire 
+        $commentairesForm = $this->createForm(CommentairesType::class, $commentaires);
+        $commentairesForm->handleRequest($request);
+
+        //Traitement du formulaire
+        if ($commentairesForm->isSubmitted() && $commentairesForm->isValid()) {
+            $commentaires->setDateCreation(new DateTime());
+            $commentaires->setannonces($resultat);
+            $resultat->addCommentaire($commentaires);
+
+
+            // On recupere le contenu du champ parentid
+            $parentid = $commentairesForm->get("parentid")->getData();
+
+            // On va chercher le commentaire correspondant 
+            $em = $this->getDoctrine()->getManager();
+            if ($parentid != null) {
+                $parent = $em->getRepository(Commentaires::class)->find($parentid);
+            }
+            // On définit le parent 
+            $commentaires->setParent($parent ?? null);
+
+            $em->persist($commentaires);
+            $em->flush();
+
+            return $this->redirectToRoute('detail', ['id' => $id]);
+        }
+
+        return $this->render('annonce_crud/exem.html.twig', [
+            'annonces' => $resultat,
+            'commentairesForm' => $commentairesForm->createView()
+        ]);
+
+        /*
      * @Route("/api/objects/{id}", name="api_objects_delete", methods={"DELETE"})
     public function deleteObject($id, ObjectRepository $objectRepository, EntityManagerInterface $entityManager)
     {
@@ -246,4 +297,5 @@ class AnnonceCrudController extends AbstractController
             'message' => 'L\'objet a été supprimé avec succès.',
         ]);
     } */
+    }
 }
