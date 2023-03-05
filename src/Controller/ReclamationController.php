@@ -363,7 +363,7 @@ class ReclamationController extends AbstractController
     
         }
 
-        return $this->render('reclamation/exem.html.twig', [
+        return $this->render('reclamation/comment.html.twig', [
             'reclamation' => $resultat,
             'commentForm'=>$commentForm->createView()
         ]);
