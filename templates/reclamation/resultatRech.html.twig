@@ -11,7 +11,7 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Contenu</th>
+                {#<th>Contenu</th>#}
                 <th>Nom_d_utilisateur</th>
                 <th>Date_reclamation</th>
                 <th>Etat</th>
@@ -26,7 +26,7 @@
         <tbody>
         {% for reclamation in resultOfSearch %}
             <tr>
-                <td>{{ reclamation.contenu }}</td>
+                {#<td>{{ reclamation.contenu }}</td>#}
                 {% if reclamation.User %}
                 <td>{{ reclamation.User.Nom }}</td>
                 {% endif %}

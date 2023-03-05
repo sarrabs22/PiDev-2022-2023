@@ -3,11 +3,48 @@
 {% block title %}Liste des reclamations{% endblock %}
 
 {% block body %}
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {
+  box-sizing: border-box;
+}
+#myInput {
+  background-image: url('/css/searchicon.png');
+  background-position: 10px 10px;
+  background-repeat: no-repeat;
+  width: 100%;
+  font-size: 16px;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+}
+#myTable {
+  border-collapse: collapse;
+  width: 100%;
+  border: 1px solid #ddd;
+  font-size: 18px;
+}
+#myTable th, #myTable td {
+  text-align: left;
+  padding: 12px;
+}
+#myTable tr {
+  border-bottom: 1px solid #ddd;
+}
+#myTable tr.header, #myTable tr:hover {
+  background-color: #f1f1f1;
+}
+</style>
+</head>
 <body>
     
     <center>
      <h2><i> Liste des reclamations </i></h2>
     </center>
+    
 			<!-- container -->
 			<div class="container">
 				<!-- row -->
@@ -15,10 +52,10 @@
 
 		
                     </div>
-    <table class="table">
+    <table class="table table-striped">
         <thead>
-            <tr>
-                <th>Contenu</th>
+            <tr class="header">
+                {#<th>Contenu</th>#}
                 <th>Nom_d_utilisateur</th>
                 <th>Date_reclamation</th>
                 <th>Etat</th>
@@ -33,7 +70,7 @@
         <tbody>
         {% for reclamation in reclamations %}
             <tr>
-                <td>{{ reclamation.contenu }}</td>
+                {#<td>{{ reclamation.contenu }}</td>#}
                 {% if reclamation.User %}
                 <td>{{ reclamation.User.Nom }}</td>
                 {% endif %}
@@ -60,8 +97,9 @@
     {{ knp_pagination_render(reclamations) }}
 
     <a href="{{ path('app_reclamation_new') }}"><button type="button" class="btn btn-outline-success">Créer une réclamation</button></a>
-    <a href="{{ path('app_reclamation_recherche') }}"><button type="button" class="btn btn-outline-success">Rechercher</button></a>
-    
+    <a href="{{ path('app_reclamation_recherche') }}"><button type="button" class="btn btn-outline-success">Rechercher multicritere</button></a>
+    <a href="{{ path('app_reclamation_index_searchh') }}"><button type="button" class="btn btn-outline-success">Recherche par nom</button></a>
+    <a href="{{ path('app_reclamation_chart') }}"><button type="button" class="btn btn-outline-success">Statistique</button></a>
 
  
 

@@ -9,7 +9,7 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Contenu</th>
+                {#<th>Contenu</th>#}
                 <th>Date_reclamation</th>
                 <th>Etat</th>
                 <th>Motif De Reclamation</th>
@@ -23,7 +23,7 @@
         <tbody>
         {% for reclamation in reclamations %}
             <tr id="row{{reclamation.id}}">
-                <td>{{ reclamation.contenu }}</td>
+                {#<td>{{ reclamation.contenu }}</td>#}
                 <td>{{ reclamation.dataReclamation }}</td>
                 <td id="status{{ reclamation.id }}">{{ reclamation.etat }}</td>
                 <td>{{ reclamation.MotifDeReclamation }}</td>

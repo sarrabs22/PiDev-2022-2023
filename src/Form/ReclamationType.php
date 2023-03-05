@@ -17,7 +17,6 @@ class ReclamationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('contenu')
             ->add('user', EntityType::class,[
                 'label' => 'Nom d utilisateur',
                 'class' => User::class ,

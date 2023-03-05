@@ -15,6 +15,7 @@ use Doctrine\Persistence\ManagerRegistry as PersistenceManagerRegistry;
 use Symfony\Component\HttpFoundation\File\File;
 use App\Form\SearchType;
 use DateTime;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
@@ -135,7 +136,15 @@ class ReclamationController extends AbstractController
         ]);
     }
 
-    
+    #[Route('/searchh', name: 'app_reclamation_index_searchh', methods: ['GET'])]
+    public function search(ReclamationRepository $reclamationRepository): Response
+    {   
+        
+
+        return $this->render('reclamation/search2.html.twig', [
+            'reclamations' => $reclamationRepository->findAll(),
+        ]);
+    }
 
     #[Route('/Chart', name: 'app_reclamation_chart', methods: ['GET'])]
     public function chartAction(EntityManagerInterface $em): Response
@@ -297,6 +306,7 @@ class ReclamationController extends AbstractController
             'form' => $form,
         ]);
     }
+    
 
     #[Route('/{id}', name: 'app_reclamation_delete', methods: ['POST'])]
     public function delete(Request $request, Reclamation $reclamation, ReclamationRepository $reclamationRepository): Response
@@ -309,7 +319,7 @@ class ReclamationController extends AbstractController
     }
 
     #[Route('/detail/{id}', name: 'detail')]
-    public function detail (ManagerRegistry $mg ,ReclamationRepository $X ,Request $request, $id): Response
+    public function detail (ManagerRegistry $mg ,ReclamationRepository $X ,Request $request, FlashBagInterface $flashBag, $id): Response
     {    
     
     $repo=$mg->getRepository(Reclamation::class);
@@ -346,7 +356,9 @@ class ReclamationController extends AbstractController
             $em->persist($comment);
             $em->flush();
 
-            $this->addFlash('message','Votre commentaire a bien été envoyé');
+
+            $flashBag->add('success', 'Votre commentaire a bien été envoyé !');
+            //$this->addFlash('message','Votre commentaire a bien été envoyé');
             return $this->redirectToRoute('detail', ['id' => $id]);
     
         }

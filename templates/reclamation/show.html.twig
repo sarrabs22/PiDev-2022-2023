@@ -10,10 +10,10 @@
     <table class="table">
         <tbody>
             
-            <tr>
+            {#<tr>
                 <th>Contenu</th>
                 <td>{{ reclamation.contenu }}</td>
-            </tr>
+            </tr>#}
             <tr>
                 <th>Nom_d_utilisateur</th>
                 <td>{{ reclamation.User.Nom }}</td>
@@ -51,7 +51,7 @@
 
     <a href="{{ path('app_reclamation_index') }}">Retour</a>
 
-    <a href="{{ path('app_reclamation_edit', {'id': reclamation.id}) }}">Modifier</a>
+    <a href="{{ path('app_reclamation_edit', {'id': reclamation.id}) }}"><button type="button" class="btn btn-outline-success">Modifier</button></a>
     <a href="{{ path('app_reclamation_pdf', {'id': reclamation.id}) }}"><button type="button" class="btn btn-outline-success">pdf</button></a>
 
     {{ include('reclamation/_delete_form.html.twig') }}

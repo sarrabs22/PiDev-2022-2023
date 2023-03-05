@@ -20,11 +20,6 @@ class Reclamation
     #[Groups("reclamation")]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::TEXT)]
-    #[Groups("reclamation")]
-    #[Assert\NotBlank(message:"contenu is required")]
-    private ?string $contenu = null;
-
     #[ORM\Column(type: Types::STRING)]
     #[Groups("reclamation")]
     #[Assert\NotBlank(message:"date is required")]
@@ -79,18 +74,6 @@ class Reclamation
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getContenu(): ?string
-    {
-        return $this->contenu;
-    }
-
-    public function setContenu(string $contenu): self
-    {
-        $this->contenu = $contenu;
-
-        return $this;
     }
 
     public function getDataReclamation(): ?string
