@@ -2,6 +2,8 @@
 
 {% block title %}Calendrier{% endblock %}
 
+
+
 {% block stylesheets %}
     <style>
         #calendrier{
@@ -14,6 +16,10 @@
 {% block body %}
     <div id="calendrier">
     </div>
+    
+        <a href="{{ path('app_calendar1_new') }}">Ajouter une date</a>
+        
+
 {% endblock %}
 
 {% block javascripts %}
@@ -45,5 +51,6 @@ calendar.on('eventChange', (e) => {
         calendar.render()    
     }   
 </script>
+   
 
 {% endblock %}

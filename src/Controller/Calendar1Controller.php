@@ -32,7 +32,7 @@ class Calendar1Controller extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $calendar1Repository->save($calendar1, true);
 
-            return $this->redirectToRoute('app_calendar1_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_calendar1_reserve', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('calendar1/new.html.twig', [

@@ -1,5 +1,4 @@
-{% extends 'base.html.twig' %}
-
+{% extends 'backbase.html.twig' %} 
 {% block title %}Calendar1 index{% endblock %}
 
 {% block body %}
@@ -33,7 +32,7 @@
                 <td>{{ calendar1.backgroundColor }}</td>
                 <td>{{ calendar1.textColor }}</td>
                 <td>
-                    <a href="{{ path('app_calendar1_show', {'id': calendar1.id}) }}">show</a>
+                    <a   href="{{ path('app_calendar1_show', {'id': calendar1.id}) }}">show</a>
                     <a href="{{ path('app_calendar1_edit', {'id': calendar1.id}) }}">edit</a>
                 </td>
             </tr>
@@ -45,5 +44,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_calendar1_new') }}">Create new</a>
+    {# <a href="{{ path('app_calendar1_new') }}">Create new</a> #}
 {% endblock %}
