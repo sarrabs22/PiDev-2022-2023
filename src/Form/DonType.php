@@ -11,6 +11,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class DonType extends AbstractType
 {
@@ -18,12 +19,16 @@ class DonType extends AbstractType
     {
         $builder
             ->add('NameD', TextType::class, [
+                'attr' => [],
                 'label' => 'Name'
             ])
             ->add('quantite', TextType::class, [
+                'attr' => [],
                 'label' => 'Quantite (Kg,L,P)'
             ])
-            ->add('Description')
+            ->add('Description', TextareaType::class, [
+                'attr' => [],
+            ])
             ->add('Localisation')
             ->add('Image', FileType::class, [
                 'data_class' => null,

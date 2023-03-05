@@ -261,19 +261,21 @@ class DonController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($don);
             $entityManager->flush();
-        }
-        $Num = $don->getNumero();
-        $accountSid = 'AC904d482ced22b4c1943dfa6f347bc92b';
-        $authToken = 'c42c0871db757e108e1a4f504d792345';
-        $client = new Client($accountSid, $authToken);
-        $message = $client->messages->create(
-            '+216' . $Num, // replace with admin's phone number
-            [
-                'from' => '+15673717088
+            $Name = $don->getNameD();
+            $Num = $don->getNumero();
+            $accountSid = 'AC904d482ced22b4c1943dfa6f347bc92b';
+            $authToken = 'b9fba2dc9693993d02d1a8bdc9b65f83';
+            $client = new Client($accountSid, $authToken);
+            $message = $client->messages->create(
+                '+216' . $Num, // replace with admin's phone number
+                [
+                    'from' => '+15673717088
                 ', // replace with your Twilio phone number
-                'body' => 'Your Donnation has been Claimed By a user', // replace with your message
-            ]
-        );
+                    'body' => 'Your Donnation ' . $Name . ' has been Claimed By a user with  quantity = ' . $quantite, // replace with your message
+                ]
+            );
+        }
+
 
         return $this->render('don/claim.html.twig', [
             'form' => $form->createView(),
@@ -347,6 +349,15 @@ class DonController extends AbstractController
         $json = $serializer->serialize($don, "json", ["groups" => "dons"]);
         return new Response("event deleted" . json_encode($json));
     }
+    #[Route('/delete/{id}', name: 'app_don_deleteN', methods: ['POST'])]
+    public function delete2(Request $request, Don $don, DonRepository $donRepository): Response
+    {
+        if ($this->isCsrfTokenValid('delete' . $don->getId(), $request->request->get('_token'))) {
+            $donRepository->remove($don, true);
+        }
+
+        return $this->redirectToRoute('app_don_Admin', [], Response::HTTP_SEE_OTHER);
+    }
     #[Route('/{id}/edit', name: 'app_don_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Don $don, DonRepository $donRepository): Response
     {
@@ -378,8 +389,6 @@ class DonController extends AbstractController
         ]);
     }
 
-
-
     #[Route('/{id}', name: 'app_don_delete', methods: ['POST'])]
     public function delete(Request $request, Don $don, DonRepository $donRepository): Response
     {
@@ -387,6 +396,6 @@ class DonController extends AbstractController
             $donRepository->remove($don, true);
         }
 
-        return $this->redirectToRoute('app_don_delete', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_don_index', [], Response::HTTP_SEE_OTHER);
     }
 }

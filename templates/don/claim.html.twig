@@ -10,7 +10,7 @@
 	</div>
 	{{ form_row(form.quantite) }}
 	{{ form_row(form.userType) }}
-	<button onclick="sendSMS()" class="btn btn-outline-success" href="{{ path('app_don_index', {'id': don.id})}}" type="submit">Confirm</button>
+	<button class="btn btn-outline-success" href="{{ path('app_don_index', {'id': don.id})}}" type="submit">Confirm</button>
 	{{ form_end(form) }}
 	<h1>Don</h1>
 

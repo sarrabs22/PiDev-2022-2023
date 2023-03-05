@@ -1,20 +1,21 @@
-{{ form_start(form,{'attr': {'novalidate': 'novalidate'}}
-) }}
+{{ form_start(form, {'attr': {'class': '', 'novalidate': 'novalidate'}}) }}
+
 {% form_theme form 'bootstrap_5_horizontal_layout.html.twig' %}
 <div class="my-custom-class-for-errors">
 	{{ form_errors(form) }}
 </div>
 <div class="col-lg-7">
-	{{ form_row(form.NameD) }}
+	{{ form_row(form.NameD, {'attr': {'class': ''}}) }}
+
 </div>
 <div class="col-lg-7">
-	{{ form_row(form.quantite) }}
+	{{ form_row(form.quantite, {'attr': {'class':''}}) }}
 </div>
 <div class="col-lg-7">
 	{{ form_row(form.Description) }}
 </div>
 <div class="col-lg-7">
-	{{ form_row(form.Localisation) }}
+	{{ form_row(form.Localisation, {'attr': {'class':''}}) }}
 </div>
 
 <div class="col-lg-7">

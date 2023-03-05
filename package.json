@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "bad-words": "^3.0.4",
     "jspdf": "^2.5.1",
     "leaflet": "^1.9.3",
     "twilio": "^4.8.0"
