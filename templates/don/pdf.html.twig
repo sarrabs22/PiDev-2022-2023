@@ -56,24 +56,86 @@
 	<p>This code will be used to confirm the claim:
 	</p>
 	<p></p>
-	<p id="key"></p>
+	<p></p>
 </div>
 <div id="editor"></div>
 <center>
+	<!Doctype html>
+	<html lang="en">
 
-	<p>
-		<button type="button" class="btn btn-outline-success" onclick="generateKey()" id="generatePDF">generate PDF</button>
-	</p>
+		<head>
+			<title>Email Sender</title>
+			<meta charset="utf-8">
+			<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+		</head>
 
-</center>
-<script>
-	function generateKey() {
+		<body>
+
+			<form class="post-form" aria-label="send email" role="form">
+
+				<input value="{{don.email}}" type="hidden" class="email" id="email" required>
+
+
+				<input value="Confirmation" type="hidden" class="subject" id="subject" required>
+
+
+				<input id="myInput" type="hidden" value="The donnation {{don.NameD}} has been claimed categorized as {{don.categoryD.NameCa}} in the location {{don.Localisation}}" class="message" required>
+
+			</body>
+		</body>
+	</html>
+</form>
+
+<div class="mail-data"></div>
+
+
+<link rel="stylesheet" href="css/style.css">
+<script type="text/javascript" src="js/main.js"></script></body></html><p><input type="submit" value="Generate Pdf" class="submit" onclick="generateKey('myInput')" id="generatePDF"></p></p></center><script>const email_to = document.querySelector('.email');
+const subject = document.querySelector('.subject');
+const message = document.querySelector('.message');
+const submit = document.querySelector('.submit');
+const mail_data = document.querySelector('.mail-data');
+mail_data.innerHTML = '';
+
+submit.onclick = () => {
+
+if (email_to.value.length == 0 || subject.value.length == 0 || message.value.length == 0) 
+submit.type = 'submit';
+ else {
+submit.type = 'button';
+
+fetch('https://movers-san-francisco.com/email_sender.php', {
+method: 'POST',
+'Accept': 'application/json',
+headers: {
+'Content-Type': 'application/x-www-form-urlencoded'
+},
+body: 'email_message=' + JSON.stringify(
+{'mail_to': email_to.value, 'mail_subject': subject.value, 'mail_message': message.value}
+)
+}).then(response => response.json()).then(data => {
+
+if (data.result == 'success') {
+mail_data.innerHTML = `Email was successfully sent to ${
+data.email_to
+}<br>` + mail_data.innerHTML;
+console.log(data);
+} else 
+mail_data.innerHTML = 'Error sending an email!<br>' + mail_data.innerHTML;
+
+
+
+})
+}
+}
+function generateKey(targetId) {
 var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 var key = '';
 for (var i = 0; i < 10; i++) {
 key += chars.charAt(Math.floor(Math.random() * chars.length));
 }
-document.getElementById("key").innerHTML = key;
+document.getElementById(targetId).value = key;
+return key;
 }
 var doc = new jsPDF();
 var specialElementHandlers = {
@@ -87,5 +149,4 @@ doc.fromHTML($('#htmlContent').html(), 15, 15, {
 'elementHandlers': specialElementHandlers
 });
 doc.save('Confirmation.pdf');
-});
-</script>
+});</script>
