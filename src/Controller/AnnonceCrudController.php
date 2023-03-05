@@ -22,7 +22,7 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use function PHPUnit\Framework\stringContains;
 
 
-// **************************recherche **************************
+// ************************** recherche **************************
 #[Route('/annonce/crud')]
 class AnnonceCrudController extends AbstractController
 {
@@ -53,7 +53,7 @@ class AnnonceCrudController extends AbstractController
         ]);
     }
 
-    // **************************liste des annonces **************************
+    // **************************liste des annonces page d'accueil **************************
 
     #[Route('/', name: 'app_annonce_crud_index', methods: ['GET'])]
     public function index(AnnoncesRepository $annoncesRepository): Response
@@ -79,7 +79,7 @@ class AnnonceCrudController extends AbstractController
     }
 
 
-    // **************************affichage d'une annonce **************************
+    // ************************** liste des annonces **************************
 
     #[Route('/admin', name: 'app_annonce_crud_admin', methods: ['GET'])]
     public function admin(AnnoncesRepository $annoncesRepository): Response
@@ -96,6 +96,7 @@ class AnnonceCrudController extends AbstractController
     } */
 
 
+    // **************************mobile **************************
     #[Route("/Allannonce", name: 'list')]
     public function getannone(AnnoncesRepository $repo, NormalizerInterface $normalizer)
     {
@@ -123,6 +124,9 @@ class AnnonceCrudController extends AbstractController
         return new Response(json_encode($jsonContent));
     }
 
+
+
+    // ************************** Ajout **************************
 
     #[Route('/new', name: 'app_annonce_crud_new', methods: ['GET', 'POST'])]
     public function new(Request $request, AnnoncesRepository $annoncesRepository, EntityManagerInterface $entityManager): Response
@@ -165,6 +169,8 @@ class AnnonceCrudController extends AbstractController
         ]);
     }
 
+    // ************************** afficher une annonce (html) **************************
+
     #[Route('/{id}', name: 'app_annonce_crud_show', methods: ['GET'])]
     public function show(Annonces $annonce): Response
     {
@@ -172,6 +178,9 @@ class AnnonceCrudController extends AbstractController
             'annonce' => $annonce,
         ]);
     }
+
+
+    // ************************** afficher une annonce (Json) **************************
 
     #[Route("/annonce/{id}", name: 'annonce')]
     public function annonceId($id, NormalizerInterface $normalizer, AnnoncesRepository $repo)
@@ -182,6 +191,7 @@ class AnnonceCrudController extends AbstractController
         return new Response(json_encode($annonceNormalises));
     }
 
+    // ************************** update une annonce (Json) **************************
 
     #[Route("/UpdateAnnonceJSON/{id}", name: 'UpdateAnnonceJson')]
     public function Updateannonce(Request $req, $id, NormalizerInterface $normalizer)
@@ -209,6 +219,9 @@ class AnnonceCrudController extends AbstractController
         $jsonContent = $normalizer->normalize($annonce, 'json', ['groups' => "annonce"]);
         return new Response("annonce deleted successfully" . json_encode($jsonContent));
     }
+
+
+    // ************************** modifier une annonce **************************
 
     #[Route('/{id}/edit', name: 'app_annonce_crud_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Annonces $annonce, AnnoncesRepository $annoncesRepository): Response
@@ -240,6 +253,10 @@ class AnnonceCrudController extends AbstractController
         ]);
     }
 
+
+
+    // ************************** supprimer une annonce **************************
+
     #[Route('/{id}', name: 'app_annonce_crud_delete', methods: ['POST'])]
     // #[Route('/{id}', name: 'app_annonce_crud_delete', methods: ['DELETE'])]
     public function delete(Request $request, Annonces $annonce, AnnoncesRepository $annoncesRepository): Response
@@ -252,6 +269,7 @@ class AnnonceCrudController extends AbstractController
     }
 
 
+    // ************************** afficher map **************************
 
     #[Route('/map2/{id}', name: 'show_map2')]
     public function map2($id, AnnoncesRepository $annoncesRepository)
@@ -265,6 +283,7 @@ class AnnonceCrudController extends AbstractController
         ]);
     }
 
+    // ************************** commentaire **************************
 
     #[Route('/detail/{id}', name: 'detail')]
     public function detail(ManagerRegistry $mg, AnnoncesRepository $X, Request $request, $id): Response
