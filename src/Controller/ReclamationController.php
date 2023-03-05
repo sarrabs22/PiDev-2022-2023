@@ -358,7 +358,6 @@ class ReclamationController extends AbstractController
 
 
             $flashBag->add('success', 'Votre commentaire a bien été envoyé !');
-            //$this->addFlash('message','Votre commentaire a bien été envoyé');
             return $this->redirectToRoute('detail', ['id' => $id]);
     
         }
