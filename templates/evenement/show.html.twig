@@ -39,7 +39,7 @@
             </tr>
             <tr>
             {% if user in evenement.user %}
-                           <th>  <a href="{{ path('download_pdf', {'id': evenement.id}) }}"><input type="button"  class="btn btn-outline-success" value="Imprimé ticket"</a></th>
+                           <th>  <a href="{{ path('app_don_pdf', {'id': evenement.id}) }}"><input type="button"  class="btn btn-outline-success" value="Imprimé ticket"</a></th>
                             {% else %}
              <th><input type="button" class="btn btn-outline-success" disabled value="Imprimé ticket">   </th>                    
                 {% endif %}
@@ -54,6 +54,7 @@
     <a href="{{ path('app_evenement_index') }}"><input type="button" class="btn btn-outline-success" value="retour"</a>
 
     <a href="{{ path('app_evenement_edit', {'id': evenement.id}) }}"><input type="button" class="btn btn-outline-success" value="modifier"</a>
+    <a href="{{ path('show_map2', {'id': evenement.id}) }}"><input type="button" class="btn btn-outline-success" value="Afficher localisation"</a>
 
     {{ include('evenement/_delete_form.html.twig') }}
 {% endblock %}

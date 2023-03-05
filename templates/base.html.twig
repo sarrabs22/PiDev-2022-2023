@@ -10,7 +10,6 @@
     <meta content="" name="description">
 {% block stylesheet %}
     <!-- Favicon -->
-    <link href="{{asset('img/favicon.ico')}}" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="{{asset('https://fonts.googleapis.com')}}">
@@ -52,6 +51,7 @@
     <!-- Template Javascript -->
     <script src="{{asset('js/main.js')}}"></script>
     {% endblock %}
+    {% block test %}
      <!-- Navbar Start -->
     <div class="navbar navbar-expand-lg navbar-dark bg-dark">
         
@@ -97,11 +97,11 @@
         
         </nav>
     </div>
-    
+    </head>
     <!-- Navbar End -->
-
+{% endblock %}
       {% block navbar %}
-      </head>
+      
 {% endblock %}
 <body>
       {% block body %}
@@ -110,7 +110,7 @@
 
 
 
-
+{% block test2 %}
     <footer>
  
     <!-- Footer Start -->
@@ -170,7 +170,7 @@
     </div>
     <!-- Footer End -->
    </footer>
-
+{% endblock %}
 
     
 

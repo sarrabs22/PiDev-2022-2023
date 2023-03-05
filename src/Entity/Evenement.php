@@ -8,50 +8,44 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Serializer\Annotation\Groups;
+
 #[ORM\Entity(repositoryClass: EvenementRepository::class)]
 class Evenement
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups("event")]
+
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message:"Il faut insérer le nom") ]
-    #[Groups("event")]
     public ?string $Nom_event = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE) ]
     
     #[Assert\GreaterThanOrEqual("today", message: "Veuillez saisir une date supérieure à la date d'aujourd'hui ")]
-    
     private ?\DateTimeInterface $date_debut = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
    
     #[Assert\GreaterThanOrEqual(propertyPath:"date_debut", message: "Veuillez saisir une date supérieure à la date debut ")]
-   
     private ?\DateTimeInterface $date_fin = null;
 
     #[ORM\Column(length: 255)]
-    
     #[Assert\NotBlank(message:"Il faut insérer l'adresse") ]
     private ?string $localisation = null;
 
     
-
     #[ORM\ManyToOne(inversedBy: 'events')]
+
     private ?Categorie $categorie = null;
 
     #[ORM\Column(length: 255)]
-    
     #[Assert\NotBlank(message:"Il faut insérer une image") ] 
     public ?string $image_event = null;
 
     #[ORM\Column]
-    
     #[Assert\GreaterThanOrEqual(0)]
     private ?int $nbParticipants =1;
 

@@ -22,7 +22,7 @@
   <div class="container" >
    
     <div class="row" style="display:inline-block;"  >
-      {% for evenement in tri %}
+      {% for evenement in triD %}
       <div class="col-lg-3  col-sm-6" style="display:inline-block">
         <div class="product-card">
           <div class="card-thumbnail">
@@ -92,6 +92,7 @@ Recherche</button>
   
 
 
+ {{ knp_pagination_render(evenements) }}
  
 
  {% endblock %}

@@ -38,6 +38,13 @@ class EvenementRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+    public function findStudentByNsc($Nom_event){
+        return $this->createQueryBuilder("s")
+           ->where('s.Nom_event LIKE :Nom_event')
+           ->setParameter('Nom_event', '%'.$Nom_event.'%')
+           ->getQuery()
+           ->getResult();
+        }
 
    /**
     * @return Evenement[] Returns an array of Evenement objects
@@ -69,6 +76,14 @@ public function getEventOrdredByName()
 {
     $qb =  $this->createQueryBuilder('x')
         ->orderBy('x.Nom_event', 'ASC');
+    return $qb->getQuery()
+        ->getResult();
+}
+
+public function getEventOrdredByName2()
+{
+    $qb =  $this->createQueryBuilder('x')
+        ->orderBy('x.Nom_event', 'DESC');
     return $qb->getQuery()
         ->getResult();
 }
