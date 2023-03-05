@@ -144,6 +144,13 @@ Yes <input  type="radio" onclick="javascript:yesnoCheck();" name="yesno" id="yes
 	{{form_widget(form.captcha) }}
 </div>
 
+<a  href="{{ path('app_calendar1_reserve') }}">
+                                       reserver une date pour l'entretien
+                                        <div class="d-inline-flex btn-sm-square bg-white text-primary rounded-circle ms-2">
+                                            
+                                        </div>
+ </a>
+
     <button class="btn btn-success">{{ button_label|default('Save') }}</button>
 
 {{ form_end(form) }}

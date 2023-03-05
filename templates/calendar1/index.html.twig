@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Calendar1 index{% endblock %}
+
+{% block body %}
+    <h1>Calendar1 index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Start</th>
+                <th>End</th>
+                <th>Description</th>
+                <th>AllDay</th>
+                <th>BorderColor</th>
+                <th>BackgroundColor</th>
+                <th>TextColor</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for calendar1 in calendar1s %}
+            <tr>
+                <td>{{ calendar1.id }}</td>
+                <td>{{ calendar1.title }}</td>
+                <td>{{ calendar1.start ? calendar1.start|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ calendar1.end ? calendar1.end|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ calendar1.description }}</td>
+                <td>{{ calendar1.allDay ? 'Yes' : 'No' }}</td>
+                <td>{{ calendar1.borderColor }}</td>
+                <td>{{ calendar1.backgroundColor }}</td>
+                <td>{{ calendar1.textColor }}</td>
+                <td>
+                    <a href="{{ path('app_calendar1_show', {'id': calendar1.id}) }}">show</a>
+                    <a href="{{ path('app_calendar1_edit', {'id': calendar1.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="10">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_calendar1_new') }}">Create new</a>
+{% endblock %}
