@@ -19,7 +19,7 @@ use MercurySeries\FlashyBundle\FlashyNotifier;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\JsonResponse;
-
+use Twilio\Rest\Client;
 #[Route('/evenement')]
 class EvenementController extends AbstractController
 {
@@ -132,6 +132,18 @@ class EvenementController extends AbstractController
         $entityManager->persist($event);
         $entityManager->flush();
 
+        // Send SMS notification to admin
+        $accountSid = 'ACe78e17b02f6db96616cebcab40c3982a';
+        $authToken = '74aacf7553901aa3402a7a382fe6797f';
+        $client = new Client($accountSid, $authToken);
+        $message = $client->messages->create(
+            '+21626318708', // replace with admin's phone number
+            [
+                'from' => '+15674092850', // replace with your Twilio phone number
+                'body' => $user->getName() . ' a participé à levenement ' . $event->getNomEvent() ,  // replace with your message
+            ]
+        );
+
         $flashy->success('Bienvenue !', 'http://your-awesome-link.com');
 
         return $this->redirectToRoute('app_evenement_index');
@@ -155,6 +167,17 @@ class EvenementController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($event);
             $entityManager->flush();
+             // Send SMS notification to admin
+        $accountSid = 'ACe78e17b02f6db96616cebcab40c3982a';
+        $authToken = '74aacf7553901aa3402a7a382fe6797f';
+        $client = new Client($accountSid, $authToken);
+        $message = $client->messages->create(
+            '+21626318708', // replace with admin's phone number
+            [
+                'from' => '+15674092850', // replace with your Twilio phone number
+                'body' => $user->getName() . ' a annulé ça participation à levenement ' . $event->getNomEvent() ,  // replace with your message
+            ]
+        );
     
             $flashy->success('Bye :(', 'http://your-awesome-link.com');
     

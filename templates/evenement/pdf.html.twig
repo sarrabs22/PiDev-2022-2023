@@ -25,53 +25,33 @@
 	}
 </style>
 <div id="htmlContent">
-
-	<div id="ticket-background-container">
-    <div id="left-part">
-      <div id="left-top">
-        <h1>Gene</h1>
-      </div>
-      <div id="left-bottom">
-        <div class="divider"></div>
-      </div>
-      <div></div>
-    </div>
-    <div id="right-part">
-      <div id="right-top">
-        <div class="divider"></div>
-      </div>
-      <div id="right-bottom">
-        <h1>Reux</h1>
-      </div>
-    </div>
-  </div>
-
-  <div id="ticket-main-container" style="d-center">
-    <div id="main-left">
-      <h2>{{ evenement.dateDebut ? evenement.dateDebut|date('d-m') : '' }}</h2>
-      <h2>{{ evenement.dateDebut ? evenement.dateDebut|date('Y') : '' }}</h2>
-      <p>Adresse:{{ evenement.localisation }}</p>
-      <p>Price: free</p>
-      
-    </div>
-    <div id="main-center">
-      <div id="main-center-top">
-        <p>Votre ticket pour l'evenement: {{ evenement.NomEvent }}</p>
-      </div>
-      <div id="main-center-bottom">
-        <p id="number">ticket: {{ evenement.id }}</p>
-        <p>Genereux</p>
-      </div>
-    </div>
-  </div>
-
-  <div id="decoration">
-    <div id="decoration-top"></div>
-    <div id="decoration-bottom"></div>
-  </div>
-	<p>Merci pour ta participation ! Amusez vous !
-	</p>
-	<p></p>
+	<table>
+		<tbody>
+			<tr>
+				<th>Nom</th>
+				<td>{{ evenement.NomEvent }}</td>
+			</tr>
+			<tr>
+				<th>Date Debut</th>
+				<td>{{ evenement.dateDebut ? evenement.dateDebut|date('d-m-Y') : '' }}</td>
+			</tr>
+			<tr>
+				<th>Date fin</th>
+				<td>{{ evenement.dateDebut ? evenement.dateDebut|date('d-m-Y') : '' }}</td>
+			</tr>
+			<tr>
+				<th>Adresse</th>
+				<td>{{ evenement.localisation }}</td>
+			</tr>
+			<tr>
+				<th>Categorie</th>
+				<td>{{ evenement.categorie.nomcategevent }}</td>
+			</tr>
+			
+		</tbody>
+	</table>
+	
+	
 	<p id="key"></p>
 </div>
 <div id="editor"></div>
