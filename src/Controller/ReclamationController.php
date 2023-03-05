@@ -209,7 +209,7 @@ class ReclamationController extends AbstractController
             $entityManager->flush();
                   // Send SMS notification to admin
         $accountSid = 'AC9915eed7fbb7f651dc65d44a18a7eca4';
-        $authToken = '4cb0d9ed7c8fcede84fe84f7b8cdf8ef';
+        $authToken = 'b37aef6701292755e6ac39fbed963e8d';
         $client = new Client($accountSid, $authToken);
         $message = $client->messages->create(
             '+21622552903', // replace with admin's phone number
@@ -330,10 +330,10 @@ class ReclamationController extends AbstractController
 
         return $this->redirectToRoute('app_reclamation_index_admin', [], Response::HTTP_SEE_OTHER);
     }
-    #[Route('/{id}', name: 'app_reclamation_delete2', methods: ['POST'])]
+    #[Route('/delete/{id}', name: 'delete', methods: ['POST'])]
     public function delete2(Request $request, Reclamation $reclamation, ReclamationRepository $reclamationRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete2'.$reclamation->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$reclamation->getId(), $request->request->get('_token'))) {
             $reclamationRepository->remove($reclamation, true);
         }
 

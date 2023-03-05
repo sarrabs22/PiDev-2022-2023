@@ -85,6 +85,10 @@
                     <a href="{{ path('app_reclamation_show', {'id': reclamation.id}) }}"><button type="button" class="btn btn-success">Afficher</button></a>
                     <a href="{{ path('app_reclamation_edit', {'id': reclamation.id}) }}"><button type="button" class="btn btn-success">Modifier</button></a>
                     <a href="{{ path('detail', {'id': reclamation.id}) }}"><button type="button" class="btn btn-success">Commenter</button></a>
+                    <a href="{{ path('delete', {'id': reclamation.id}) }}">
+							{{ include('reclamation/delete2.html.twig') }}
+
+						</a>
                 </td>
             </tr>
         {% else %}
