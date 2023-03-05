@@ -5,7 +5,7 @@
 {% block body %}
     <h1>Membre index</h1>
 
-    <table class="table">
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th>Id</th>
@@ -35,8 +35,9 @@
                 <td>{{ membre.ClubEntendu }}</td>
                 <td>{{ membre.actions }}</td>
                 <td>
-                    <a href="{{ path('app_membre_show', {'id': membre.id}) }}">show</a>
-                    <a href="{{ path('app_membre_edit', {'id': membre.id}) }}">edit</a>
+                                    
+                    <a href="{{ path('app_membre_show', {'id': membre.id}) }}"><input type="button" class="btn btn-outline-success" value="afficher"></a>
+                    <a href="{{ path('app_membre_edit', {'id': membre.id}) }}"><input type="button" class="btn btn-outline-danger" value="Modifier"></a>
                 </td>
             </tr>
         {% else %}
