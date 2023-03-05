@@ -47,7 +47,7 @@ class CategorieRecController extends AbstractController
                 $erreur = 1;
             } else {
             $categorieRecRepository->save($categorieRec, true);
-
+          
             return $this->redirectToRoute('app_categorie_rec_index', [], Response::HTTP_SEE_OTHER);
         }
     }

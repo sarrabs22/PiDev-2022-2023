@@ -22,6 +22,7 @@ use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Dompdf\Dompdf;
 use Dompdf\Options;
+use Twilio\Rest\Client;
 
 
 
@@ -185,6 +186,7 @@ class ReclamationController extends AbstractController
         $reclamation->setEmail ($req->get('Email'));
         $em->persist($reclamation);
         $em->flush();
+    
         $jsonContent = $normalizer->normalize($reclamation,'json',['groups'=>"reclamation"]);
         return new Response(json_encode($jsonContent));
 
@@ -205,6 +207,17 @@ class ReclamationController extends AbstractController
             $entityManager = $doctrine->getManager();
             $entityManager->persist($reclamation);
             $entityManager->flush();
+                  // Send SMS notification to admin
+        $accountSid = 'AC9915eed7fbb7f651dc65d44a18a7eca4';
+        $authToken = '4cb0d9ed7c8fcede84fe84f7b8cdf8ef';
+        $client = new Client($accountSid, $authToken);
+        $message = $client->messages->create(
+            '+21622552903', // replace with admin's phone number
+            [
+                'from' => '+15674092876', // replace with your Twilio phone number
+                'body' => 'Une réclamation a bien été envoyée !' // replace with your message
+            ]
+        );
             $uploadedFile = $form['Image']->getData();
             $destination = $this->getParameter('kernel.project_dir') . '/public/uploads';
             $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
@@ -316,6 +329,15 @@ class ReclamationController extends AbstractController
         }
 
         return $this->redirectToRoute('app_reclamation_index_admin', [], Response::HTTP_SEE_OTHER);
+    }
+    #[Route('/{id}', name: 'app_reclamation_delete2', methods: ['POST'])]
+    public function delete2(Request $request, Reclamation $reclamation, ReclamationRepository $reclamationRepository): Response
+    {
+        if ($this->isCsrfTokenValid('delete2'.$reclamation->getId(), $request->request->get('_token'))) {
+            $reclamationRepository->remove($reclamation, true);
+        }
+
+        return $this->redirectToRoute('app_reclamation_index', [], Response::HTTP_SEE_OTHER);
     }
 
     #[Route('/detail/{id}', name: 'detail')]
