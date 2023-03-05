@@ -8,6 +8,7 @@ use App\Form\AnnoncesType;
 use App\Form\CommentairesType;
 use  App\Form\SearchType;
 use App\Repository\AnnoncesRepository;
+use App\Repository\CommentairesRepository;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -220,6 +221,18 @@ class AnnonceCrudController extends AbstractController
         return new Response("annonce deleted successfully" . json_encode($jsonContent));
     }
 
+    // ************************** supprimer reponse **************************
+
+    #[Route('/delete/{id}', name: 'app_commentaire_delete', methods: ['POST'])]
+    // #[Route('/{id}', name: 'app_annonce_crud_delete', methods: ['DELETE'])]
+    public function deleteCommentaire(Request $request, Commentaires $commentaires, CommentairesRepository $commentairesRepository): Response
+    {
+        if ($this->isCsrfTokenValid('delete' . $commentaires->getId(), $request->request->get('_token'))) {
+            $commentairesRepository->remove($commentaires, true);
+        }
+
+        return $this->redirectToRoute('app_annonce_crud_index', [], Response::HTTP_SEE_OTHER);
+    }
 
     // ************************** modifier une annonce **************************
 
@@ -267,6 +280,10 @@ class AnnonceCrudController extends AbstractController
 
         return $this->redirectToRoute('app_annonce_crud_index', [], Response::HTTP_SEE_OTHER);
     }
+
+
+
+
 
 
     // ************************** afficher map **************************
