@@ -36,4 +36,6 @@ services:
         arguments: ['@service_container']
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
-     
+    App\Security\AccessDeniedHandler:
+        tags:
+            - { name: 'monolog.logger', channel: 'security' }

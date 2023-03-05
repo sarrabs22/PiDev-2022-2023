@@ -15,15 +15,13 @@ class UserprofileController extends AbstractController
     {
 
         //getting user
-         $session = $request->getSession();
-         $userid = $session->get('userid');
-        // dd($userid);
+        $user=$this->getUser();
+        
         /////
         // Retrieve the user entity from the database
-            $user = $entityManager
-            ->getRepository(User::class)
-            ->find($userid);
-
+        $user = $entityManager
+        ->getRepository(User::class)
+        ->findOneBy(['email' => $user->getUserIdentifier()]);
 // Convert the image data to a base64 string
 $base64 = base64_encode($user->getImage());
         return $this->render('userprofile/index.html.twig', [

@@ -31,12 +31,13 @@ class EditprofileController extends AbstractController
 
 
         //Getting user
-        $session = $request->getSession();
-       $userid = $session->get('userid');
+       $user=$this->getUser();
       
-      
+    
          //////
-        $user=$entityManager->getRepository(User::class)->find($userid);
+         $user = $entityManager
+         ->getRepository(User::class)
+         ->findOneBy(['email' => $user->getUserIdentifier()]);
        
         $userimage=$user->getImage();
         

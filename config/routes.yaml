@@ -13,3 +13,7 @@ login:
 
 logout:
     path: /logout
+
+errors:
+    path: /error
+    controller: App\Controller\AccessDeniedController::AccessDenied

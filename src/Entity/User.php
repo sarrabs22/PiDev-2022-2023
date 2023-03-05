@@ -10,36 +10,41 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert ;
-
+use Symfony\Component\Serializer\Annotation\Groups;
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
 #[UniqueEntity(fields: ['email'], message: 'il existe un compte enregistré avec cette adresse')]
 #[UniqueEntity(fields: ['NumTelephone'], message: 'le numero de telehpone existe deja')]
+#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
+
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups("user")]
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
     #[Assert\Email(
         message: 'Cette email {{ value }} n"est pas valide',
     )]
+    #[Groups("user")]
     private ?string $email = null;
 
     #[ORM\Column]
+    #[Groups("user")]
     private array $roles = [];
 
     /**
      * @var string The hashed password
      */
     #[ORM\Column]
-    
+    #[Groups("user")]
     private ?string $password = null;
 
     #[ORM\Column(type: 'boolean')]
-    
+    #[Groups("user")]
     private $isVerified = false;
 
     #[ORM\Column(length: 255)]
@@ -50,31 +55,37 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\NotBlank(
         message : "veuillez inserer votre numtelephone"
     )]
+    #[Groups("user")]
     private ?string $NumTelephone = null;
 
     #[ORM\Column(length: 255)]
-    
+    #[Groups("user")]
     private ?string $type = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups("user")]
     private ?int $score = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups("user")]
     private ?int $nb_etoile = null;
 
     #[ORM\ManyToMany(targetEntity: Exploit::class, inversedBy: 'users')]
+    #[Groups("user")]
     private Collection $exploits;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(
         message : "veuillez inserer votre nom"
     )]
+    #[Groups("user")]
     private ?string $nom = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(
         message : "veuillez inserer votre prenom"
     )]
+    #[Groups("user")]
     private ?string $prenom = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -82,10 +93,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
        
         message :"Vous devez selectionnez une photo de profil",
     )] 
+    #[Groups("user")]
     private ?string $image = null;
 
-    
+    #[ORM\OneToMany(targetEntity:'Participant',mappedBy:'user')]
+    private $participants ;
 
+    #[ORM\OneToMany(targetEntity:'Message',mappedBy:'user')]
+    private $messages ;
     public function __construct()
     {
         
@@ -94,7 +109,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getId(): ?int
     {
-        return $this->id;
+        return  $this->id;
     }
 
     public function getEmail(): ?string
@@ -114,9 +129,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      *
      * @see UserInterface
      */
-    public function getUserIdentifier(): string
+    public function getUserIdentifier(): int
     {
-        return (string) $this->email;
+        return (int) $this->id;
     }
 
     /**

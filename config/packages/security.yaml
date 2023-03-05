@@ -1,4 +1,5 @@
 security:
+    
     enable_authenticator_manager: true
     # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
     password_hashers:
@@ -17,24 +18,22 @@ security:
         main:
             lazy: true
             provider: app_user_provider
+          
+           # custom_authenticators:
+            #    - App\Security\CustomAUTH
             # by default, the feature allows 5 login attempts per minute
            # login_throttling: null
 
-            # configure the maximum login attempts
-            #login_throttling:
-              #  max_attempts: 3          # per minute ...
-                # interval: '10 seconds' # ... or in a custom period
-               # rate: { interval: '3 seconds', amount: 10 }
-            # use a custom rate limiter via its service ID
-            #login_throttling:
-              #  limiter: app.my_login_rate_limiter
+           
+            
             form_login:
                 # "app_login" is the name of the route created previously
-                login_path: app_login_signup
-                check_path: app_login_signup
-                username_parameter: email
-                password_parameter: password
-                target_path_parameter: app_login_signup
+                  login_path: app_login_signup
+                  check_path: app_login_signup
+                  username_parameter: email
+                  password_parameter: password
+                  target_path_parameter: app_login_signup
+            
             # custom_authenticator: App\Security\AppCustomAthenticatorAuthenticator
             logout:
                 path: app_logout
@@ -47,7 +46,7 @@ security:
 
             # https://symfony.com/doc/current/security/impersonating_user.html
             # switch_user: true
-
+    
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:

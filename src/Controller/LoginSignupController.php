@@ -44,9 +44,24 @@ class LoginSignupController extends AbstractController
             /*  $user = $security->getUser();
  */
       
-
+       
         $email = $authenticationUtils->getLastUsername();
        
+        if($this->isGranted('ROLE_USER'))
+        {
+            $user=$this->getUser();
+        $user2 = $entityManager
+        ->getRepository(User::class)
+        ->find($user->getUserIdentifier());
+      //  if($user2->isVerified() == true )
+      //  {
+              
+            return $this->redirectToRoute('app_test');
+       // }
+       //  else {
+      //      return $this->redirectToRoute('app_verifieremail');
+      //  }  
+     }
         // get the number of login attempts from the session
        
         $loginAttempts = $session->get('login_attempts', 0);
@@ -57,67 +72,30 @@ class LoginSignupController extends AbstractController
         $session->set('login_attempts', $loginAttempts);
         
 
-        $user = $entityManager
+        
+        
+        /* if(!$error && $email )
+        {
+            $user = $entityManager
         ->getRepository(User::class)
         ->findOneBy(['email' => $email]);
-        
-        if(!$error && $email )
-        {
         $user = $entityManager
             ->getRepository(User::class)
-            ->findOneBy(['email' => $email]);
+            ->find($this->getUser()->getUserIdentifier()); */
 
-            $user = $entityManager
-            ->getRepository(User::class)
-            ->findOneBy(['email' => $email]);
-    
-            $session->set('userid', $user);
-            $session->save();
        
-         
-           
-          
-
-        
-         
-        if($user->isVerified())
-        {
-            $session = $request->getSession();
-            $session->set('userid', $user);
-            $session->save();
-           
-            return $this->redirectToRoute('app_test');
-            
-        }
-        else{
-            return $this->redirectToRoute('app_verifieremail');
-        }
      
          
        
-    }
+    
     if ($this->isGranted('ROLE_ADMIN')) {
-        $user = $entityManager
-        ->getRepository(User::class)
-        ->findOneBy(['email' => $email]);
-
-    $session->set('userid', $user);
-    $session->save();
+    
         return $this->redirectToRoute('app_admin');
-        $session->set('userid', $user);
-        $session->save();
+        
     }
     
     if ($this->isGranted('ROLE_USER')) {
-        $user = $entityManager
-        ->getRepository(User::class)
-        ->findOneBy(['email' => $email]);
-
-    $session->set('userid', $user);
-    $session->save();
-    
-       
-       
+        
     }
         // check if the user has exceeded the maximum number of login attempts
         $maxAttempts = 3;
@@ -152,7 +130,20 @@ class LoginSignupController extends AbstractController
             }
         }
 
-        /* $error = null;
+      
+        return $this->render('login_signup/index.html.twig', [
+            'controller_name' => 'LoginSignupController',
+            /* 'loginForm' => $form->createView(), */
+            'error' => $errorMessage,
+            'email' => $email,
+            'remaining_attempts' => $remainingAttempts,
+            'max_attempts' => $maxAttempts,
+            'form_appear' => $form_appear,
+            'showRefresh' => $show_refresh,
+        ]);
+
+        
+     /* $error = null;
         $lastUsername = $session->get('_security.last_username');
 
         if ($remainingAttempts <= 0) {
@@ -199,19 +190,6 @@ class LoginSignupController extends AbstractController
 
             
        /*  } */
-        return $this->render('login_signup/index.html.twig', [
-            'controller_name' => 'LoginSignupController',
-            /* 'loginForm' => $form->createView(), */
-            'error' => $errorMessage,
-            'email' => $email,
-            'remaining_attempts' => $remainingAttempts,
-            'max_attempts' => $maxAttempts,
-            'form_appear' => $form_appear,
-            'showRefresh' => $show_refresh,
-        ]);
-
-        
-   
     
     /* private function getAuthenticationError(Request $request)
     {
