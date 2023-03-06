@@ -21,6 +21,9 @@
                 <td>
                     <a href="{{ path('app_categorie_show', {'id': categorie.id}) }}"><input type="button" class="btn btn-outline-secondary" value="Afficher"</a>
                     <a href="{{ path('app_categorie_edit', {'id': categorie.id}) }}"><input type="button" class="btn btn-outline-danger" value="Modifier"</a>
+                     <a href="{{ path('app_categorie_delete', {'id': categorie.id}) }}">
+                     {{include('categorie/_delete_form.html.twig') }}
+                   </a>
 
                                         {# <a href="{{ path('app_association_show', {'id': association.id}) }}"><input type="button" class="btn btn-outline-success" value="Afficher"</a> #}
 
