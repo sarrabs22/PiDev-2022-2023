@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+	<label for="select">Choose a User Type:</label>
+	<select id="myselect">
+		<option value="donneur">Donneur</option>
+		<option value="receveur">Receveur</option>
+		<option value="admin">Admin</option>
+	</select>
+	<button onclick="test()" class="btn btn-outline-danger">Valider</button>
+
+	<script>
+		function test() {
+var select = document.getElementById("myselect");
+var value = select.options[select.selectedIndex].value;
+if (value == "donneur") {
+window.location.href = "http://127.0.0.1:8000/don/new";
+} else if (value == "receveur") {
+window.location.href = "http://127.0.0.1:8000/don/client"
+} else if (value == "admin") {
+window.location.href = "http://127.0.0.1:8000/category/d/"
+} else {
+alert("Please fill the field with valid information")
+}
+}
+	</script>
+{% endblock %}

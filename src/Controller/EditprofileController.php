@@ -12,8 +12,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\User;
 use App\Form\UpdateFormType;
-use App\Form\ImageUpdateType
-;
+use App\Form\ImageUpdateType;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -37,7 +36,7 @@ class EditprofileController extends AbstractController
          //////
          $user = $entityManager
          ->getRepository(User::class)
-         ->findOneBy(['email' => $user->getUserIdentifier()]);
+         ->findOneBy(['id' => $user->getUserIdentifier()]);
        
         $userimage=$user->getImage();
         

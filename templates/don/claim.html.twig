@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+	<h1>Claim Don</h1>
+
+	{{ form_start(form,{'attr': {'novalidate': 'novalidate'}}
+	) }}
+	{% form_theme form 'bootstrap_5_horizontal_layout.html.twig' %}
+	<div class="my-custom-class-for-errors">
+		{{ form_errors(form) }}
+	</div>
+	{{ form_row(form.quantite) }}
+	{{ form_row(form.userType) }}
+	<button class="btn btn-outline-success" href="{{ path('app_don_index', {'id': don.id})}}" type="submit">Confirm</button>
+	{{ form_end(form) }}
+	<h1>Don</h1>
+
+	<table class="table">
+		<tbody>
+			<tr>
+				<th>NameD</th>
+				<td>{{ don.NameD }}</td>
+			</tr>
+			<tr>
+				<th>Quantite</th>
+				<td>{{ don.quantite }}</td>
+			</tr>
+			<tr>
+				<th>Description</th>
+				<td>{{ don.Description }}</td>
+			</tr>
+			<tr>
+				<th>Localisation</th>
+				<td>{{ don.Localisation }}</td>
+			</tr>
+			<tr>
+				<th>Image</th>
+				<td><img src="/uploads/{{ don.Image }}" alt="image Don" width="100" height="100"></td>
+			</tr>
+			<tr>
+				<th>Email</th>
+				<td>{{ don.email }}</td>
+			</tr>
+			<tr>
+				<th>Numero</th>
+				<td>{{ don.Numero }}</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<a href="{{ path('app_don_index') }}">
+		<button type="button" class="btn btn-outline-success">Back to List</button>
+	</a>
+	<a href="{{ path('app_don_pdf', {'id': don.id}) }}">
+		<button type="button" class="btn btn-outline-success">Download confirmation Pdf</button>
+	</a>
+</a>{% endblock %}

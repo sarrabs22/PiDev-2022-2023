@@ -1,0 +1,142 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Annonces{% endblock %}
+
+{% block stylesheet %}
+
+<!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Saira:wght@500;600;700&display=swap" rel="stylesheet"> 
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="{{asset('lib/animate/animate.min.css')}}" rel="stylesheet">
+    <link href="{{asset('lib/owlcarousel/assets/owl.carousel.min.css')}}" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="{{asset('css/style.css')}}" rel="stylesheet">
+    <link href="{{asset('css/rating.css')}}" rel="stylesheet">
+    <link href="{{asset('css/rating.js')}}" rel="stylesheet">
+      <style>
+        .star {
+            font-size: 1.5rem;
+        }
+        
+        .hover {
+            color: rgb(255, 196, 0);
+        }
+    </style>
+
+{% endblock %}
+
+{% block body %}
+    <h1>Annonces</h1>
+
+    <table class="table">
+        <tbody>
+           {#  <tr>
+                <th>Id</th>
+                <td>{{ annonce.id }}</td>
+            </tr> #}
+            
+            <tr>
+                <th>Description</th>
+                <td>{{ annonce.Description }}</td>
+            </tr>
+            <tr>
+                <th>Image</th>
+                <td><img src="/uploads/{{ annonce.image }}" alt="Pas d'image" width="100" height="100"></td>
+            </tr>
+            
+             <tr>
+                <th>adresse</th>
+                <td>{{ annonce.adresse }}</td>
+            </tr>
+            <tr>
+            <p>Date de publication : {{ annonce.DatePublication|date('Y-m-d H:i:s') }}</p>    
+            </tr>
+            <tr>
+            <p>Categorie : {{ annonce.categorie.nom }}</p>    
+            </tr>
+            <tr>
+            <p>Nombre Etoile : {{ annonce.nombreEtoiles }}</p>    
+            </tr>
+            
+
+        </tbody>
+    </table>
+    
+    
+    <i class="star" data-note="1">&#9733;</i>
+    <i class="star" data-note="2">&#9733;</i>
+    <i class="star" data-note="3">&#9733;</i>
+    <i class="star" data-note="4">&#9733;</i>
+    <i class="star" data-note="5">&#9733;</i>
+    <i class="note">Note:</i>
+    <script>
+        const stars = document.querySelectorAll('.star');
+        let check = false;
+        stars.forEach(star => {
+            star.addEventListener('mouseover', selectStars);
+            star.addEventListener('mouseleave', unselectStars);
+            star.addEventListener('click', activeSelect);
+        })
+
+        function selectStars(e) {
+            const data = e.target;
+            const etoiles = priviousSiblings(data);
+            if (!check) {
+                etoiles.forEach(etoile => {
+                    etoile.classList.add('hover');
+                })
+            }
+
+        }
+
+        function unselectStars(e) {
+            const data = e.target;
+            const etoiles = priviousSiblings(data);
+            if (!check) {
+                etoiles.forEach(etoile => {
+                    etoile.classList.remove('hover');
+                })
+            }
+        }
+
+        function activeSelect(e) {
+            if (!check) {
+                check = true;
+                document.querySelector('.note').innerHTML = 'Note ' + e.target.dataset.note;
+                window.location.href = "/rating?id=" + {{ annonce.id|json_encode() }} + "&note_value=" + e.target.dataset.note;
+            }
+        }
+
+        function priviousSiblings(data) {
+            let values = [data];
+            while (data = data.previousSibling) {
+                if (data.nodeName === 'I') {
+                    values.push(data);
+                }
+            }
+            return values;
+        }
+    </script>
+<a href="{{ path('app_annonce_crud_index') }}"><button type="button" class="btn btn-outline-success" >Retour</button></a>
+
+<a href="{{ path('detail', {'id': annonce.id}) }}"><button type="button" class="btn btn-secondary">Detail</button></a>
+<a href="{{ path('show_map2', {'id': annonce.id}) }}"><button type="button" class="btn btn-secondary">Map</button></a>
+
+    
+
+    {{ include('annonce_crud/_delete_form.html.twig') }}
+{% endblock %}

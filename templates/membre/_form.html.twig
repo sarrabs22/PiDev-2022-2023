@@ -1,0 +1,172 @@
+{% block style %}
+ <style>
+
+.row::after {
+  content: "";
+  clear: both;
+  display: table;
+  
+}
+.imgClasse{
+
+    float: left;
+
+}
+.column {
+  float: left;
+  width: 33.33%;
+  padding: 5px;
+
+ 
+
+}
+
+ 
+
+.row {
+  display: flex;
+
+  
+}
+
+.column {
+  flex: 33.33%;
+  padding: 5px;
+  
+}
+
+.image-ronde{
+  width : 150px; height : 150px;
+  border: none;
+  -moz-border-radius : 75px;
+  -webkit-border-radius : 75px;
+  border-radius : 75px;
+} 
+
+</style>
+{% endblock %}
+
+<div style="display:flex;justify-content:center;alighn-items:center;" data-inline="true">
+
+<a  href="{{ path('app_association_filter') }}">
+                                        Filter les association
+                                        <div class="d-inline-flex btn-sm-square bg-white text-primary rounded-circle ms-2">
+                                            
+                                        </div>
+ </a>
+    
+{% for association in associations %}
+
+  
+  {# <div class="rounded-circle" data-inline="true" >
+    <img src="/uploads/{{ association.Image }}" alt="logo" width="150" height="150" >
+  </div> #}
+
+
+  <a href="{{ path('show2', {'id': association.id}) }} ">
+  
+     <img src="/uploads/{{ association.Image }}" alt="logo" width="150" height="150" style="margin-right:10px;" class="rounded-circle">
+
+  </a>
+
+
+{# class="imgClasse" #}
+{# -------------------------------------------------------------------------------------- #}
+{% endfor %}
+<br>
+<br>
+
+
+  </div>
+
+  
+
+
+
+<br>
+<br>
+<br>
+<br>
+
+<center>
+
+{{ form_start(form,{'attr': {'novalidate': 'novalidate'}}
+) }}
+
+{% form_theme form 'bootstrap_5_horizontal_layout.html.twig' %}
+<div class="my-custom-class-for-errors">
+	{{ form_errors(form) }}
+</div>
+<p>Quel est votre nom? </p>
+<div class="col-lg-7">
+	{{ form_row(form.nom) }}
+</div>
+<p>Quel est votre prenom? </p>
+<div class="col-lg-7">
+	{{ form_row(form.prenom) }}
+</div>
+<p>Ecrivez votre mail ? </p>
+<div class="col-lg-7">
+	{{ form_row(form.mail) }}
+</div>
+<div class="col-lg-7">
+<p>Quel est votre age? </p>
+	{{ form_row(form.age) }}
+</div>
+<p>Pouvez-vous nous parler de vos passionss ?</p>
+<div class="col-lg-7">
+	{{ form_row(form.passions) }}
+</div>
+<p>Avez vous une expérience dans la vie associative ?</p>
+
+{# <div id="experience" {% if form.experience.vars.value is  empty %}style="display:block"{% endif %}> #}
+Yes <input  type="radio" onclick="javascript:yesnoCheck();" name="yesno" id="yesCheck"> No <input type="radio" onclick="javascript:yesnoCheck();" name="yesno" id="noCheck">
+<div id="hmed" class="col-lg-7">
+    
+<p> Si oui étalez vous sur ça</p>
+    {{ form_row(form.experience) }}
+    </div>
+     </div>
+{# </div>
+
+   {#  {{ form_row(form.experience) }} 
+    </div> #}
+   <p>Comment avez vous entendu de notre club ?</p>
+    <div class="col-lg-7">
+	{{ form_row(form.ClubEntendu) }}
+  </div>
+  <p>Avez-vous une idée de nos actions réalisées ?</p>
+   <div class="col-lg-7">
+	{{ form_row(form.actions) }}
+  </div>
+
+<div class="col-lg-7">
+	{{form_widget(form.captcha) }}
+</div>
+
+<a  href="{{ path('app_calendar1_reserve') }}">
+                                       reserver une date pour l'entretien
+                                        <div class="d-inline-flex btn-sm-square bg-white text-primary rounded-circle ms-2">
+                                            
+                                        </div>
+ </a>
+
+    <button class="btn btn-success">{{ button_label|default('Save') }}</button>
+
+{{ form_end(form) }}
+
+</centre>
+{% block javascripts %}
+  
+  <script>
+    function yesnoCheck() {
+        if (document.getElementById('yesCheck').checked) {
+            document.getElementById('hmed').style.visibility = 'visible';
+        }
+        else document.getElementById('hmed').style.visibility = 'hidden';
+    }
+
+    
+</script>
+  <script src="{{ asset('js/filters.js') }}"></script>
+  {% endblock %}

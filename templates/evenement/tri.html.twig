@@ -1,0 +1,100 @@
+ 
+ {% extends 'base.html.twig' %}
+
+{% block title %}Evenement index{% endblock %}
+
+
+
+{% block body %}
+{#  <!-- Load Flashy default CSS -->
+    <link rel="stylesheet" href="{{ asset('bundles/mercuryseriesflashy/css/flashy.css') }}">
+ <!-- Flashy depends on jQuery -->
+    <script src="//code.jquery.com/jquery.js"></script>
+    <!-- Load Flashy default JavaScript -->
+    <script src="{{ asset('bundles/mercuryseriesflashy/js/flashy.js') }}"></script>
+    <!-- Include Flashy default partial -->
+    <link href="//fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700' rel='stylesheet'>
+    {{ include('@MercurySeriesFlashy/flashy.html.twig') }} #}
+   <link rel="stylesheet" href="{{ asset('css/style2.css') }}">
+<link rel="stylesheet" href="{{ asset('css/responsive2.css') }}">
+<link rel="stylesheet" href="{{ asset('css/test.css') }}">
+<link rel="stylesheet" href="{{ asset('css/animate.min.css') }}">
+
+<div class="product-container">
+  <div class="container" >
+   
+    <div class="row" style="display:inline-block;"  >
+      {% for evenement in tri %}
+      <div class="col-lg-3  col-sm-6" style="display:inline-block">
+        <div class="product-card">
+          <div class="card-thumbnail">
+          <a href="{{ path('app_evenement_show', {'id': evenement.id}) }}">
+            <img class="img-responsive" src="/uploads/{{ evenement.image_event }}" width="50" height="300">
+            </a>
+          </div>
+          <div class="card-content">
+            <div class="send">
+              <i class="fa fa-send fa-2x"></i>
+            </div>
+            <h1 class="card-title">
+              {{ evenement.NomEvent }}
+            </h1>
+            <h2 class="card-sub-title">
+             {{ evenement.localisation }}
+            </h2>
+            <p class="description">
+              debut: {{ evenement.dateDebut ? evenement.dateDebut|date('d-m-Y') : '' }} fin: {{ evenement.datefin ? evenement.datefin|date('d-m-Y') : '' }}
+            </p>
+             {% if user in evenement.users %}
+                            <td><a href="{{ path('cancelP', {'id': evenement.id}) }}"><input type="button" class="btn btn-outline-success" value="Annuler participation"</a></td>
+                            {% else %}
+                            <td><a href="{{ path('addParticipation', {'id': evenement.id}) }}"><input type="button" class="btn btn-outline-success" value="Participer"</a></td>
+                            {% endif %}
+
+            
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+        
+   
+            
+                 
+    <a href="{{ path('app_evenement_new') }}"><input type="button" class="btn btn-outline-success" value="nouveau evenement"></a>
+
+{#  <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+Recherche</button>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Recherche</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+       
+    {{ include('evenement/search.html.twig') }}
+
+
+
+ </div>
+     
+    </div>
+  </div>
+</div>
+</div>
+
+ #}
+
+  
+
+
+ 
+
+ {% endblock %}

@@ -1,0 +1,49 @@
+ {% extends 'base.html.twig' %} 
+
+{% block title %}Association{% endblock %}
+
+{% block body %}
+    <h1>Association</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ association.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ association.nom }}</td>
+            </tr>
+            <tr>
+                <th>Numero</th>
+                <td>{{ association.numero }}</td>
+            </tr>
+            <tr>
+                <th>Mail</th>
+                <td>{{ association.mail }}</td>
+            </tr>
+            <tr>
+                <th>Adresse</th>
+                <td>{{ association.adresse }}</td>
+            </tr>
+            <tr>
+                <th>CodePostal</th>
+                <td>{{ association.CodePostal }}</td>
+            </tr>
+            <tr>
+                <th>Ville</th>
+                <td>{{ association.ville }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    {# <a href="{{ path('app_association_index') }}"><input type="button" class="btn btn-outline-success"" value="retourner liste des association"</a>
+
+    <a href="{{ path('app_association_edit', {'id': association.id}) }}"><input type="button" class="btn btn-outline-danger" value="Modifier"</a> #}
+
+    {# {{ include('association/_delete_form.html.twig') }} #}
+{% endblock %}
+
+
+{# <a href="{{ path('app_association_edit', {'id': association.id}) }}"><input type="button" class="btn btn-outline-danger" value="Modifier"</a> #}

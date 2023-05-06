@@ -1,0 +1,35 @@
+{% extends 'base_back.html.twig' %}
+
+{% block title %}Categorie index{% endblock %}
+
+{% block body %}
+    <h1>Les Categories</h1>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                
+                <th scope="col">Nom Categorie</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+        {% for categorie in categories %}
+            <tr>
+                
+                <td>{{ categorie.nomCategEvent }}</td>
+                <td>
+                    <a href="{{ path('app_categorie_show', {'id': categorie.id}) }}"><input type="button" class="btn btn-outline-success" value="afficher"</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_categorie_new') }}"><input type="button" class="btn btn-outline-success" value="nouvelle categorie"</a>
+{#     <a href="{{ path('app_evenement_index') }}"><input type="button" class="btn btn-outline-success" value="list evenement"</a>
+ #}{% endblock %}

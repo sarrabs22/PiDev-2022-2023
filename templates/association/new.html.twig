@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Association{% endblock %}
+
+{% block body %}
+    <h1>Ajouter votre association</h1>
+
+    {{ include('association/_form.html.twig') }}
+
+    {# <a href="{{ path('app_association_index') }}"><input type="button" class="btn btn-primary" value="Retourner liste des association"></a> #}
+{% endblock %}

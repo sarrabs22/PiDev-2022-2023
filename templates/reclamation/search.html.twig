@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Rechercher{% endblock %}
+
+{% block body %}
+
+{{ form_start(formSearch,{'attr':{'novalidate':'novalidate'}}) }}
+<center >
+
+{% form_theme formSearch 'bootstrap_5_horizontal_layout.html.twig' %} 
+
+    <div class="my-custom-class-for-errors">
+        {{ form_errors(formSearch) }}
+    </div>
+ 
+    <div class="col-lg-7">
+        {{ form_row(formSearch.MotifDeReclamation) }}
+    </div>
+    <div class="col-lg-7">
+        {{ form_row(formSearch.etat) }}
+    </div>
+    
+    <div class="col-lg-7">
+
+        {{ form_row(formSearch.categorieRec) }}
+    </div> 
+   
+
+{{ form_end(formSearch) }}
+</center>
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends 'BackBase.html.twig' %}
+
+{% block title %}Don index
+{% endblock %}
+
+{% block body %}
+	<h1>Don index</h1>
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th>NameD</th>
+				<th>Quantite</th>
+				<th>Description</th>
+				<th>Localisation</th>
+				<th>Image</th>
+				<th>Email</th>
+				<th>Numero</th>
+				<th>Category</th>
+				<th>actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for don in dons %}
+				<tr>
+					<td>{{ don.NameD }}</td>
+					<td>{{ don.quantite }}</td>
+					<td>{{ don.Description }}</td>
+					<td>{{ don.Localisation }}</td>
+					<td><img src="/uploads/{{ don.Image }}" alt="image Don" width="100" height="100"></td>
+					<td>{{ don.email }}</td>
+					<td>{{ don.Numero }}</td>
+					<td>{{ don.categoryD.NameCa }}</td>
+					<td>
+						<a href="{{ path('app_don_deleteN', {'id': don.id}) }}">
+							{{ include('don/delete2.html.twig') }}
+						</a>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="6">no records found</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+
+	<a href="/category/d/new">
+		<button type="button" class="btn btn-outline-primary">Create a new Category</button>
+	</a>
+
+{% endblock %}

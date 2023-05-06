@@ -1,0 +1,13 @@
+{# {% extends 'base.html.twig' %} #}
+{% extends 'base_back.html.twig' %}
+{% block title %}New Categorie{% endblock %}
+
+{% block body %}
+    <h1>Ajouter une nouvelle catégorie</h1>
+
+    {{ include('categorieAssociation/_form.html.twig') }}
+
+    <a href="{{ path('app_categorieAssociation_index') }}"><input type="button" class="btn btn-outline-info" value="Retouner a la liste des categorie"/a>
+
+
+{% endblock %}

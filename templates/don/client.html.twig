@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Don index
+{% endblock %}
+{# {% block stylesheets %}
+	<link href="{{ asset('css/Client.css')}}" rel="stylesheet">
+{% endblock %} #}
+{% block body %}
+
+<div class="product-container">
+	<div class="container">
+		<div class="row">
+			{% for don in dons %}
+				<div class="col-sm-4">
+					<div class="product-card">
+						<div class="card-thumbnail">
+							<a href="{{ path('app_don_showclient', {'id': don.id}) }}">
+								<img src="/uploads/{{ don.Image }}" alt="image Don" width="400" height="400">
+							</a>
+						</div>
+						<div class="card-content">
+							<div class="send">
+								<i href="#" class="fa fa-send-o" style="font-size:13px"></i>
+							</div>
+							<h1 class="card-title">
+								{{ don.NameD }}
+							</h1>
+
+							<h2 class="card-sub-title">
+								{{ don.Description }}
+							</h2>
+							<p class="description"></p>
+							<p>Quantity:
+								{{ don.quantite }}</p>
+							<ul class="list-inline post-meta">
+								<li href="{{ path('show_map') }}" class="time-stamp">
+									<i class="fa fa-map-marker" style="font-size:20px"></i>
+									{{ don.Localisation }}
+								</li>
+								<li class="card-comment">
+									<i class="fa fa-phone" style="font-size:20px;color:green"></i>
+									<a href="#">
+										{{ don.Numero }}</a>
+								</li>
+								<li class="card-comment">
+									<i class="fa fa-envelope" style="font-size:20px;color:blue"></i>
+									<a>{{ don.Email }}
+									</a>
+								</li>
+							</ul>
+							<a href="{{ path('app_don_claim', {'id': don.id}) }}">
+								<button type="button" class="btn btn-outline-primary">Claim</button>
+							</a>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+</div>
+
+
+{# {% block javascripts %}
+
+
+		<script src="js/client.js"></script>
+	{% endblock %} #}{%  endblock %}

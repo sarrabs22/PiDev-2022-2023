@@ -1,0 +1,96 @@
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
+<style>
+	table {
+		font-family: arial, sans-serif;
+		border-collapse: collapse;
+		width: 50%;
+		margin: 0 auto;
+	}
+	#htmlContent {
+		text-align: center;
+	}
+	td,
+	th,
+	button {
+		border: 1px solid #dddddd;
+		text-align: left;
+		padding: 8px;
+	}
+	button {
+		border: 1px solid black;
+	}
+	tr:nth-child(even) {
+		background-color: #dddddd;
+	}
+</style>
+<div id="htmlContent">
+	<table class="table">
+        <tbody>
+            <tr>
+                <th>Nom_d_utilisateur</th>
+                <td>{{ reclamation.User.Nom }}</td>
+            </tr>
+            <tr>
+                <th>Date_reclamation</th>
+                <td>{{ reclamation.dataReclamation ? reclamation.dataReclamation|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Etat</th>
+                <td>{{ reclamation.etat }}</td>
+            </tr>
+            <tr>
+                <th>MotifDeReclamation</th>
+                <td>{{ reclamation.MotifDeReclamation }}</td>
+            </tr>
+            <tr>
+                <th>NumTelephone</th>
+                <td>{{ reclamation.NumTelephone }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ reclamation.Email}}</td>
+            </tr>
+            <tr>
+                <th>Categorie_Rec</th>
+                <td>{{ reclamation.CategorieRec.Nom }}</td>
+            </tr>
+        </tbody>
+    </table>
+	<p>This code will be used to confirm the claim:
+	</p>
+	<p></p>
+	<p id="key"></p>
+</div>
+<div id="editor"></div>
+<center>
+
+	<p>
+		<button type="button" class="btn btn-outline-success" id="generatePDF">generate PDF</button>
+	</p>
+
+</center>
+<script>
+	/*function generateKey() {
+var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+var key = '';
+for (var i = 0; i < 10; i++) {
+key += chars.charAt(Math.floor(Math.random() * chars.length));
+}
+document.getElementById("key").innerHTML = key;
+}*/
+var doc = new jsPDF();
+var specialElementHandlers = {
+'#editor': function (element, renderer) {
+return true;
+}
+};
+$('#generatePDF').click(function () {
+doc.fromHTML($('#htmlContent').html(), 15, 15, {
+'width': 190,
+'elementHandlers': specialElementHandlers
+});
+doc.save('Confirmation.pdf');
+
+});
+</script>

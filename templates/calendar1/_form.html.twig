@@ -1,0 +1,40 @@
+<center>
+{{ form_start(form,{'attr': {'novalidate': 'novalidate'}}
+) }}
+{% form_theme form 'bootstrap_5_horizontal_layout.html.twig' %}
+<div class="my-custom-class-for-errors">
+	{{ form_errors(form) }}
+</div>
+
+<div class="col-lg-7">
+	{{ form_row(form.title) }}
+</div>
+
+<div class="col-lg-7">
+	{{ form_row(form.start) }}
+</div>
+<div class="col-lg-7">
+	{{ form_row(form.end) }}
+</div>
+<div class="col-lg-7">
+	{{ form_row(form.description) }}
+</div>
+<div class="col-lg-7">
+	{{ form_row(form.allDay) }}
+</div>
+<div class="col-lg-7">
+	{{ form_row(form.borderColor) }}
+</div>
+<div class="col-lg-7">
+	{{ form_row(form.backgroundColor) }}
+</div>
+
+<div class="col-lg-7">
+	{{ form_row(form.textColor) }}
+</div>
+
+    {{ form_widget(form) }}
+	    <button   class="btn">{{ button_label|default('Save') }}</button>
+
+{{ form_end(form) }}
+<center>

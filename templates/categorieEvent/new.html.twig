@@ -1,0 +1,15 @@
+{% extends 'base_back.html.twig' %}
+
+{% block title %}New Categorie{% endblock %}
+
+{% block body %}
+    <h1>Ajouter Categorie</h1>
+
+    
+    {{ include('categorie/_form.html.twig') }}
+    
+{% if erreur == 1 %}
+		<div class="alert alert-danger">{{ "La categorie est deja existante" }}</div>
+	{% endif %}
+    <a href="{{ path('app_categorie_index') }}"><input type="button" class="btn btn-outline-success" value="retour"</a>
+{% endblock %}

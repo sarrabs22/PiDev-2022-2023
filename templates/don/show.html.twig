@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Don
+{% endblock %}
+
+{% block body %}
+	<h1>Don</h1>
+
+	<table class="table">
+		<tbody>
+			<tr>
+				<th>Name</th>
+				<td>{{ don.NameD }}</td>
+			</tr>
+			<tr>
+				<th>Quantite</th>
+				<td>{{ don.quantite }}</td>
+			</tr>
+			<tr>
+				<th>Description</th>
+				<td>{{ don.Description }}</td>
+			</tr>
+			<tr>
+				<th>Localisation</th>
+				<td>{{ don.Localisation }}</td>
+			</tr>
+			<tr>
+				<th>Image</th>
+				<td><img src="/uploads/{{ don.Image }}" alt="image Don" width="100" height="100"></td>
+			</tr>
+			<tr>
+				<th>Email</th>
+				<td>{{ don.email }}</td>
+			</tr>
+			<tr>
+				<th>Numero</th>
+				<td>{{ don.Numero }}</td>
+			</tr>
+			<tr>
+				<th>Category</th>
+				<td>{{ don.categoryD.NameCa }}</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<a href="{{ path('app_don_index') }}">
+		<button type="button" class="btn btn-outline-success">Back to List</button>
+	</a>
+</a>
+
+<a href="{{ path('app_don_edit', {'id': don.id}) }}">
+	<button type="button" class="btn btn-outline-success">Edit</button>
+</a>
+
+{{ include('don/_delete_form.html.twig') }}{% endblock %}

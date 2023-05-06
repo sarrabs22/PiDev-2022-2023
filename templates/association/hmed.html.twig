@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+{% block style %}
+ <style>
+
+.row::after {
+  content: "";
+  clear: both;
+  display: table;
+  
+}
+.imgClasse{
+
+    float: left;
+
+}
+.column {
+  float: left;
+  width: 33.33%;
+  padding: 5px;
+
+ 
+
+}
+
+ 
+
+.row {
+  display: flex;
+
+  
+}
+
+.column {
+  flex: 33.33%;
+  padding: 5px;
+  
+}
+
+.image-ronde{
+  width : 150px; height : 150px;
+  border: none;
+  -moz-border-radius : 75px;
+  -webkit-border-radius : 75px;
+  border-radius : 75px;
+} 
+
+</style>
+{% endblock %}
+{% block body %}
+    <h1>Associations</h1>
+
+    <form method="get" action="{{ path('app_association_filter') }}">
+        {% for categorie in categories %}
+            <div>
+                <input type="radio" id="categorie_{{ categorie.id }}" name="categorie" value="{{ categorie.id }}" {% if app.request.query.get('categorie') == categorie.id %}checked{% endif %}>
+                <label for="categorie_{{ categorie.id }}">{{ categorie.nom }}</label>
+            </div>
+        {% endfor %}
+
+        <button type="submit">Filtrer</button>
+    </form>
+
+    <hr>
+
+    <ul>
+        {% for association in associations %}
+            
+            <div style="display:flex;justify-content:center;alighn-items:center;" data-inline="true">
+                {# <h2>{{ association.nom }}</h2>
+                <p>{{ association.adresse }}, {{ association.codepostal }} {{ association.ville }}</p> #}
+                <img   alt="logo" width="150" height="150" style="margin-right:10px;" class="rounded-circle"   src="{{ asset('uploads/' ~ association.image) }}" alt="{{ association.nom }}">
+            {# <p>Catégorie : {{ association.categorie.nom }}</p> #}
+            </div>
+       
+    {% endfor %}
+</ul>
+{% endblock %}

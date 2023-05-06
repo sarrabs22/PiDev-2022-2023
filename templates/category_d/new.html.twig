@@ -1,0 +1,16 @@
+{% extends 'base_back.html.twig' %}
+
+{% block title %}New CategoryD
+{% endblock %}
+
+{% block body %}
+	<h1>Create new CategoryD</h1>
+
+	{{ include('category_d/_form.html.twig') }}
+	{% if erreur == 1 %}
+		<div class="alert alert-danger">{{ "this category already exists" }}</div>
+	{% endif %}
+	<a href="{{ path('app_category_d_index') }}">
+		<button type="button" class="btn btn-outline-success">Back To List</button>
+	</a>
+{% endblock %}

@@ -1,0 +1,29 @@
+
+{{ form_start(form,{'attr':{'novalidate':'novalidate'}}) }}
+<center >
+
+{% form_theme form 'bootstrap_5_horizontal_layout.html.twig' %} 
+
+    <div class="my-custom-class-for-errors">
+        {{ form_errors(form) }}
+    </div>
+    
+    <div class="col-lg-7">
+        {{ form_row(form.MotifDeReclamation) }}
+    </div>
+    <div class="col-lg-7">
+        {{ form_row(form.NumTelephone) }}
+    </div>
+    <div class="col-lg-7">
+        {{ form_row(form.Image) }}
+    </div>
+    
+    <div class="col-lg-7">
+
+        {{ form_row(form.categorieRec) }}
+    </div> 
+   
+
+    <button class="btn">{{ button_label|default('Enregistrer') }}</button>
+{{ form_end(form) }}
+</center>

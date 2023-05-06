@@ -1,0 +1,52 @@
+{% extends 'backbase.html.twig' %} 
+
+{% block title %}Membre index{% endblock %}
+
+{% block body %}
+    <h1>Membre index</h1>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Mail</th>
+                <th>Age</th>
+                <th>peux-tu nous parler de tes passions ?</th>
+               
+                <th>Experience</th>
+                <th>ClubEntendu</th>
+                <th>Actions</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for membre in membres %}
+            <tr>
+                <td>{{ membre.id }}</td>
+                <td>{{ membre.nom }}</td>
+                <td>{{ membre.prenom }}</td>
+                <td>{{ membre.mail }}</td>
+                <td>{{ membre.age }}</td>
+                <td>{{ membre.passions }}</td>
+                
+                <td>{{ membre.experience }}</td>
+                <td>{{ membre.ClubEntendu }}</td>
+                <td>{{ membre.actions }}</td>
+                <td>
+                                    
+                    <a href="{{ path('app_membre_show', {'id': membre.id}) }}"><input type="button" class="btn btn-outline-success" value="afficher"></a>
+                    <a href="{{ path('app_membre_edit', {'id': membre.id}) }}"><input type="button" class="btn btn-outline-danger" value="Modifier"></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="11">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {# <a  class="btn btn-success" href="{{ path('app_membre_new') }}">Create new</a> #}
+{% endblock %}

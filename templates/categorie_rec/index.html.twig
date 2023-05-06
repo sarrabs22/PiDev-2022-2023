@@ -1,0 +1,38 @@
+{# {% extends 'base.html.twig' %} #}
+{% extends 'base_back.html.twig' %}
+
+{% block title %}Categorie{% endblock %}
+
+{% block body %}
+    <h1>Liste des Categories</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for categorie_rec in categorie_recs %}
+            <tr>
+                <td>{{ categorie_rec.id }}</td>
+                <td>{{ categorie_rec.Nom }}</td>
+                <td>
+                    <a href="{{ path('app_categorie_rec_show', {'id': categorie_rec.id}) }}"><button type="button" class="btn btn-secondary">Afficher</button></a>
+                    <a href="{{ path('app_categorie_rec_edit', {'id': categorie_rec.id}) }}"><button type="button" class="btn btn-secondary">Modifier</button></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+{{ knp_pagination_render(categorie_recs) }}
+    <a href="{{ path('app_categorie_rec_new') }}"><button type="button" class="btn btn-outline-success">Créer une nouvelle categorie</button></a>
+{% endblock %}

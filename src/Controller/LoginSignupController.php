@@ -107,7 +107,7 @@ class LoginSignupController extends AbstractController
             $remainingTime = $session->get('remaining_time');
 
             if ($remainingTime === null || $remainingTime <= time()) {
-                $remainingTime = time() + 30;
+                $remainingTime = time() + 50;
                 $session->set('remaining_time', $remainingTime);
                 $session->set('login_attempts', 0);
                 $session->save();

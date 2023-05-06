@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des reclamations{% endblock %}
+
+{% block body %}
+<body>
+    <center>
+     <h2><i> Liste des reclamations </i></h2>
+    </center>
+
+    <table class="table">
+        <thead>
+            <tr>
+                {#<th>Contenu</th>#}
+                <th>Nom_d_utilisateur</th>
+                <th>Date_reclamation</th>
+                <th>Etat</th>
+                <th>Motif De Reclamation</th>
+                <th>Image</th>
+                <th>NumTelephone</th>
+                <th>Email</th>
+                <th>CategorieRec</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for reclamation in resultOfSearch %}
+            <tr>
+                {#<td>{{ reclamation.contenu }}</td>#}
+                {% if reclamation.User %}
+                <td>{{ reclamation.User.Nom }}</td>
+                {% endif %}
+                <td>{{ reclamation.dataReclamation }}</td>
+                <td>{{ reclamation.etat }}</td>
+                <td>{{ reclamation.MotifDeReclamation }}</td>
+                <td><img src="/uploads/{{ reclamation.Image }}" alt="image reclamation" width="100" height="100"></td>
+                <td>{{ reclamation.NumTelephone }}</td>
+                <td>{{ reclamation.Email }}</td>
+                <td>{{ reclamation.CategorieRec.Nom }}</td>
+                <td>
+                    <a href="{{ path('app_reclamation_show', {'id': reclamation.id}) }}"><button type="button" class="btn btn-secondary">Afficher</button></a>
+                    <a href="{{ path('app_reclamation_edit', {'id': reclamation.id}) }}"><button type="button" class="btn btn-secondary">Modifier</button></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_reclamation_index') }}"><button type="button" class="btn btn-outline-success">Retour</button></a>
+    </body>
+{% endblock %}

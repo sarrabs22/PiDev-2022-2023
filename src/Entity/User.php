@@ -57,6 +57,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     )]
     #[Groups("user")]
     private ?string $NumTelephone = null;
+    
 
     #[ORM\Column(length: 255)]
     #[Groups("user")]
@@ -101,10 +102,40 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\OneToMany(targetEntity:'Message',mappedBy:'user')]
     private $messages ;
+
+    #[ORM\Column(nullable: true)]
+    #[Groups("user")]
+    private ?int $blocked = null;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Annonces::class)]
+    private Collection $annonces;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Commentaires::class)]
+    private Collection $commentaires;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Comments::class)]
+    private Collection $comments;
+
+    #[ORM\ManyToMany(targetEntity: Evenement::class, inversedBy: 'users')]
+    private Collection $evenement;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Association::class)]
+    private Collection $associations;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Don::class)]
+    private Collection $dons;
+
+   
     public function __construct()
     {
         
         $this->exploits = new ArrayCollection();
+        $this->annonces = new ArrayCollection();
+        $this->commentaires = new ArrayCollection();
+        $this->comments = new ArrayCollection();
+        $this->evenement = new ArrayCollection();
+        $this->associations = new ArrayCollection();
+        $this->dons = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -316,5 +347,192 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function getBlocked(): ?int
+    {
+        return $this->blocked;
+    }
+
+    public function setBlocked(?int $blocked): self
+    {
+        $this->blocked = $blocked;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Annonces>
+     */
+    public function getAnnonces(): Collection
+    {
+        return $this->annonces;
+    }
+
+    public function addAnnonce(Annonces $annonce): self
+    {
+        if (!$this->annonces->contains($annonce)) {
+            $this->annonces->add($annonce);
+            $annonce->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnnonce(Annonces $annonce): self
+    {
+        if ($this->annonces->removeElement($annonce)) {
+            // set the owning side to null (unless already changed)
+            if ($annonce->getUser() === $this) {
+                $annonce->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Commentaires>
+     */
+    public function getCommentaires(): Collection
+    {
+        return $this->commentaires;
+    }
+
+    public function addCommentaire(Commentaires $commentaire): self
+    {
+        if (!$this->commentaires->contains($commentaire)) {
+            $this->commentaires->add($commentaire);
+            $commentaire->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentaire(Commentaires $commentaire): self
+    {
+        if ($this->commentaires->removeElement($commentaire)) {
+            // set the owning side to null (unless already changed)
+            if ($commentaire->getUser() === $this) {
+                $commentaire->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Comments>
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comments $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments->add($comment);
+            $comment->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comments $comment): self
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getUser() === $this) {
+                $comment->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Evenement>
+     */
+    public function getEvenement(): Collection
+    {
+        return $this->evenement;
+    }
+
+    public function addEvenement(Evenement $evenement): self
+    {
+        if (!$this->evenement->contains($evenement)) {
+            $this->evenement->add($evenement);
+        }
+
+        return $this;
+    }
+
+    public function removeEvenement(Evenement $evenement): self
+    {
+        $this->evenement->removeElement($evenement);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Association>
+     */
+    public function getAssociations(): Collection
+    {
+        return $this->associations;
+    }
+
+    public function addAssociation(Association $association): self
+    {
+        if (!$this->associations->contains($association)) {
+            $this->associations->add($association);
+            $association->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAssociation(Association $association): self
+    {
+        if ($this->associations->removeElement($association)) {
+            // set the owning side to null (unless already changed)
+            if ($association->getUser() === $this) {
+                $association->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Don>
+     */
+    public function getDons(): Collection
+    {
+        return $this->dons;
+    }
+
+    public function addDon(Don $don): self
+    {
+        if (!$this->dons->contains($don)) {
+            $this->dons->add($don);
+            $don->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDon(Don $don): self
+    {
+        if ($this->dons->removeElement($don)) {
+            // set the owning side to null (unless already changed)
+            if ($don->getUser() === $this) {
+                $don->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    
     
 }

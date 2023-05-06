@@ -1,0 +1,123 @@
+
+
+{% extends 'base.html.twig' %} 
+{% block title %}
+acceuil 
+{% endblock %}
+
+{% block style %}
+ <style>
+
+.row::after {
+  content: "";
+  clear: both;
+  display: table;
+  
+}
+.imgClasse{
+
+    float: left;
+
+}
+.column {
+  float: left;
+  width: 33.33%;
+  padding: 5px;
+
+ 
+
+}
+
+ 
+
+.row {
+  display: flex;
+
+  
+}
+
+.column {
+  flex: 33.33%;
+  padding: 5px;
+  
+}
+
+.image-ronde{
+  width : 150px; height : 150px;
+  border: none;
+  -moz-border-radius : 75px;
+  -webkit-border-radius : 75px;
+  border-radius : 75px;
+} 
+
+</style>
+
+{% endblock %}
+
+
+
+{% block body %}
+<br>
+<br>
+<br>
+<br>
+<br>
+<center>
+
+ <a data-inline="true" class="btn btn-primary py-2 px-3 animated slideInDown" href="/membre/new">
+                                         Devenir un menmbre dans une association
+                                        <div class="d-inline-flex btn-sm-square bg-white text-primary rounded-circle ms-2">
+                                            <i class="fa fa-arrow-right"></i>
+                                        </div>
+</a>
+
+ <a data-inline="true" class="btn btn-primary py-2 px-3 animated slideInDown" href="/association/new">
+                                        s'inscrire en tant qu' association
+                                        <div class="d-inline-flex btn-sm-square bg-white text-primary rounded-circle ms-2">
+                                            <i class="fa fa-arrow-right"></i>
+                                        </div>
+ </a>
+
+ 
+
+
+</center>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<div style="display:flex;justify-content:center;alighn-items:center;" data-inline="true">
+
+    
+{% for association in associations %}
+
+  
+  {# <div class="rounded-circle" data-inline="true" >
+    <img src="/uploads/{{ association.Image }}" alt="logo" width="150" height="150" >
+  </div> #}
+
+
+  
+     <img src="/uploads/{{ association.Image }}" alt="logo" width="150" height="150" style="margin-right:10px;" class="rounded-circle">
+
+  
+
+
+{# class="imgClasse" #}
+
+{% endfor %}
+  </div>
+{% endblock %}
+
+

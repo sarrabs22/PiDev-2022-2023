@@ -17,41 +17,14 @@ class TestController extends AbstractController
     #[Route('/test', name: 'app_test')]
     public function index(): Response
     {
-       
-        $config = [
-            'hipchat_urls' => [
-                'YOUR-INTEGRATION-URL-1',
-                'YOUR-INTEGRATION-URL-2',
-            ],
-            'nexmo_key' => 'YOUR-NEXMO-APP-KEY',
-            'nexmo_secret' => 'YOUR-NEXMO-APP-SECRET',
-            'microsoft_bot_handle' => 'YOUR-MICROSOFT-BOT-HANDLE',
-            'microsoft_app_id' => 'YOUR-MICROSOFT-APP-ID',
-            'microsoft_app_key' => 'YOUR-MICROSOFT-APP-KEY',
-            'slack_token' => 'xoxe.xoxp-1-Mi0yLTIzODM4MDMzNzUtNDg4MzQ3ODIwMzExMS00ODk3ODgyMjI1ODI3LTQ4OTUwNzQxODAxODEtYzkyZmU0MGE3MWMyOGI5ZjRhNGJlNjhmMzA2ZWUxMjg3MzRjMzM1NDE0YmVlOTYzMzZlNzBkNjExMjdhZjgxYg',
-            'telegram_token' => 'YOUR-TELEGRAM-TOKEN-HERE',
-            'facebook_token' => 'YOUR-FACEBOOK-TOKEN-HERE',
-            'facebook_app_secret' => 'YOUR-FACEBOOK-APP-SECRET-HERE',
-            'wechat_app_id' => 'YOUR-WECHAT-APP-ID',
-            'wechat_app_key' => 'YOUR-WECHAT-APP-KEY',
-        ];
-       // create an instance
-$botman = BotManFactory::create($config);
-
-// give the bot something to listen for.
-$botman->hears('hello', function (BotMan $bot) {
-    $bot->reply('Hello yourself.');
-});
-
-// start listening
-$botman->listen();
+  
        
        // $this->denyAccessUnlessGranted('ROLE_ADMIN');
         /* $profilePicture = $user->getImage(); */
 
         return $this->render('test/index.html.twig', [
             'controller_name' => 'TestController',
-            'config' => $config,
+           
         ]);
     }
     #[Route('/test/message', name: 'app_test_message', methods: ['POST','GET'])]
@@ -84,14 +57,23 @@ $botman->listen();
     if (stripos($message, 'objectif') !== false) {
         $responseMessage = 'notre objectif est de rendre les ressources de notre planète plus durable';
     }
-    if (stripos($message, 'don') !== false && stripos($message, 'donner') !== false) {
+    if (stripos($message, 'don') !== false || stripos($message, 'donner') !== false) {
         $responseMessage = 'Vous pouvez donner un don a travers l interface don de l utilisateur si vous etes inscrits en tant que donneur';
     }
-    if (stripos($message, 'don') !== false && stripos($message, 'recuperer') !== false) {
+    if (stripos($message, 'don') !== false || stripos($message, 'recuperer') !== false) {
         $responseMessage = 'Vous pouvez recuperer un don a travers l interface de don si vous etes inscrits en tant que receveur';
     }
     if (stripos($message, 'aide') !== false ) {
         $responseMessage = 'Notre site vous offre la possiblite de recuperer ou donner des objets ,vous pouvez recuperer des objets ou donner des objets,il vous suffit simplement de saisir les informations de vos objets';
+    }
+    if (stripos($message, 'association') !== false ) {
+        $responseMessage = 'Vous pouvez creez une association et cree des membres et faire des associations';
+    }
+    if (stripos($message, 'annonce') !== false ) {
+        $responseMessage = 'Vous pouvez creez une annonce a partir le nav bar en haut';
+    }
+    if (stripos($message, 'creation') !== false ) {
+        $responseMessage = 'Vous pouvez creez un compte et participer en different activite dans ce site';
     }
     
     // If no response message was set, provide a generic response

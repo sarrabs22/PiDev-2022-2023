@@ -19,24 +19,24 @@ class MailerController extends AbstractController
     {
 
 
-        /* $transport = Transport::fromDsn('smtp://genereux.scaredtocompile@gmail.com:qxrosldtlgtwnpky@smtp.gmail.com:587');
+         $transport = Transport::fromDsn('smtp://genereux.scaredtocompile@gmail.com:qxrosldtlgtwnpky@smtp.gmail.com:587');
             $mailer= new Mailer($transport);
     
             $email=(new TemplatedEmail());
     
             $email->from('genereux.scaredtocompile@gmail.com');
-            $email->to('benromdhane.aziz@esprit.tn');
+            $email->to('dhafer.souid@esprit.tn');
             $email->htmlTemplate('confirmationEmail.html.twig');
-
+            $email->html('<p> salut test <p>');
             /* $this->renderView(
                 // templates/hello/email.txt.twig
                 'hello/email.txt.twig',
                 ['name' => $name]
             ) */
     
-           // $mailer->send($email);
+            $mailer->send($email);
         
-        return $this->render('mailer/index.html.twig', [
+        return $this->render('test/index.html.twig', [
             'controller_name' => 'MailerController',
         ]);
     }

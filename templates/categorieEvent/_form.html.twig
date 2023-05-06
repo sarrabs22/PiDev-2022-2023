@@ -1,0 +1,23 @@
+ {% form_theme form 'bootstrap_5_horizontal_layout.html.twig' %} 
+<center >
+
+
+{{ form_start(form,{'attr':{'novalidate':'novalidate'}}) }}
+    <div class="my-custom-class-for-errors">
+        {{ form_errors(form) }}
+    </div>
+   
+    
+  
+    <div class="col-lg-12">
+        {{ form_row(form.nom_categ_event) }}
+    </div> 
+
+    <button class="btn btn-outline-success">{{ button_label|default('Save') }}</button>
+    <a href="{{ path('app_categorie_index') }}"><input type="button" class="btn btn-outline-success" value="retour"</a>
+{{ form_end(form) }}
+
+
+
+</center>
+

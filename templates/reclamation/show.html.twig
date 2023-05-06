@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reclamation{% endblock %}
+
+{% block body %}
+    <center>
+     <h2><i> Reclamation </i></h2>
+    </center>
+
+    <table class="table">
+        <tbody>
+            
+            {#<tr>
+                <th>Contenu</th>
+                <td>{{ reclamation.contenu }}</td>
+            </tr>#}
+            <tr>
+                <th>Nom_d_utilisateur</th>
+                <td>{{ reclamation.User.Nom }}</td>
+            </tr>
+            <tr>
+                <th>Date_reclamation</th>
+                <td>{{ reclamation.dataReclamation ? reclamation.dataReclamation|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Etat</th>
+                <td>{{ reclamation.etat }}</td>
+            </tr>
+            <tr>
+                <th>MotifDeReclamation</th>
+                <td>{{ reclamation.MotifDeReclamation }}</td>
+            </tr>
+            <tr>
+                <th>Image</th>
+                <td><img src="/uploads/{{ reclamation.Image }}" alt="image reclamation" width="100" height="100"></td>
+            </tr>
+            <tr>
+                <th>NumTelephone</th>
+                <td>{{ reclamation.NumTelephone }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ reclamation.Email}}</td>
+            </tr>
+            <tr>
+                <th>Categorie_Rec</th>
+                <td>{{ reclamation.CategorieRec.Nom }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_reclamation_index') }}">Retour</a>
+
+    <a href="{{ path('app_reclamation_edit', {'id': reclamation.id}) }}"><button type="button" class="btn btn-outline-success">Modifier</button></a>
+    <a href="{{ path('app_reclamation_pdf', {'id': reclamation.id}) }}"><button type="button" class="btn btn-outline-success">pdf</button></a>
+
+    {{ include('reclamation/_delete_form.html.twig') }}
+{% endblock %}

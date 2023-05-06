@@ -1,0 +1,13 @@
+{% extends 'backbase.html.twig' %}
+
+{% block title %}Edit Calendar1{% endblock %}
+
+{% block body %}
+    {# <h1>Edit Calendar1</h1> #}
+
+    {{ include('calendar1/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_calendar1_index') }}"><input type="button" class="btn btn-outline-danger" value="Modifier"></a>
+
+    {{ include('calendar1/_delete_form.html.twig') }}
+{% endblock %}

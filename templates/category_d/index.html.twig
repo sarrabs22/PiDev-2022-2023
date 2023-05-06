@@ -1,0 +1,45 @@
+{% extends 'base_back.html.twig' %}
+
+{% block title %}CategoryD index
+{% endblock %}
+
+{% block body %}
+	<h1>CategoryD index</h1>
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>NameCa</th>
+				<th>actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for category_d in category_ds %}
+				<tr>
+					<td>{{ category_d.id }}</td>
+					<td>{{ category_d.NameCa }}</td>
+					<td>
+						<a href="{{ path('app_category_d_show', {'id': category_d.id}) }}">
+							<button type="button" class="btn btn-outline-success">Show</button>
+						</a>
+						<a href="{{ path('app_category_d_edit', {'id': category_d.id}) }}">
+							<button type="button" class="btn btn-outline-danger">Edit</button>
+						</a>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="3">no records found</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+	<a href="{{ path('app_category_d_new') }}">
+		<button type="button" class="btn btn-outline-success">Create a new Category</button>
+	</a>
+	<a href="/don/">
+		<button type="button" class="btn btn-outline-success">Back to Don</button>
+	</a>
+{% endblock %}

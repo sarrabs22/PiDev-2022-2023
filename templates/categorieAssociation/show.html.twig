@@ -1,0 +1,29 @@
+{# {% extends 'base.html.twig' %} #}
+{% extends 'base_back.html.twig' %}
+{% block title %}Categorie{% endblock %}
+
+{% block body %}
+    <h1>Categorie</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ categorie.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ categorie.nom }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a class="btn btn-outline-success"  href="{{ path('app_categorieAssociation_index') }}"  >back to list</a>
+
+    <a class="btn btn-outline-success" href="{{ path('app_categorieAssociation_edit', {'id': categorie.id}) }}">edit</a>
+
+
+
+
+    {{ include('categorieAssociation/_delete_form.html.twig') }}
+{% endblock %}

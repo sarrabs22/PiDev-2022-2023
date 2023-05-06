@@ -1,0 +1,48 @@
+{% extends 'base_back.html.twig' %}
+
+{% block title %}Annonces index{% endblock %}
+
+
+{% block body %}
+    <h1>Annonces index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                {# <th>Id</th> #}
+                <th>Description</th>
+                <th>Image</th>
+                <th>adresse</th>
+                <th>Date de publication</th>
+                <th>Categorie</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        {% for annonce in annonces %}
+            <tr>
+                {# <td>{{ annonce.id }}</td> #}
+                <td>{{ annonce.Description }}</td>
+                <td><img src="/uploads/{{ annonce.image }}" alt="Pas d'image" width="100" height="100"></td>
+                <td>{{ annonce.adresse }}</td>
+                <td>{{ annonce.DatePublication }}</td>
+                <td>{{ annonce.categorie.nom }}</td>
+                <td>
+                <a href="{{ path('app_annonce_crud_delete') }}"><button type="button" class="btn btn-outline-danger" >Supprimer</button></a>
+
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    
+    <a href="{{ path('app_categorie_index') }}">Back</a>
+
+    
+    
+{% endblock %}

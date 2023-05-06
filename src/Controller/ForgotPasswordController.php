@@ -20,11 +20,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 class ForgotPasswordController extends AbstractController
 {
-    #[Route('/forgot/password', name: 'app_forgot_password')]
+    #[Route('/forgotPassword', name: 'app_forgot_password')]
     public function index(EntityManagerInterface $entityManager,Request $request): Response
     {
         $user=$this->getUser();
-       
+      
         $form = $this->createForm(ResetFormType::class);
         $form->handleRequest($request);
         
@@ -78,8 +78,6 @@ class ForgotPasswordController extends AbstractController
                     $form->get('password')->getData()
                 )
             );
-
-            
 
         }
         $entityManager->persist($user);

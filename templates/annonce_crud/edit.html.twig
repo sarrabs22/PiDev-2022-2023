@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Annonces{% endblock %}
+
+{% block body %}
+    <h1>Edit Annonces</h1>
+
+    {{ include('annonce_crud/_form.html.twig', {'button_label': 'Update'}) }}
+<a href="{{ path('app_annonce_crud_index') }}"><button type="button" class="btn btn-outline-success" >Retour</button></a>
+
+
+    {{ include('annonce_crud/_delete_form.html.twig') }}
+{% endblock %}

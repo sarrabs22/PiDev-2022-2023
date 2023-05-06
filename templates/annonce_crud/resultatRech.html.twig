@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Annonces index{% endblock %}
+
+{% block body %}
+  
+
+
+
+    <div class="container-xxl py-5">
+        <div class="container p-5 my-5 "  >
+            <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" >
+                <div class="d-inline-block rounded-pill bg-secondary text-primary py-1 px-3 mb-3">♥</div>
+                <h1 class="display-6 mb-5">Les annonces</h1>
+            </div>
+             
+            <div class="row g-4 " style="display:inline-block;justify-content:center;" data-wow-delay="0.7s" >
+                           {% for annonce in resultOfSearch %}
+
+                <div class="col-lg-3 col-md-5 wow fadeInUp"  style=" display: inline-block;justify-content:right;"    >
+                    <div class="team-item position-relative rounded overflow-hidden">
+                        <div class="overflow-hidden">
+                         
+                            <img class="img-fluid" src="/uploads/{{ annonce.image }}"  >
+                             
+                        </div>
+                        <div class="team-text bg-light text-center p-4">
+                      
+                           {#  <h5>{{ evenement.NomEvent }}</h5> #}
+                            
+                            <p class="text-primary">{{ annonce.description }}</p>
+                            
+                            <div class="team-social text-center">
+                            
+                           
+                           
+                            <td><a href="{{ path('app_annonce_crud_show', {'id': annonce.id}) }}"><input type="button" class="btn btn-outline-success" value="afficher"</a></td>
+                           
+                           
+
+                            </div>
+                        </div>
+                    </div>
+                  
+                </div>
+             
+              {% endfor %}
+            </div>
+         </div>
+
+    </div>
+
+    {% endblock %}

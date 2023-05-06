@@ -1,0 +1,27 @@
+{# {% extends 'base.html.twig' %} #}
+{% extends 'base_back.html.twig' %}
+
+{% block title %}CategorieRec{% endblock %}
+
+{% block body %}
+    <h1>CategorieRec</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ categorie_rec.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ categorie_rec.Nom }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_categorie_rec_index') }}">back to list</a>
+
+    <a href="{{ path('app_categorie_rec_edit', {'id': categorie_rec.id}) }}">edit</a>
+
+    {{ include('categorie_rec/_delete_form.html.twig') }}
+{% endblock %}

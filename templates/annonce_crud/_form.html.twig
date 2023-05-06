@@ -1,0 +1,33 @@
+{{ form_start(form,{'attr':{'novalidate':'novalidate'}}) }}
+<center >
+
+{% form_theme form 'bootstrap_5_horizontal_layout.html.twig' %} 
+
+    <div class="my-custom-class-for-errors">
+        {{ form_errors(form) }}
+    </div>
+    <div class="col-lg-7">
+        {{ form_row(form.Description) }}
+    </div> 
+    <div class="col-lg-7">
+        {{ form_row(form.Image) }}
+    </div>
+    <div class="col-lg-7">
+        {{ form_row(form.adresse) }}
+    </div>
+    <div class="col-lg-7">
+        {{ form_row(form.Categorie) }}
+    </div>
+    
+    
+    
+   
+    
+   
+        <button class="btn btn-outline-success" >{{ button_label|default('Save') }}</button>
+         <a href="{{ path('app_annonce_crud_index') }}"><input type="button" class="btn btn-outline-success" value="retour"</a>
+       
+{{ form_end(form) }}
+
+</center>
+

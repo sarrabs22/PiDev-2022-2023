@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+   
+        
+   
+   <div class="product-container">
+  <div class="container" >
+   
+    <div class="row" style="display:inline-block;"  >
+      {% for evenement in resultOfSearch %}
+      <div class="col-lg-3  col-sm-7" style="display:inline-block">
+        <div class="product-card">
+          <div class="card-thumbnail">
+            <img class="img-responsive" src="/uploads/{{ evenement.image_event }}" width="50" height="300">
+          </div>
+          <div class="card-content">
+            <div class="send">
+              <i class="fa fa-send fa-2x"></i>
+            </div>
+            <h1 class="card-title">
+              {{ evenement.NomEvent }}
+            </h1>
+            <h2 class="card-sub-title">
+             {{ evenement.localisation }}
+            </h2>
+            <p class="description">
+              debut: {{ evenement.dateDebut ? evenement.dateDebut|date('Y-m-d') : '' }} fin: {{ evenement.datefin ? evenement.datefin|date('Y-m-d') : '' }}
+            </p>
+             {% if user in evenement.user %}
+                            <td><a href="{{ path('cancelP', {'id': evenement.id}) }}"><input type="button" class="btn btn-outline-success" value="Annuler participation"</a></td>
+                            {% else %}
+                            <td><a href="{{ path('addParticipation', {'id': evenement.id}) }}"><input type="button" class="btn btn-outline-success" value="Participer"</a></td>
+                            {% endif %}
+
+            
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+        
+   
+            
+   
+
+    
+        <a href="{{ path('app_evenement_index') }}"><input type="button" class="btn btn-outline-success" value="Retour toute liste"</a>
+
+
+    
+    
+
+{% endblock %} 
