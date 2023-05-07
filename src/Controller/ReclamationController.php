@@ -14,6 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry as PersistenceManagerRegistry;
 use Symfony\Component\HttpFoundation\File\File;
 use App\Form\SearchType;
+use App\Repository\UserRepository;
 use DateTime;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Doctrine\Persistence\ManagerRegistry;
@@ -193,13 +194,16 @@ class ReclamationController extends AbstractController
 
     }
     #[Route('/new', name: 'app_reclamation_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, ReclamationRepository $reclamationRepository, PersistenceManagerRegistry $doctrine): Response
+    public function new(Request $request, ReclamationRepository $reclamationRepository, PersistenceManagerRegistry $doctrine,UserRepository $repouser): Response
     {
+      $user = $repouser->find($this->getUser()->getUserIdentifier());
         $reclamation = new Reclamation();
         $DateActuelle = new \DateTime('NOW');
         $formattedDate = $DateActuelle->format('Y-m-d H:i:s');
         $reclamation->setDataReclamation($formattedDate);
         $reclamation->setEtat('en cours');
+        $reclamation->setUser($user);
+        $reclamation->setEmail($user->getEmail());
         $form = $this->createForm(ReclamationType::class, $reclamation);
         $form->handleRequest($request);
 
@@ -209,7 +213,7 @@ class ReclamationController extends AbstractController
             $entityManager->persist($reclamation);
             $entityManager->flush();
                   // Send SMS notification to admin
-        $accountSid = 'AC9915eed7fbb7f651dc65d44a18a7eca4';
+       /* $accountSid = 'AC9915eed7fbb7f651dc65d44a18a7eca4';
         $authToken = 'b37aef6701292755e6ac39fbed963e8d';
         $client = new Client($accountSid, $authToken);
         $message = $client->messages->create(
@@ -218,9 +222,9 @@ class ReclamationController extends AbstractController
                 'from' => '+15674092876', // replace with your Twilio phone number
                 'body' => 'Une réclamation a bien été envoyée !' // replace with your message
             ]
-        );
+        );*/
             $uploadedFile = $form['Image']->getData();
-            $destination = $this->getParameter('kernel.project_dir') . '/public/uploads';
+            $destination = 'C:\xampp\htdocs\public';
             $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
             $newFile = $originalFilename . '-' . uniqid() . '.' . $uploadedFile->guessExtension();
             $uploadedFile->move(
