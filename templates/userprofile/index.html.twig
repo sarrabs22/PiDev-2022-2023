@@ -46,11 +46,19 @@
           <div class="card-body p-4 text-black">
             <div class="mb-5">
               <p class="lead fw-normal mb-1">About</p>
-              <div class="p-4" style="background-color: #f8f9fa;">
-                {# <p class="font-italic mb-1">Web Developer</p>
-                <p class="font-italic mb-1">Lives in New York</p>
-                <p class="font-italic mb-0">Photographer</p> #}
-              </div>
+             <div class="p-4" style="background-color: #f8f9fa;">
+            {% if reclamationStatuses|length > 0 %}
+                <h4>Vos Reclamations</h4>
+                <ul>
+                    {% for i in 0..reclamationStatuses|length-1 %}
+                        <li>Votre Reclamation de {{ reclamationNames[i] }} est  {{ reclamationStatuses[i] }} publié le {{ reclamationDates[i] }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>You have no reclamations.</p>
+            {% endif %}
+        </div>
+
             </div>
             <div class="d-flex justify-content-between align-items-center mb-4">
               <p class="lead fw-normal mb-0">Exploit</p>
