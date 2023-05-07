@@ -52,6 +52,7 @@
                     <li class="nav-item active">
                         <a class="nav-link" href="index.html">Home</a>
                     </li>
+                    {% if app.user %}
                      {% if app.user.type == "Donneur" %} 
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('app_don_index') }}">Dons</a>
@@ -60,6 +61,7 @@
                   <li class="nav-item">
                      <a class="nav-link" href="{{ path('app_don_Client') }}">Dons</a>
                      </li>
+                    {% endif %}
                     {% endif %}
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('app_annonce_crud_index') }}">Annonces</a>
