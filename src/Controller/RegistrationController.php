@@ -44,7 +44,7 @@ class RegistrationController extends AbstractController
                     $form->get('password')->getData()
                 )
             );
-
+            $user->setRoles(["ROLE_USER"]);
             $entityManager->persist($user);
             $entityManager->flush();
             //$verificationCode = uniqid(); // Generate a unique verification code

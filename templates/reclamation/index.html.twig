@@ -69,8 +69,10 @@
         </thead>
         <tbody>
         {% for reclamation in reclamations %}
+                        {% if app.user.id == reclamation.user.id %}
             <tr>
                 {#<td>{{ reclamation.contenu }}</td>#}
+
                 {% if reclamation.User %}
                 <td>{{ reclamation.User.Nom }}</td>
                 {% endif %}
@@ -95,6 +97,7 @@
             <tr>
                 <td colspan="5">no records found</td>
             </tr>
+             {% endif %}
         {% endfor %}
         </tbody>
     </table>

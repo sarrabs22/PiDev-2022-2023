@@ -31,7 +31,10 @@
       <th style="white-space: nowrap;">CategorieRec</th>
       <th style="white-space: nowrap;">Utilisateur qui a envoyé la reclamation</th>
       <th style="white-space: nowrap;">Numero de téléphone de l'utilisateur qui a envoyé la réclamation</th>
+     
       <th style="white-space: nowrap;">Actions</th>
+       <th style="white-space: nowrap;">profile de l'utilisateur qui a envoyé la reclamation</th>
+      
       </tr>
     </thead>
     <tbody>
@@ -40,7 +43,7 @@
           <td>{{ reclamation.dataReclamation }}</td>
           <td id="status{{ reclamation.id }}">{{ reclamation.etat }}</td>
           <td>{{ reclamation.MotifDeReclamation }}</td>
-          <td><img src="/uploads/{{ reclamation.Image }}" alt="image reclamation" width="100" height="100"></td>
+          <td><img src="http://localhost/public/{{ reclamation.Image }}" alt="image reclamation" width="100" height="100"></td>
           <td>{{ reclamation.NumTelephone }}</td>
           <td>{{ reclamation.Email }}</td>
           <td>{{ reclamation.CategorieRec.Nom }}</td>
@@ -48,6 +51,9 @@
           <td>{{ reclamation.user.NumTelephone }}</td>
           <td>
             <a onclick="changeStatus('{{ reclamation.id }}')" href="{{ path('app_status', { 'id': reclamation.id }) }}"><button type="button" class="btn btn-secondary">Valider la reclamation</button></a>
+          </td>
+          <td>
+            <a  href="{{ path('app_otheruser', { 'id': reclamation.user.id }) }}"><button type="button" class="btn btn-secondary">Profil</button></a>
           </td>
           <td>
             <a href="{{ path('app_reclamation_delete', {'id': reclamation.id}) }}">
