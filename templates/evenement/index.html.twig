@@ -16,89 +16,60 @@
     <link href="//fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700' rel='stylesheet'>
     {{ include('@MercurySeriesFlashy/flashy.html.twig') }} #}
-   <link rel="stylesheet" href="{{ asset('css/style2.css') }}">
-<link rel="stylesheet" href="{{ asset('css/responsive2.css') }}">
-<link rel="stylesheet" href="{{ asset('css/test.css') }}">
-<link rel="stylesheet" href="{{ asset('css/animate.min.css') }}">
+  
 
-<div class="product-container">
+<link rel="stylesheet" href="{{ asset('css/test.css') }}"> 
 
-  <div class="container"  >
-   
-    <div class="row" style="display:inline-block;"  >
-      {% for evenement in evenements %}
-      <div class="col-lg-3  col-sm-6" style="display:inline-block">
-        <div class="product-card">
-          <div class="card-thumbnail">
-          <a href="{{ path('app_evenement_show', {'id': evenement.id}) }}">
-            <img class="img-responsive" src="/uploads/{{ evenement.image_event }}" width="50" height="300">
-            </a>
+
+
+
+  <div class="container">
+  <h1>Evenements</h1>
+  <div class="row">
+    <div class="col-md-8">
+      <ul class="cards">
+        {% for evenement in evenements %}
+        <li class="cards_item">
+          <div class="card">
+            <div class="img">
+              <a href="{{ path('app_evenement_show', {'id': evenement.id}) }}">
+                <img src="/uploads/{{ evenement.image_event }}" width="500" height="300">
+              </a>
+            </div> 
+            <div class="card_content">
+              <h2 class="card_title">{{ evenement.NomEvent }}</h2>
+              <p class="card_text">Adresse: {{ evenement.localisation }}</p>
+              {% if user in evenement.users %}
+                <td><a href="{{ path('cancelP', {'id': evenement.id}) }}"><input type="button" class="btn card_btn" value="Annuler participation"></a></td>
+              {% else %}
+                <td><a href="{{ path('addParticipation', {'id': evenement.id}) }}"><input type="button" class="btn card_btn" value="Participer"></a></td>
+              {% endif %}
+            </div> 
           </div>
-          <div class="card-content">
-            <div class="send">
-              <i class="fa fa-send fa-2x"></i>
-            </div>
-            <h1 class="card-title">
-              {{ evenement.NomEvent |replace({"2g1c": '*',
- "2 girls 1 cup": '*',
- "acrotomophilia": '*',
- "ahole": '*',
- "anal": '*',
-
- "brunette action": '*',
- "bukkake": '*',
- "bulldyke": '*',
-
- "kinky": '*',
- "knobbing": '*',
- "knob": '*',
- "knobs": '*',
- "knobz": '*',
- "kunt": '*',
- "kunts": '*',
- "kuntz": '*',
- "leather restraint": '*',
- "leather straight jacket": '*',
- "lemon party": '*',
- "lolita": '*',
- "lovemaking": '*',
- "Lesbian": '*',
- "Lezzian": '*',
-
- "yed": '*',
- "zabourah": '*',
-			 })  }}
-            </h1>
-            <h2 class="card-sub-title">
-             {{ evenement.localisation }}
-            </h2>
-            <p class="description">
-              debut: {{ evenement.dateDebut ? evenement.dateDebut|date('d-m-Y') : '' }} fin: {{ evenement.datefin ? evenement.datefin|date('d-m-Y') : '' }}
-            </p>
-             {% if user in evenement.users %}
-                            <td><a href="{{ path('cancelP', {'id': evenement.id}) }}"><input type="button" class="btn btn-outline-success" value="Annuler participation"</a></td>
-                            {% else %}
-                            <td><a href="{{ path('addParticipation', {'id': evenement.id}) }}"><input type="button" class="btn btn-outline-success" value="Participer"</a></td>
-                            {% endif %}
-
-            
-          </div>
-        </div>
+        </li>
+        {% endfor %}
+      </ul>
+     {#  {{ knp_pagination_render(evenements) }} #}
+    </div>
+    <div class="col-md-4">
+      <div class="mb-3">
+        <a href="{{ path('app_evenement_new') }}">
+          <input type="button" class="btn btn-outline-success" value="Nouveau événement">
+        </a>
       </div>
-      {% endfor %}
+      <div class="mb-3">
+        <a href="{{ path('app_evenement_tri') }}">
+          <input type="button" class="btn btn-outline-success" value="Trier">
+        </a>
+      </div>
+      <div class="mb-3">
+        <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          Recherche
+        </button>
+      </div>
     </div>
   </div>
 </div>
-        
-   
-            
-                 
-    <a href="{{ path('app_evenement_new') }}"><input type="button" class="btn btn-outline-success" value="nouveau evenement"></a>
-        <a href="{{ path('app_evenement_tri') }}"><input type="button" class="btn btn-outline-success" value="Tri"></a>
-
- <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
-Recherche</button>
-
 
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -108,24 +79,16 @@ Recherche</button>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-       
-    {{ include('evenement/search.html.twig') }}
-
-
-
- </div>
-     
+        {{ include('evenement/search.html.twig') }}
+      </div>
     </div>
   </div>
 </div>
-</div>
-
 
 
  
-
-
- {{ knp_pagination_render(evenements) }}
  
-  
  {% endblock %}
+
+ 
+

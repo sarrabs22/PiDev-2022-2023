@@ -60,7 +60,7 @@ class Evenement
     
 
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'events')]
-    private Collection $user ;
+    public Collection $user ;
 
     private $cancelled;
 

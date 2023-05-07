@@ -1,49 +1,55 @@
 {# {% extends 'base.html.twig' %}  #}
- {% extends 'base_back.html.twig' %}
+ {% extends 'base.html.twig' %}
 {% block title %}Association index{% endblock %}
 
 {% block body %}
-    <h1>Association index</h1>
+  <link rel="stylesheet" href="{{ asset('css/test.css') }}"> 
 
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th scope="col">Id</th>
-                <th scope="col">Nom</th>
-                <th scope="col">Numero</th>
-                <th scope="col">Mail</th>
-                <th scope="col">Adresse</th>
-                <th scope="col">Logo</th>
-                <th scope="col">CodePostal</th>
-                <th scope="col">Ville</th>
-                <th scope="col">actions</th>
 
-            </tr>
-        </thead>
-        <tbody>
-        {% for association in associations %}
-            <tr>
-                <td>{{ association.id }}</td>
-                <td>{{ association.nom }}</td>
-                <td>{{ association.numero }}</td>
-                <td>{{ association.mail }}</td>
-                <td>{{ association.adresse }}</td>
-                <td><img src="/uploads/{{ association.Image }}" alt="Logo" width="100" height="100"></td>
-                <td>{{ association.CodePostal }}</td>
-                <td>{{ association.ville }}</td>
-                <td>
-                    <a href="{{ path('app_association_show', {'id': association.id}) }}"><input type="button" class="btn btn-outline-success" value="Afficher"</a>
-                    <a href="{{ path('app_association_edit', {'id': association.id}) }}"><input type="button" class="btn btn-outline-danger" value="Modifier"</a>
-                    
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="8">no records found</td>
-            </tr>
+
+
+  <div class="container">
+  <h1>Associations</h1>
+  <div class="row">
+    <div class="col-md-8">
+      <ul class="cards">
+          {% for association in associations %}
+        <li class="cards_item">
+          <div class="card">
+            <div class="img">
+              <a href="{{ path('app_association_show', {'id': association.id}) }}">
+                <img src="/uploads/{{ association.Image }}" width="500" height="300">
+              </a>
+            </div> 
+            <div class="card_content">
+              <h2 class="card_title">{{ association.nom }}</h2>
+              <p class="card_text">Adresse: {{ association.ville }}</p>
+              <a href="{{ path('app_association_show', {'id': association.id}) }}">
+								<button type="button" class="btn card_btn">Afficher</button>
+							</a>
+            </div> 
+          </div>
+        </li>
         {% endfor %}
-        </tbody>
-    </table>
+      </ul>
+     
+    </div>
+    <div class="col-md-4">
+      <div class="mb-3">
+        <a href="{{ path('app_association_new') }}">
+          <input type="button" class="btn btn-outline-success" value="Nouvelle association">
+        </a>
+      </div>
+     
+    </div>
+  </div>
+</div>
 
-    <a href="{{ path('app_association_new') }}"><input type="button" class="btn btn-outline-success" value="Ajouter une nouvelle Association"</a>
 {% endblock %}
+
+
+
+
+
+
+ 
