@@ -1,21 +1,12 @@
  
  {% extends 'base.html.twig' %}
 
-{% block title %}Evenement index{% endblock %}
+{% block title %}Evenement{% endblock %}
 
 
 
 {% block body %}
-{#  <!-- Load Flashy default CSS -->
-    <link rel="stylesheet" href="{{ asset('bundles/mercuryseriesflashy/css/flashy.css') }}">
- <!-- Flashy depends on jQuery -->
-    <script src="//code.jquery.com/jquery.js"></script>
-    <!-- Load Flashy default JavaScript -->
-    <script src="{{ asset('bundles/mercuryseriesflashy/js/flashy.js') }}"></script>
-    <!-- Include Flashy default partial -->
-    <link href="//fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700' rel='stylesheet'>
-    {{ include('@MercurySeriesFlashy/flashy.html.twig') }} #}
+
   
 
 <link rel="stylesheet" href="{{ asset('css/test.css') }}"> 
@@ -33,7 +24,7 @@
           <div class="card">
             <div class="img">
               <a href="{{ path('app_evenement_show', {'id': evenement.id}) }}">
-                <img src="/uploads/{{ evenement.image_event }}" width="500" height="300">
+                <img src="http://localhost/public/{{ evenement.image_event }}" width="500" height="300">
               </a>
             </div> 
             <div class="card_content">
@@ -79,7 +70,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        {{ include('evenement/search.html.twig') }}
+  {# {{ include('evenement/search.html.twig') }}  #}
       </div>
     </div>
   </div>

@@ -1,6 +1,6 @@
-{# {% extends 'base.html.twig' %}  #}
+
  {% extends 'base.html.twig' %}
-{% block title %}Association index{% endblock %}
+{% block title %}Association{% endblock %}
 
 {% block body %}
   <link rel="stylesheet" href="{{ asset('css/test.css') }}"> 
@@ -18,7 +18,7 @@
           <div class="card">
             <div class="img">
               <a href="{{ path('app_association_show', {'id': association.id}) }}">
-                <img src="/uploads/{{ association.Image }}" width="500" height="300">
+                <img src="http://localhost/public/{{ association.Image }}" width="500" height="300">
               </a>
             </div> 
             <div class="card_content">

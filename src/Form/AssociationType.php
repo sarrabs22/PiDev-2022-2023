@@ -64,13 +64,13 @@ class AssociationType extends AbstractType
                 'choice_label' => 'nom'
             ])
             
-            ->add('captcha', CaptchaType::class,[
+           /*  ->add('captcha', CaptchaType::class,[
             'attr' => [
                
                 'class' => "form-control"
             ],
             ]
-        );
+        ); */
             
             ;
 

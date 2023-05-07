@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Annonces index{% endblock %}
+{% block title %}Annonces{% endblock %}
 
 {% block body %}
   
@@ -9,7 +9,7 @@
 
   
   <div class="container">
-  <h1>Evenements</h1>
+  <h1>Annonces</h1>
   <div class="row">
     <div class="col-md-8">
       <ul class="cards">
@@ -18,7 +18,7 @@
           <div class="card">
             <div class="img">
               <a href="{{ path('app_annonce_crud_show', {'id': annonce.id}) }}">
-                <img src="/uploads/{{ annonce.image }}" width="500" height="300">
+                <img src="http://localhost/public/{{ annonce.image }}" width="500" height="300">
               </a>
             </div> 
             <div class="card_content">

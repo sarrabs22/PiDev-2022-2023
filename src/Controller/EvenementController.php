@@ -74,7 +74,7 @@ class EvenementController extends AbstractController
             $evenementRepository->save($evenement, true);
              /** @var UploadedFile $uploadedFile */
              $uploadedFile = $form['Image_Event']->getData();
-             $destination = $this->getParameter('kernel.project_dir').'/public/uploads';
+             $destination = 'C:\xampp\htdocs\public';
              $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
              $newFile = $originalFilename.'-'.uniqid().'.'.$uploadedFile->guessExtension();
              $uploadedFile->move(
@@ -179,7 +179,7 @@ class EvenementController extends AbstractController
         $entityManager->persist($event);
         $entityManager->flush();
 
-        // Send SMS notification to admin
+       /*  // Send SMS notification to admin
         $accountSid = 'ACe78e17b02f6db96616cebcab40c3982a';
         $authToken = '80e7d0a24cfa828e6267c3ba1b92ac4f';
         $client = new Client($accountSid, $authToken);
@@ -189,7 +189,7 @@ class EvenementController extends AbstractController
                 'from' => '+15674092850', // replace with your Twilio phone number
                 'body' => $user->getnom() . ' a participé à l evenement ' . $event->getNomEvent() ,  // replace with your message
             ]
-        );
+        ); */
 
         $flashy->success('Bienvenue !', 'http://your-awesome-link.com');
 
@@ -215,7 +215,7 @@ class EvenementController extends AbstractController
             $entityManager->persist($event);
             $entityManager->flush();
              // Send SMS notification to admin
-        $accountSid = 'ACe78e17b02f6db96616cebcab40c3982a';
+       /*  $accountSid = 'ACe78e17b02f6db96616cebcab40c3982a';
         $authToken = '80e7d0a24cfa828e6267c3ba1b92ac4f';
         $client = new Client($accountSid, $authToken);
         $message = $client->messages->create(
@@ -224,7 +224,7 @@ class EvenementController extends AbstractController
                 'from' => '+15674092850', // replace with your Twilio phone number
                 'body' => $user->getNom() . ' a annulé ça participation à l evenement ' . $event->getNomEvent() ,  // replace with your message
             ]
-        );
+        ); */
     
             $flashy->success('Bye :(', 'http://your-awesome-link.com');
     
@@ -316,7 +316,7 @@ class EvenementController extends AbstractController
             $evenementRepository->save($evenement, true);
             /** @var UploadedFile $uploadedFile */
             $uploadedFile = $form['Image_Event']->getData();
-            $destination = $this->getParameter('kernel.project_dir').'/public/uploads';
+            $destination = 'C:\xampp\htdocs\public';
             $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
             $newFilename = $originalFilename.'-'.uniqid().'.'.$uploadedFile->guessExtension();
             $uploadedFile->move(

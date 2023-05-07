@@ -52,9 +52,15 @@
                     <li class="nav-item active">
                         <a class="nav-link" href="index.html">Home</a>
                     </li>
+                   {% if app.user.type == "Donneur" %} 
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('app_don_index') }}">Dons</a>
                     </li>
+                    {% else %}
+                  <li class="nav-item">
+                     <a class="nav-link" href="{{ path('app_don_Client') }}">Dons</a>
+                     </li>
+                    {% endif %}
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('app_annonce_crud_index') }}">Annonces</a>
                     </li>
@@ -65,7 +71,7 @@
                         <a class="nav-link" href="{{ path('app_evenement_index') }}">Events</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_reclamation_index') }}">Reclamer</a>
+                        <a class="nav-link" href="{{ path('app_reclamation_new') }}">Reclamer</a>
                     </li>
                     <li class="nav-item">
                         {% if is_granted('ROLE_ADMIN') %}

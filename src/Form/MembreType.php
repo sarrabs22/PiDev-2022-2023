@@ -70,16 +70,16 @@ class MembreType extends AbstractType
             ->add('ClubEntendu', TextType::class, [
                 'label' => ' ' ])
             ->add('actions', TextType::class, [
-                'label' => ' ' ])
+                'label' => ' ' ]);
 
 
-                ->add('captcha', CaptchaType::class,[
+              /*   ->add('captcha', CaptchaType::class,[
                     'attr' => [
                        
                         'class' => "form-control"
                     ],
                     ]
-                );
+                ); */
         
     }
 

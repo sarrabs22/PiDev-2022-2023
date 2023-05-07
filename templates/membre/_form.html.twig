@@ -1,4 +1,4 @@
-{% block style %}
+{# {% block style %}
  <style>
 
 .row::after {
@@ -44,7 +44,7 @@
 } 
 
 </style>
-{% endblock %}
+{% endblock %} #}
 
 <div style="display:flex;justify-content:center;alighn-items:center;" data-inline="true">
 
@@ -140,9 +140,9 @@ Yes <input  type="radio" onclick="javascript:yesnoCheck();" name="yesno" id="yes
 	{{ form_row(form.actions) }}
   </div>
 
-<div class="col-lg-7">
+{# <div class="col-lg-7">
 	{{form_widget(form.captcha) }}
-</div>
+</div> #}
 
 <a  href="{{ path('app_calendar1_reserve') }}">
                                        reserver une date pour l'entretien

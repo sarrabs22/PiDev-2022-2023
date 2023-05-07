@@ -108,7 +108,7 @@ public function filterAssociations(Request $request, EntityManagerInterface $ent
         $association->setUser($this->getUser());
         if ($form->isSubmitted() && $form->isValid()) {
             $uploadedFile = $form['Image']->getData();
-            $destination = $this->getParameter('kernel.project_dir') . '/public/uploads';
+            $destination = 'C:\xampp\htdocs\public';
             $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
             $newFile = $originalFilename . '-' . uniqid() . '.' . $uploadedFile->guessExtension();
             $uploadedFile->move(
@@ -121,7 +121,7 @@ public function filterAssociations(Request $request, EntityManagerInterface $ent
             $entityManager->flush();
             $associationRepository->save($association, true);
 
-        //    code ell sms 
+       /*  //    code ell sms 
             $accountSid = 'AC7baee01e459dc347a9e9f0a9b8f744c5';
             $authToken = '9c4d3175f524029937ea448f92ae988e';
             $client = new Client($accountSid, $authToken);
@@ -131,7 +131,7 @@ public function filterAssociations(Request $request, EntityManagerInterface $ent
                     'from' => '++12764098996', // replace with your Twilio phone number
                     'body' => 'une nouvelle association est inscrit nommé: '.$form->get('nom')->getData(), // replace with your message
                 ]
-            );
+            ); */
 
 
             return $this->redirectToRoute('app_association_choix', [], Response::HTTP_SEE_OTHER);

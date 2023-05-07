@@ -147,7 +147,7 @@ class DonController extends AbstractController
             $notifier->send(new Notification('Can you check your submission? There are some problems with it.', ['browser']));
             /** @var UploadedFile $uploadedFile */
             $uploadedFile = $form['Image']->getData();
-            $destination = $this->getParameter('kernel.project_dir') . '/public/uploads';
+            $destination = 'C:\xampp\htdocs\public';
             $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
             $newFile = $originalFilename . '-' . uniqid() . '.' . $uploadedFile->guessExtension();
             $uploadedFile->move(
@@ -223,9 +223,9 @@ class DonController extends AbstractController
     {
         $don = $donRepository->find($id);
        
-        if($don->getUser()->getType() == 'Receiver'){
+        if($don->getUser()->getType() == 'Receveur'){
         $form = $this->createFormBuilder()
-            ->add('userType', ChoiceType::class, ['choices' => ['Receiver' => 'receiver']])
+            ->add('userType', ChoiceType::class, ['choices' => ['Receveur' => 'Receveur']])
             ->add('quantite', IntegerType::class, [
                 'label' => 'Quantité',
                 'constraints' => [
@@ -280,7 +280,7 @@ class DonController extends AbstractController
             $entityManager->flush();
             $Name = $don->getNameD();
             $Num = $don->getNumero();
-            $accountSid = 'AC904d482ced22b4c1943dfa6f347bc92b';
+           /*  $accountSid = 'AC904d482ced22b4c1943dfa6f347bc92b';
             $authToken = 'b9fba2dc9693993d02d1a8bdc9b65f83';
             $client = new Client($accountSid, $authToken);
             $message = $client->messages->create(
@@ -290,7 +290,7 @@ class DonController extends AbstractController
                 ', // replace with your Twilio phone number
                     'body' => 'Your Donnation ' . $Name . ' has been Claimed By a user with  quantity = ' . $quantite, // replace with your message
                 ]
-            );
+            ); */
         }
 
 
@@ -384,7 +384,7 @@ class DonController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var UploadedFile $uploadedFile */
-            $uploadedFile = $form['Image']->getData();
+            $destination = 'C:\xampp\htdocs\public';
             $destination = $this->getParameter('kernel.project_dir') . '/public/uploads';
             $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
             $newFilename = $originalFilename . '-' . uniqid() . '.' . $uploadedFile->guessExtension();
