@@ -160,7 +160,7 @@ class DonController extends AbstractController
             $entityManager->flush();
             $this->addFlash('message', 'This don has been successfully added');
             $donRepository->save($don, true);
-            return $this->redirectToRoute('app_don_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_don_Client', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('don/new.html.twig', [
@@ -262,7 +262,7 @@ class DonController extends AbstractController
                     $this->addFlash('Error', 'It needs to be 1');
                 }
             } elseif ($userType == 'association') {
-                if ($quantite <= 4) {
+                if ($quantite < round($don->getQuantite()*0.2)) {
                     $don->setQuantite($don->getQuantite() - $quantite);
                 } else {
                     $this->addFlash('Error', 'It needs to be max 3');
@@ -384,8 +384,8 @@ class DonController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var UploadedFile $uploadedFile */
+            $uploadedFile = $form['Image']->getData();
             $destination = 'C:\xampp\htdocs\public';
-            $destination = $this->getParameter('kernel.project_dir') . '/public/uploads';
             $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
             $newFilename = $originalFilename . '-' . uniqid() . '.' . $uploadedFile->guessExtension();
             $uploadedFile->move(

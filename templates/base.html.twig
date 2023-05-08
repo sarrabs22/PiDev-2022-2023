@@ -42,7 +42,7 @@
     <div class="header_section">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="logo">
-                <a href=""><img src="{{asset('images/logo.png')}}"></a>
+                <a href="/test"><img src="{{asset('images/logo.png')}}" height="130" width = "130"></a>
             </div>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -50,7 +50,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="index.html">Home</a>
+                        <a class="nav-link" href="/test">Home</a>
                     </li>
                     {% if app.user %}
                    {% if app.user.type == "Donneur" %} 
@@ -110,24 +110,24 @@
     <div class="footer_section layout_padding">
         <div class="container">
             <div class="location_main">
-                <div class="location_text"><img src="{{asset('images/map-icon.png')}}"><span class="padding_left_10"><a href="#">Location</a></span></div>
-                <div class="location_text center"><img src="{{asset('images/call-icon.png')}}"><span class="padding_left_10"><a href="#">Call ; 01 1234567890</a></span></div>
-                <div class="location_text right"><img src="{{asset('images/mail-icon.png')}}"><span class="padding_left_10"><a href="#">demo@gmail.com</a></span></div>
+                <div class="location_text"><img src="{{asset('images/map-icon.png')}}"><span class="padding_left_10"><a href="#">Adresse: Ariana, Tunis</a></span></div>
+                <div class="location_text center"><img src="{{asset('images/call-icon.png')}}"><span class="padding_left_10"><a href="#">Appelez nous ; +216 26 318 708</a></span></div>
+                <div class="location_text right"><img src="{{asset('images/mail-icon.png')}}"><span class="padding_left_10"><a href="#">Genereux.ScaredtoCompile@gmail.com</a></span></div>
             </div>
             <div class="footer_section_2">
                 <div class="row">
                     <div class="col-lg-4">
-                        <h2 class="footer_taital">About</h2>
-                        <p class="footer_text">There are many variations of passages of Lorem Ipsum available, but the majority havThere are many variations of passages of Lorem Ipsum available, but the majority hav</p>
+                        <h2 class="footer_taital">À propos</h2>
+                        <p class="footer_text"> Un moyen pratique et efficace d'échanger des biens ou des services entre pairs, de faciliter les transactions commerciales entre particuliers ou encore de fournir une plateforme pour des activités de crowdfunding.</p>
                     </div>
                     <div class="col-lg-4">
                         <h2 class="footer_taital">Services Link</h2>
-                        <p class="footer_text">There are many variations of passages of Lorem Ipsum available, but the majority havThere are many variations of passages of Lorem Ipsum available, but the majority hav</p>
+                        <p class="footer_text"></p>
                     </div>
                     <div class="col-lg-4">
-                        <h2 class="footer_taital">Subscribe</h2>
-                        <input type="text" class="Enter_text" placeholder="Enter Your Email" name="Enter Your Email">
-                        <div class="subscribe_bt"><a href="#">Subscribe</a></div>
+                        <h2 class="footer_taital">Faire un Don</h2>
+                        
+                        <div class="subscribe_bt"><a href="{{ path('app_don_new') }}">Faire un Don</a></div>
                         <div class="social_icon">
                             <ul>
                                 <li>
@@ -156,7 +156,7 @@
     <!-- copyright section start -->
     <div class="copyright_section">
         <div class="container">
-            <p class="copyright_text">Copyright 2020 All Rights Reserved.<a href="https://html.design"> Free  html Templates</a></p>
+            <p class="copyright_text">Copyright 2020 All Rights Reserved.<a href="https://html.design"></a></p>
         </div>
     </div>
    

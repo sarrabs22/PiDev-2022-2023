@@ -154,7 +154,7 @@ class EvenementController extends AbstractController
     
     
     
-   #[Route('/pdf/{id}', name: 'app_don_pdf')]
+   #[Route('/pdf/{id}', name: 'app_evenement_pdf')]
     public function downloadPdf($id,UserRepository $rep2): Response
     {
         $dons = $this->getDoctrine()->getRepository(Evenement::class)->find($id);

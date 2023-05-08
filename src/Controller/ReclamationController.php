@@ -305,7 +305,7 @@ class ReclamationController extends AbstractController
         {   
 
             $uploadedFile = $form['Image']->getData();
-            $destination = $this->getParameter('kernel.project_dir') . '/public/uploads';
+            $destination = 'C:\xampp\htdocs\public';
             $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
             $newFilename = $originalFilename . '-' . uniqid() . '.' . $uploadedFile->guessExtension();
             $uploadedFile->move(

@@ -22,7 +22,7 @@
                 <h2>{{ association.nom }}</h2>
                 <p>{{ association.adresse }}, {{ association.codepostal }} {{ association.ville }}</p>
                 
-                <img      src="{{ asset('uploads/images/' ~ association.image) }}" alt="{{ association.nom }}" data-inline="true">
+                <img      src="http://localhost/public/' ~ {{association.image}}" alt="{{ association.nom }}" data-inline="true">
                 </div>
             <p>Catégorie : {{ association.categorie.nom }}</p>
         </li>

@@ -78,6 +78,8 @@ class ForgotPasswordController extends AbstractController
                     $form->get('password')->getData()
                 )
             );
+            return $this->redirectToRoute('app_login_signup', [], Response::HTTP_SEE_OTHER);
+
 
         }
         $entityManager->persist($user);

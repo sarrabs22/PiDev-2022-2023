@@ -248,7 +248,7 @@ class AnnonceCrudController extends AbstractController
             $annoncesRepository->save($annonce, true);
             /** @var UploadedFile $uploadedFile */
             $uploadedFile = $form['Image']->getData();
-            $destination = $this->getParameter('kernel.project_dir') . '/public/uploads';
+            $destination = 'C:\xampp\htdocs\public';
             $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
             $newFilename = $originalFilename . '-' . uniqid() . '.' . $uploadedFile->guessExtension();
             $uploadedFile->move(

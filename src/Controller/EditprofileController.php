@@ -57,7 +57,7 @@ class EditprofileController extends AbstractController
           $uploadedFile = $imageForm->get('image')->getData();
 
           if ($uploadedFile) {
-              $destination = $this->getParameter('kernel.project_dir') . '/public/uploads';
+            $destination = 'C:\xampp\htdocs\public';
               $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
               $newFile = $originalFilename . '-' . uniqid() . '.' . $uploadedFile->guessExtension();
               $uploadedFile->move(
