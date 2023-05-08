@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\MembreRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: MembreRepository::class)]
@@ -43,6 +45,20 @@ class Membre
 
     protected $captchaCode;
 
+   
+
+    #[ORM\ManyToMany(targetEntity: Association::class, mappedBy: 'Membres')]
+    private Collection $associations;
+
+    #[ORM\ManyToOne(inversedBy: 'membres')]
+    private ?User $User = null;
+
+    public function __construct()
+    {
+        $this->associations = new ArrayCollection();
+    }
+
+   
 
     
     public function getId(): ?int
@@ -148,4 +164,46 @@ class Membre
 
         return $this;
     }
+
+    
+    /**
+     * @return Collection<int, Association>
+     */
+    public function getAssociations(): Collection
+    {
+        return $this->associations;
+    }
+
+    public function addAssociation(Association $association): self
+    {
+        if (!$this->associations->contains($association)) {
+            $this->associations->add($association);
+            $association->addMembre($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAssociation(Association $association): self
+    {
+        if ($this->associations->removeElement($association)) {
+            $association->removeMembre($this);
+        }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->User;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->User = $user;
+
+        return $this;
+    }
+
+    
 }

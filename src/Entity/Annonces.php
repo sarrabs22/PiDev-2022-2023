@@ -64,7 +64,21 @@ class Annonces
     #[ORM\Column(nullable: true)]
     private ?int $rated = null;
 
-    
+    #[ORM\Column(nullable: true)]
+    private ?int $etoile_1 = 0;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $etoile_2 = 0;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $etoile_3 = 0;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $etoile_4 = 0;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $etoile_5 = 0;
+
     public function __construct()
     {
         $this->commentaires = new ArrayCollection();
@@ -207,6 +221,66 @@ class Annonces
     public function setRated(?int $rated): self
     {
         $this->rated = $rated;
+
+        return $this;
+    }
+
+    public function getEtoile1(): ?int
+    {
+        return $this->etoile_1;
+    }
+
+    public function setEtoile1(?int $etoile_1): self
+    {
+        $this->etoile_1 = $etoile_1;
+
+        return $this;
+    }
+
+    public function getEtoile2(): ?int
+    {
+        return $this->etoile_2;
+    }
+
+    public function setEtoile2(?int $etoile_2): self
+    {
+        $this->etoile_2 = $etoile_2;
+
+        return $this;
+    }
+
+    public function getEtoile3(): ?int
+    {
+        return $this->etoile_3;
+    }
+
+    public function setEtoile3(?int $etoile_3): self
+    {
+        $this->etoile_3 = $etoile_3;
+
+        return $this;
+    }
+
+    public function getEtoile4(): ?int
+    {
+        return $this->etoile_4;
+    }
+
+    public function setEtoile4(?int $etoile_4): self
+    {
+        $this->etoile_4 = $etoile_4;
+
+        return $this;
+    }
+
+    public function getEtoile5(): ?int
+    {
+        return $this->etoile_5;
+    }
+
+    public function setEtoile5(?int $etoile_5): self
+    {
+        $this->etoile_5 = $etoile_5;
 
         return $this;
     }

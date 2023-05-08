@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\AssociationRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Mime\Message;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -65,6 +67,14 @@ class Association
 
     #[ORM\ManyToOne(inversedBy: 'associations')]
     private ?User $user = null;
+
+    #[ORM\ManyToMany(targetEntity: Membre::class, inversedBy: 'associations')]
+    private Collection $Membres;
+
+    public function __construct()
+    {
+        $this->Membres = new ArrayCollection();
+    }
 
         
     public function getId(): ?int
@@ -187,6 +197,30 @@ class Association
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Membre>
+     */
+    public function getMembres(): Collection
+    {
+        return $this->Membres;
+    }
+
+    public function addMembre(Membre $membre): self
+    {
+        if (!$this->Membres->contains($membre)) {
+            $this->Membres->add($membre);
+        }
+
+        return $this;
+    }
+
+    public function removeMembre(Membre $membre): self
+    {
+        $this->Membres->removeElement($membre);
 
         return $this;
     }

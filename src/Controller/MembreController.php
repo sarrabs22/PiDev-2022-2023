@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Association;
 use App\Entity\Categorie;
 use App\Entity\Membre;
 use App\Form\MembreType;
@@ -12,6 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\AssociationRepository;
 use App\Repository\CategorieRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -26,10 +28,13 @@ class MembreController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_membre_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, MembreRepository $membreRepository,AssociationRepository $associationRepository,CategorieRepository $categorieRepository, EntityManagerInterface $entityManager): Response
+    #[Route('/new/{id}', name: 'app_membre_new', methods: ['GET', 'POST'])]
+    public function new($id,Request $request,UserRepository $UserRepo, MembreRepository $membreRepository,AssociationRepository $associationRepository,CategorieRepository $categorieRepository, EntityManagerInterface $entityManager): Response
     {
         $membre = new Membre();
+        $associationChoisi = new Association();
+        $associationChoisi= $associationRepository->find($id);
+        $user = $UserRepo->find($this->getUser()->getUserIdentifier());
         $form = $this->createForm(MembreType::class, $membre);
         $form->handleRequest($request);
 
@@ -37,9 +42,57 @@ class MembreController extends AbstractController
             if ($data && isset($data['yesExperience']) && !$data['yesExperience']) {
                 $form->remove('experience');
             }
-        if ($form->isSubmitted() && $form->isValid()) {
-            $membreRepository->save($membre, true);
+           
+                    //associations lié a l 'utilistateur
+            $qb = $entityManager->createQueryBuilder();
+            $qb->select('a.id')
+               ->from('App\Entity\Association', 'a')
+               ->join('a.Membres', 'm')
+               ->where('m.User = :user')
+               ->setParameter('user', $user);
+            
+            $result = $qb->getQuery()->getResult();
+            
+            $associationIds = array_map(function($row) {
+                return $row['id'];
+            }, $result);
+            
+          //  dd($associationIds);
+            //Check if user connected to association
+            $qb = $entityManager->createQueryBuilder();
+            $qb->select('a.id')
+               ->from('App\Entity\Association', 'a')
+               ->join('a.Membres', 'm')
+               ->where('m.User = :user')
+               ->setParameter('user', $user);
+                        
+            $result = $qb->getQuery()->getResult();
+            
+            if (in_array($associationChoisi->getId(), $associationIds)) {
+                // User has already participated in an association
+                return $this->render('/association/retour.html.twig');
+               //dd( $associationIds);
+            } else {
+                // User has not yet participated in any association
+              //  return $this->render('no_participation.html.twig');
+            }
+            
+            
 
+
+            // $associationIds now contains an array of association IDs associated with the user
+        if ($form->isSubmitted() && $form->isValid()) {
+           
+            
+            $membre->addAssociation($associationChoisi);
+            $membre->setUser($user);
+            $membre->setNom($user->getNom());
+            $membre->setPrenom($user->getPrenom());
+            $membre->setMail($user->getEmail());
+            $membreRepository->save($membre, true);
+           
+            
+            
             return $this->redirectToRoute('app_membre_index', [], Response::HTTP_SEE_OTHER);
         }
         

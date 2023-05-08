@@ -16,12 +16,7 @@ class MembreType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('nom', TextType::class, [
-                'label' => ' ' ])
-            ->add('prenom', TextType::class, [
-                'label' => ' ' ])
-            ->add('mail', TextType::class, [
-                'label' => ' ' ])
+            
             ->add('age', TextType::class, [
                 'label' => ' ' ])
             ->add('passions' , TextType::class, [

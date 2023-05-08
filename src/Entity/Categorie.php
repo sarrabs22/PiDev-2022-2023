@@ -21,9 +21,13 @@ class Categorie
     #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: Annonces::class)]
     private Collection $Annonces;
 
+    #[ORM\OneToMany(mappedBy: 'Categorie', targetEntity: Annonces::class)]
+    private Collection $annonces;
+
     public function __construct()
     {
         $this->Annonces = new ArrayCollection();
+        $this->annonces = new ArrayCollection();
     }
 
     public function getId(): ?int

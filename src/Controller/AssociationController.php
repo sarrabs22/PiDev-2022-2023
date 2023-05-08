@@ -7,6 +7,7 @@ use App\Entity\CategorieAssociation;
 use App\Form\AssociationType;
 use App\Form\FilterAssociationsType;
 use App\Repository\AssociationRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\Entity;
 use Normalizer;
@@ -100,9 +101,11 @@ public function filterAssociations(Request $request, EntityManagerInterface $ent
 
 
     #[Route('/new', name: 'app_association_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, AssociationRepository $associationRepository): Response
+    public function new(Request $request, AssociationRepository $associationRepository,UserRepository $userepo): Response
     {
         $association = new Association();
+
+        $user= $userepo->find($this->getUser()->getUserIdentifier());
         $form = $this->createForm(AssociationType::class, $association);
         $form->handleRequest($request);
         $association->setUser($this->getUser());
@@ -117,6 +120,7 @@ public function filterAssociations(Request $request, EntityManagerInterface $ent
             );
             $association->setImage($newFile);
             $entityManager = $this->getDoctrine()->getManager();
+            $association->setUser($user);
             $entityManager->persist($association);
             $entityManager->flush();
             $associationRepository->save($association, true);

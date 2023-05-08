@@ -24,8 +24,8 @@
             <div class="card_content">
               <h2 class="card_title">{{ association.nom }}</h2>
               <p class="card_text">Adresse: {{ association.ville }}</p>
-              <a href="{{ path('app_association_show', {'id': association.id}) }}">
-								<button type="button" class="btn card_btn">Afficher</button>
+              <a href="{{ path('app_membre_new', {'id': association.id}) }}">
+								<button type="button" class="btn card_btn">Participer</button>
 							</a>
             </div> 
           </div>

@@ -57,67 +57,58 @@ acceuil
 
 
 {% block body %}
-<br>
-<br>
-<br>
-<br>
-<br>
-<center>
+<link rel="stylesheet" href="{{ asset('css/test.css') }}">
 
- <a data-inline="true" class="btn btn-primary py-2 px-3 animated slideInDown" href="/membre/new">
-                                         Devenir un menmbre dans une association
-                                        <div class="d-inline-flex btn-sm-square bg-white text-primary rounded-circle ms-2">
-                                            <i class="fa fa-arrow-right"></i>
-                                        </div>
-</a>
+ <div class="container">
+  <h1>Participer a une association</h1>
+  <div class="row">
+    <div class="col-md-8">
+      <ul class="cards">
+       {% for association in associations %}
+        <li class="cards_item">
+          <div class="card">
+            <div class="img">
+              {# <a href="{{ path('app_don_showclient', {'id': don.id}) }}"> #}
+                <img src="http://localhost/public/{{ association.image }}" width="500" height="300">
+              </a>
+            </div> 
+            <div class="card_content">
+              <h2 class="card_title">{{ association.nom }}</h2>
+              <p class="card_text">Quantity:
+								                                    </p>
+               <a href="{{ path('app_membre_new', {'id': association.id}) }}">  
+								<button type="button" class="btn card_btn">Participer </button>
+							 </a> 
+              
+            </div> 
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+     
+    </div>
 
- <a data-inline="true" class="btn btn-primary py-2 px-3 animated slideInDown" href="/association/new">
-                                        s'inscrire en tant qu' association
-                                        <div class="d-inline-flex btn-sm-square bg-white text-primary rounded-circle ms-2">
-                                            <i class="fa fa-arrow-right"></i>
-                                        </div>
- </a>
-
- 
-
-
-</center>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-
-<div style="display:flex;justify-content:center;alighn-items:center;" data-inline="true">
-
+  </div>
+</div>
     
-{% for association in associations %}
+{# {% for association in associations %}
 
   
   {# <div class="rounded-circle" data-inline="true" >
     <img src="/uploads/{{ association.Image }}" alt="logo" width="150" height="150" >
-  </div> #}
+  </div> 
 
 
   
-     <img src="/uploads/{{ association.Image }}" alt="logo" width="150" height="150" style="margin-right:10px;" class="rounded-circle">
+     <img src="http://localhost/public/{{ association.Image }}" alt="logo" width="150" height="150" style="margin-right:10px;" class="rounded-circle">
 
   
 
 
-{# class="imgClasse" #}
+ class="imgClasse" 
 
 {% endfor %}
-  </div>
+  </div> #}
 {% endblock %}
 
 

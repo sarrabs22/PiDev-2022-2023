@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Entity;
-use App\Entity\User;
+
 use App\Repository\EvenementRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -59,8 +59,7 @@ class Evenement
 
     
 
-    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'events')]
-    public Collection $user ;
+    
 
     private $cancelled;
 
@@ -176,9 +175,7 @@ class Evenement
         return $this;
     }
 
-    /**
-     * @return Collection<int, User>
-     */
+   
     public function getUsers(): Collection
     {
         return $this->users;

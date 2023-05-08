@@ -125,6 +125,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Don::class)]
     private Collection $dons;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Membre::class)]
+    private Collection $membres;
+
+  
+
    
     public function __construct()
     {
@@ -136,6 +141,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->evenement = new ArrayCollection();
         $this->associations = new ArrayCollection();
         $this->dons = new ArrayCollection();
+        $this->membres = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -532,6 +538,38 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Membre>
+     */
+    public function getMembres(): Collection
+    {
+        return $this->membres;
+    }
+
+    public function addMembre(Membre $membre): self
+    {
+        if (!$this->membres->contains($membre)) {
+            $this->membres->add($membre);
+            $membre->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMembre(Membre $membre): self
+    {
+        if ($this->membres->removeElement($membre)) {
+            // set the owning side to null (unless already changed)
+            if ($membre->getUser() === $this) {
+                $membre->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    
 
     
     
