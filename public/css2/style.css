@@ -496,7 +496,6 @@ button {
     font-weight: bold;
     font-family: 'Roboto', sans-serif;
 }
-
 .services_section_2 {
     width: 100%;
     float: left;
@@ -698,6 +697,7 @@ button {
     font-weight: bold;
     font-family: 'Roboto', sans-serif;
 }
+<<<<<<< Updated upstream
 
 .contact_taital::after {
     content: '';
@@ -710,6 +710,8 @@ button {
     top: 44%;
 }
 
+=======
+>>>>>>> Stashed changes
 .contact_text {
     width: 100%;
     float: left;
