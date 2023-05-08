@@ -56,6 +56,14 @@ class AnnoncesRepository extends ServiceEntityRepository
 
         return $qb->getQuery()->getResult();
     }
+    public function searchNom($Nom_Don)
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.adresse LIKE :ncl')
+            ->setParameter('ncl', '%' . $Nom_Don . '%')
+            ->getQuery()
+            ->execute();
+    }
 
     //    /**
     //     * @return Annonces[] Returns an array of Annonces objects

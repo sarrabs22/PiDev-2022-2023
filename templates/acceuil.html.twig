@@ -42,7 +42,7 @@
     <div class="header_section">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="logo">
-                <a href="/test"><img src="https://www.zupimages.net/up/23/19/l3kg.png" height="130" width = "130"></a>
+                <a href="/test"><img src="https://www.zupimages.net/up/23/19/l3kg.png" height="170" width = "170"></a>
             </div>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -52,29 +52,45 @@
                     <li class="nav-item active">
                         <a class="nav-link" href="/test">Home</a>
                     </li>
-                    {% if app.user %}
-                     {% if app.user.type == "Donneur" %} 
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_don_index') }}">Dons</a>
-                    </li>
-                    {% else %}
-                  <li class="nav-item">
-                     <a class="nav-link" href="{{ path('app_don_Client') }}">Dons</a>
-                     </li>
-                    {% endif %}
-                    {% endif %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_annonce_crud_index') }}">Annonces</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_association_index') }}">Association</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_evenement_index') }}">Events</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_reclamation_new') }}">Reclamer</a>
-                    </li>
+          {% if app.user %}
+    {% if app.user.type == "Donneur" %} 
+        <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_don_index') }}">Dons</a>
+        </li>
+    {% else %}
+        <li class="nav-item">
+            <a class="nav-link" href="{{ path('app_don_Client') }}">Dons</a>
+        </li>
+    {% endif %}
+    <li class="nav-item">
+        <a class="nav-link" href="{{ path('app_annonce_crud_index') }}">Annonces</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ path('app_association_index') }}">Associations</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ path('app_evenement_index') }}">Evenements</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ path('app_reclamation_new') }}">Reclamer</a>
+    </li>
+{% else %}
+    <li class="nav-item disabled">
+        <a class="nav-link" href="#" onclick="alert('Veuillez vous connecter pour accéder à cette fonctionnalité.');">Dons</a>
+    </li>
+    <li class="nav-item disabled">
+        <a class="nav-link" href="#" onclick="alert('Veuillez vous connecter pour accéder à cette fonctionnalité.');">Annonces</a>
+    </li>
+    <li class="nav-item disabled">
+        <a class="nav-link" href="#" onclick="alert('Veuillez vous connecter pour accéder à cette fonctionnalité.');">Associations</a>
+    </li>
+    <li class="nav-item disabled">
+        <a class="nav-link" href="#" onclick="alert('Veuillez vous connecter pour accéder à cette fonctionnalité.');">Evenements</a>
+    </li>
+    <li class="nav-item disabled">
+        <a class="nav-link" href="#" onclick="alert('Veuillez vous connecter pour accéder à cette fonctionnalité.');">Reclamer</a>
+    </li>
+{% endif %}
                     <li class="nav-item">
                         {% if is_granted('ROLE_ADMIN') %}
     <a href="{{ path('app_admin') }}" class="btn btn-primary">Accés Dashboard</a>
@@ -87,7 +103,7 @@
                     <a href="{{ path('app_login_signup') }}">Login/SignUp</a>
                  {% endif %}
                  {% if app.user %}
-                    <a href="{{ path('app_userprofile') }}" class="nav-item nav-link">Profile</a>
+                    <a href="{{ path('app_userprofile') }}" class="nav-item nav-link">Profil</a>
                       {% endif %}
                     </li>
 
@@ -501,6 +517,7 @@
     <script src="{{asset('https:cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js')}}"></script>
     <!-- Template Javascript -->
     <script src="{{asset('js2/main.js')}}"></script>
+    
 {% block body %}
 {% endblock  %}
 </body>

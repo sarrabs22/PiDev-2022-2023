@@ -11,7 +11,7 @@
     <div class="my-custom-class-for-errors">
         {{ form_errors(formSearch) }}
     </div>
-  
+   <div class="col-lg-7">
         {{ form_row(formSearch.adresse) }}
     </div>
     <div class="col-lg-7">
@@ -22,10 +22,11 @@
     
    
         
-         <a href="{{ path('app_annonce_crud_index') }}"><input type="button" class="btn btn-outline-success" value="retour"</a>
+        
        
 {{ form_end(formSearch) }}
-
+ <a href="{{ path('app_annonce_crud_index') }}"><input type="button" class="btn btn-outline-success" value="retour"</a>
 </center>
 {% endblock %}
 
+	

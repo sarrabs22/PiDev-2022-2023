@@ -6,6 +6,8 @@ use App\Repository\MembreRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: MembreRepository::class)]
 class Membre
@@ -16,29 +18,41 @@ class Membre
     private ?int $id = null;
 
     #[ORM\Column(length: 100)]
+    
     private ?string $nom = null;
 
     #[ORM\Column(length: 100)]
+   
     private ?string $prenom = null;
 
     #[ORM\Column(length: 255)]
     private ?string $mail = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message:" le champ est vide")]
+    #[Assert\GreaterThanOrEqual(18, message:"Vous devez avoir au moins 18 ans pour vous inscrire")]
     private ?int $age = null;
 
     #[ORM\Column(length: 500)]
+    #[Assert\NotBlank(message:" le champ est vide")]
+
     private ?string $passions = null;
 
 
 
     #[ORM\Column(length: 10000)]
+    #[Assert\NotBlank(message:" le champ est vide")]
+
     private ?string $experience = null;
 
     #[ORM\Column(length: 1000)]
+    #[Assert\NotBlank(message:" le champ est vide")]
+
     private ?string $ClubEntendu = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message:" le champ est vide")]
+
     private ?string $actions = null;
 
 

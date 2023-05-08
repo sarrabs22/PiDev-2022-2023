@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-   <title>{% block title %}SB Admin 2 - Dashboard{% endblock %}</title>
+   <title>{% block title %}Dashboard{% endblock %}</title>
    
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
@@ -51,7 +51,7 @@
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+                <div class="sidebar-brand-text mx-3">Genereux</div>
             </a>
 
             <!-- Divider -->
@@ -69,7 +69,7 @@
 
             <!-- Heading -->
             <div class="sidebar-heading">
-                Interface
+                Les interfaces
             </div>
 
             <!-- Nav Item - Pages Collapse Menu -->
@@ -77,19 +77,13 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-cog"></i>
-                     <a href="{{ path('app_association_index') }}" class="dropdown-item">association</a>
-                    <a href="{{ path('app_category_d_index') }}" class="dropdown-item">Don categorie</a>
-                    <a href="{{ path('app_categorie_rec_index') }}" class="dropdown-item">Reclamation categorie</a>
-                    <a href="{{ path('app_categorieEvent_index') }}" class="dropdown-item">evenement categorie</a>
-                    <a href="{{ path('app_test') }}" class="dropdown-item">Retour page d'acceuil</a>
+                     <a href="{{ path('app_categorieAssociation_index') }}" class="nav-link">Association categorie</a>
+                    <a href="{{ path('app_category_d_index') }}" class="nav-link">Don categorie</a>
+                    <a href="{{ path('app_categorie_rec_index') }}" class="nav-link">Reclamation categorie</a>
+                    <a href="{{ path('app_categorieEvent_index') }}" class="nav-link">Evenement categorie</a>
+                    <a href="{{ path('app_test') }}" class="nav-link">Retour au Front</a>
                      
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Custom Components:</h6>
-                        <a class="collapse-item" href="buttons.html">Buttons</a>
-                        <a class="collapse-item" href="cards.html">Cards</a>
-                    </div>
-                </div>
+               
             </li>
 
             <!-- Nav Item - Utilities Collapse Menu -->
@@ -99,16 +93,7 @@
                     <i class="fas fa-fw fa-wrench"></i>
                     <span>Utilities</span>
                 </a> #}
-                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
-                    data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Custom Utilities:</h6>
-                        <a class="collapse-item" href="utilities-color.html">Colors</a>
-                        <a class="collapse-item" href="utilities-border.html">Borders</a>
-                        <a class="collapse-item" href="utilities-animation.html">Animations</a>
-                        <a class="collapse-item" href="utilities-other.html">Other</a>
-                    </div>
-                </div>
+               
             </li>
 
             <!-- Divider -->
@@ -165,8 +150,8 @@
             <!-- Sidebar Message -->
             <div class="sidebar-card d-none d-lg-flex">
                 <img class="sidebar-card-illustration mb-2" src="img/undraw_rocket.svg" alt="...">
-                <p class="text-center mb-2"><strong>SB Admin Pro</strong> is packed with premium features, components, and more!</p>
-                <a class="btn btn-success btn-sm" href="https://startbootstrap.com/theme/sb-admin-pro">Upgrade to Pro!</a>
+                <p class="text-center mb-2"><strong>Genereux</strong> </p>
+                <a class="btn btn-success btn-sm" href="https://startbootstrap.com/theme/sb-admin-pro">Scared To Compile</a>
             </div>
 
         </ul>

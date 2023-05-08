@@ -1,22 +1,22 @@
 {# {% extends 'base.html.twig' %} #}
 {% extends 'base_back.html.twig' %}
-{% block title %}Categorie index{% endblock %}
+{% block title %}Categorie Association{% endblock %}
 
 {% block body %}
-    <h1>Categorie index</h1>
+    <h1>Liste des categories</h1>
 
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>Id</th>
+               
                 <th>Nom</th>
-                <th>actions</th>
+                <th>Afficher/Modifier</th>
             </tr>
         </thead>
         <tbody>
         {% for categorie in categories %}
             <tr>
-                <td>{{ categorie.id }}</td>
+               
                 <td>{{ categorie.nom }}</td>
                 <td>
                     <a href="{{ path('app_categorieAssociation_show', {'id': categorie.id}) }}"><input type="button" class="btn btn-outline-secondary" value="Afficher"</a>
@@ -37,5 +37,5 @@
         </tbody>
     </table>
 
-    <a class="btn btn-outline-success" href="{{ path('app_categorieAssociation_new') }}">Create new</a>
+    <a class="btn btn-outline-success" href="{{ path('app_categorieAssociation_new') }}">Ajouter</a>
 {% endblock %}

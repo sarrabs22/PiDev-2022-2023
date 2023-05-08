@@ -22,7 +22,7 @@ class Reclamation
 
     #[ORM\Column(type: Types::STRING)]
     #[Groups("reclamation")]
-    #[Assert\NotBlank(message:"date is required")]
+    #[Assert\GreaterThanOrEqual("today", message: "Veuillez saisir une date supérieure à la date d'aujourd'hui ")]
     private ?string $data_reclamation = null;
 
     #[ORM\Column(length: 255)]
@@ -34,20 +34,23 @@ class Reclamation
 
     #[ORM\Column(length: 255)]
     #[Groups("reclamation")]
-    #[Assert\NotBlank(message:"motif is required")]
+    
     private ?string $MotifDeReclamation = null;
 
     #[ORM\Column(length: 255)]
     #[Groups("reclamation")]
-    #[Assert\NotBlank(message:"image is required")]
+    #[Assert\NotBlank(message:"Veuillez télécharger une image")]
     private ?string $Image = null;
 
     #[ORM\Column]
     #[Groups("reclamation")]
+    #[Assert\Length(max:8,min:8,maxMessage:"le numero  doit être composé de 8 chiffres")]
+
     private ?int $NumTelephone = null;
 
     #[ORM\Column(length: 255)]
     #[Groups("reclamation")]
+    #[Assert\Email(message:"Ce mail '{{ value }}' n'est pas valide")]
     private ?string $Email = null;
 
     #[ORM\ManyToOne(inversedBy: 'Reclamations')]

@@ -35,7 +35,7 @@ class Association
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message:"le champ est vide")]
     #[Groups("association")]
-    #[Assert\Email(message:"the email '{{ value }}'is not a valid email")]
+    #[Assert\Email(message:"Ce mail '{{ value }}' n'est pas valide")]
     private ?string $mail = null;
 
     #[ORM\Column(length: 255)]

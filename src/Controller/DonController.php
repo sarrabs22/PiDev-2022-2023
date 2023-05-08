@@ -43,6 +43,12 @@ class DonController extends AbstractController
     #[Route('/', name: 'app_don_index', methods: ['GET'])]
     public function index(DonRepository $donRepository, Request $request, NormalizerInterface $normaliser): Response
     {
+        if ( $this->getUser() ==  null)
+        {
+            return $this->render('don/retour2.html.twig', [
+                'dons' => $donRepository->findAll(),
+            ]);
+        }
 
 
         return $this->render('don/index.html.twig', [
@@ -77,6 +83,15 @@ class DonController extends AbstractController
     public function client(Request $request, DonRepository $donRepository, PaginatorInterface $paginator): Response
     {
         $don = $donRepository->findAll();
+
+            if ( $this->getUser() ==  null)
+            {
+                return $this->render('don/retour1.html.twig', [
+                    'dons' => $donRepository->findAll(),
+                ]);
+            }
+
+
         return $this->render('don/client.html.twig', [
             'dons' => $donRepository->findAll(),
         ]);
@@ -86,6 +101,8 @@ class DonController extends AbstractController
             $request->query->getInt('page', 1), // Numéro de la page en cours, passé dans l'URL, 1 si aucune page
             3 // Nombre de résultats par page
         );
+
+
     }
     #[Route('/Admin', name: 'app_don_Admin', methods: ['GET'])]
     public function Admin(DonRepository $donRepository): Response
@@ -160,7 +177,7 @@ class DonController extends AbstractController
             $entityManager->flush();
             $this->addFlash('message', 'This don has been successfully added');
             $donRepository->save($don, true);
-            return $this->redirectToRoute('app_don_Client', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_don_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('don/new.html.twig', [

@@ -240,9 +240,9 @@ button {
 }
 
 .navbar-expand-lg .navbar-nav .nav-link {
-    padding-right: 15px;
-    padding-left: 15px;
-    font-size: 18px;
+    padding-right: 25px;
+    padding-left: 25px;
+    font-size: 15px;
     color: #acabab;
     text-transform: uppercase;
 }
@@ -260,8 +260,9 @@ button {
 }
 
 .logo {
-    width: 25%;
+    width: 30%;
     float: left;
+    margin-top: -20px;
 }
 
 .mr-auto,
@@ -664,6 +665,13 @@ button {
 .seemore_bt a:hover {
     color: #ffffff;
     background-color: #13a25d;
+}
+
+.nav-item {
+    display: inline-block;
+    /*  float: left; */
+    margin-right: 18px;
+    /* Vous pouvez ajuster la valeur de marge selon vos besoins */
 }
 
 

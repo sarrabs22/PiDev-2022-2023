@@ -237,7 +237,7 @@ class ReclamationController extends AbstractController
             $entityManager->flush();
             $reclamationRepository->save($reclamation, true);
 
-            return $this->redirectToRoute('app_reclamation_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_userprofile', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('reclamation/new.html.twig', [

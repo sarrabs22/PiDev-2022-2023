@@ -34,7 +34,7 @@ class Annonces
     private ?string $Description = null;
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
-    #[Assert\NotBlank(message: "veuillez entrer une image")]
+    #[Assert\NotBlank(message: "veuillez télécharger une image")]
     #[Groups("annonce/crud")]
     private $Image = null;
 

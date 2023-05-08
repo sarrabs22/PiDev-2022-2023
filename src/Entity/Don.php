@@ -20,22 +20,22 @@ class Don
 
     #[ORM\Column(length: 100)]
     #[Groups("dons")]
-    #[Assert\NotBlank(message: "name is required")]
+    #[Assert\NotBlank(message: "Veuillez saisir le nom de votre don")]
     private ?string $NameD = null;
 
     #[ORM\Column]
     #[Groups("dons")]
-    #[Assert\NotBlank(message: "Quantity is required")]
+    #[Assert\NotBlank(message: "Veuillez saisir la quantité de votre don")]
     private ?int $quantite = null;
 
     #[ORM\Column(type: Types::TEXT)]
     #[Groups("dons")]
-    #[Assert\NotBlank(message: "Description is required")]
+    #[Assert\NotBlank(message: "Veuillez la décrire")]
     private ?string $Description = null;
 
     #[ORM\Column(length: 255)]
     #[Groups("dons")]
-    #[Assert\NotBlank(message: "Localisation is required")]
+    #[Assert\NotBlank(message: "Oû est vous ?")]
     private ?string $Localisation = null;
 
     #[ORM\ManyToOne(inversedBy: 'Dons')]
@@ -44,24 +44,24 @@ class Don
 
     #[ORM\Column(length: 255)]
     #[Groups("dons")]
-    #[Assert\NotBlank(message: "Please fill this Image")]
+    #[Assert\NotBlank(message: "Veuillez télécharger une image")]
     private ?string $Image = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message: "Email is required")]
+    #[Assert\NotBlank(message: "Veuillez donner votre mail")]
     #[Groups("dons")]
-    #[Assert\Email(message: "the email '{{ value }}'is not a valid email")]
+    #[Assert\Email(message: "Ce mail '{{ value }}' n'est pas valide")]
     private ?string $email = null;
 
 
     #[ORM\Column]
-    #[Assert\NotBlank(message: "Number is required")]
+    #[Assert\NotBlank(message: "Donenz votre nom")]
     #[Groups("dons")]
     #[Assert\Length(
         min: 8,
         max: 8,
-        minMessage: 'Your Number must be at least {{ limit }} numbers long',
-        maxMessage: 'Your  Number cannot be longer than {{ limit }} numbers',
+        minMessage: 'Le numero ne doit pas être inferieur à {{ limit }} ',
+        maxMessage: 'Le numero ne doit pas être superieur à {{ limit }} ',
     )]
     private ?int $Numero = null;
 

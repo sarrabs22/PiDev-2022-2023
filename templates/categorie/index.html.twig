@@ -1,26 +1,26 @@
 {% extends 'base_back.html.twig' %}
 
-{% block title %}Categorie index{% endblock %}
+{% block title %} Categories Annonce{% endblock %}
 
 {% block body %}
-    <h1>Categorie index</h1>
+    <h1> Liste des Categories</h1>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
+                
                 <th>Nom</th>
-                <th>actions</th>
+                <th>Afficher/Modifier</th>
             </tr>
         </thead>
         <tbody>
         {% for categorie in categories %}
             <tr>
-                <td>{{ categorie.id }}</td>
+               
                 <td>{{ categorie.nom }}</td>
                 <td>
-                    <a href="{{ path('app_categorie_show', {'id': categorie.id}) }}">show</a>
-                    <a href="{{ path('app_categorie_edit', {'id': categorie.id}) }}">edit</a>
+                    <a href="{{ path('app_categorie_show', {'id': categorie.id}) }}">Afficher</a>
+                    <a href="{{ path('app_categorie_edit', {'id': categorie.id}) }}">Modifier</a>
                 </td>
             </tr>
         {% else %}
@@ -31,7 +31,7 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_categorie_new') }}">Create new</a>
+    <a href="{{ path('app_categorie_new') }}">Ajouter</a>
     <a href="{{ path('affichback') }}">Afficher les annonces</a>
      
 {% endblock %}

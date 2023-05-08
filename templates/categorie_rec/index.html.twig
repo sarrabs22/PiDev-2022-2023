@@ -1,7 +1,7 @@
 {# {% extends 'base.html.twig' %} #}
 {% extends 'base_back.html.twig' %}
 
-{% block title %}Categorie{% endblock %}
+{% block title %}Categorie Reclamations{% endblock %}
 
 {% block body %}
     <h1>Liste des Categories</h1>
@@ -9,15 +9,15 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
+                
                 <th>Nom</th>
-                <th>actions</th>
+                <th>Afficher/Modifier</th>
             </tr>
         </thead>
         <tbody>
         {% for categorie_rec in categorie_recs %}
             <tr>
-                <td>{{ categorie_rec.id }}</td>
+               
                 <td>{{ categorie_rec.Nom }}</td>
                 <td>
                     <a href="{{ path('app_categorie_rec_show', {'id': categorie_rec.id}) }}"><button type="button" class="btn btn-secondary">Afficher</button></a>
