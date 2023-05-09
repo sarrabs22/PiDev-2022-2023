@@ -134,6 +134,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'donner', targetEntity: Claim::class)]
     private Collection $claims;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $categories = null;
+
   
 
    
@@ -611,6 +614,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $claim->setDonner(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCategories(): ?string
+    {
+        return $this->categories;
+    }
+
+    public function setCategories(?string $categories): self
+    {
+        $this->categories = $categories;
 
         return $this;
     }

@@ -18,7 +18,8 @@ use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mailer\Mailer ;
 use Symfony\Component\Mailer\Transport ;
-
+use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactory;
+use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class RegistrationController extends AbstractController
 {
@@ -35,7 +36,17 @@ class RegistrationController extends AbstractController
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
+        
+        $factory = new PasswordHasherFactory([
+            'common' => ['algorithm' => 'bcrypt'],
+            'sodium' => ['algorithm' => 'sodium'],
+        ]);
+        
+        // retrieve the hasher using bcrypt
+        $hasher = $factory->getPasswordHasher('common');
+        $hash = $hasher->hash('plain');
 
+        dd($hash);
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
             $user->setPassword(
