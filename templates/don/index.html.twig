@@ -740,12 +740,14 @@
 							<button type="button" class="btn btn-outline-success">Show</button>
 
 						</a>
+						{% if app.user.id == don.user.id %}
 						<a href="{{ path('app_don_edit', {'id': don.id}) }}">
 							<button type="button" class="btn btn-outline-danger">Edit</button>
 						</a>
 						<a href="{{ path('app_don_delete', {'id': don.id}) }}">
 							{{ include('don/_delete_form.html.twig') }}
 						</a>
+						{% endif %}
 					</td>
 				</tr>
 			{% else %}

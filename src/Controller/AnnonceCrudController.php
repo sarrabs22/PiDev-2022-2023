@@ -156,6 +156,7 @@ class AnnonceCrudController extends AbstractController
             );
             $annonce->setImage($newFile);
             $annonce->setNombreEtoiles(0);
+            $annonce->setUser($this->getUser());
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($annonce);
             $entityManager->flush();
@@ -304,7 +305,7 @@ class AnnonceCrudController extends AbstractController
 
     // ************************** commentaire **************************
 
-    #[Route('/detail/{id}', name: 'detail')]
+    #[Route('/detail/{id}', name: 'detail_annonce')]
     public function detail(ManagerRegistry $mg, AnnoncesRepository $X, Request $request, $id): Response
     {
 
@@ -342,7 +343,7 @@ class AnnonceCrudController extends AbstractController
             $em->persist($commentaires);
             $em->flush();
 
-            return $this->redirectToRoute('detail', ['id' => $id]);
+            return $this->redirectToRoute('detail_annonce', ['id' => $id]);
         }
 
         return $this->render('annonce_crud/exem.html.twig', [

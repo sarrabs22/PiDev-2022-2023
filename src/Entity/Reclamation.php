@@ -22,7 +22,7 @@ class Reclamation
 
     #[ORM\Column(type: Types::STRING)]
     #[Groups("reclamation")]
-    #[Assert\GreaterThanOrEqual("today", message: "Veuillez saisir une date supérieure à la date d'aujourd'hui ")]
+   
     private ?string $data_reclamation = null;
 
     #[ORM\Column(length: 255)]

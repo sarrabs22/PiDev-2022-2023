@@ -53,13 +53,18 @@
                         <a class="nav-link" href="/test">Home</a>
                     </li>
                     {% if app.user %}
-                   {% if app.user.type == "Donneur" %} 
+                   {% if (app.user.type == "Donneur") or (app.user.type == "Association") %} 
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_don_index') }}">Dons</a>
+                        <a class="nav-link" href="{{ path('app_don_index') }}"> Donner des Dons</a>
                     </li>
+                    {% if app.user.type == "Association"%}
+                       <li class="nav-item">
+                         <a class="nav-link" href="{{ path('app_don_Client') }}">Recevoir des dons </a>
+                          </li>
+                     {% endif %}
                     {% else %}
                   <li class="nav-item">
-                     <a class="nav-link" href="{{ path('app_don_Client') }}">Dons</a>
+                     <a class="nav-link" href="{{ path('app_don_Client') }}">Recevoir des Dons</a>
                      </li>
                     {% endif %}
                      {% endif %}

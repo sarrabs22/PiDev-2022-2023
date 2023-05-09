@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
 
 use App\Repository\DonRepository;
@@ -67,6 +69,14 @@ class Don
 
     #[ORM\ManyToOne(inversedBy: 'dons')]
     private ?User $user = null;
+
+    #[ORM\OneToMany(mappedBy: 'donation', targetEntity: Claim::class)]
+    private Collection $claims;
+
+    public function __construct()
+    {
+        $this->claims = new ArrayCollection();
+    }
 
 
 
@@ -179,6 +189,36 @@ class Don
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Claim>
+     */
+    public function getClaims(): Collection
+    {
+        return $this->claims;
+    }
+
+    public function addClaim(Claim $claim): self
+    {
+        if (!$this->claims->contains($claim)) {
+            $this->claims->add($claim);
+            $claim->setDonation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeClaim(Claim $claim): self
+    {
+        if ($this->claims->removeElement($claim)) {
+            // set the owning side to null (unless already changed)
+            if ($claim->getDonation() === $this) {
+                $claim->setDonation(null);
+            }
+        }
 
         return $this;
     }

@@ -55,7 +55,8 @@
                     {% endfor %}
                 </ul>
             {% else %}
-                <p>You have no reclamations.</p>
+               <h4>Vos Reclamations</h4>
+                <p>Vous n'avez aucun reclamation</p>
             {% endif %}
         </div>
 
@@ -66,6 +67,7 @@
             </div>
             {# {% for association in associations %}
     <img src="{{ asset(association.image) }}" alt="{{ association.name }}"> #}
+      {% if associations|length > 0 %}
          {% for association in associations %}
     <div class="row g-2">
         <div class="col mb-2">
@@ -73,11 +75,52 @@
                 class="w-100 rounded-3">
         </div>
         <div class="col mb-2">
-            <h4>{{ association.nom }}</h4>
-            <p>{{ association.ville }}</p>
+            <h4>Nom de l'association : {{ association.nom }}</h4>
+            <p> L'emplacement de l'association {{ association.ville }}</p>
         </div>
     </div>
 {% endfor %}
+{% endif %}
+
+<table class="table">
+  <thead>
+    <tr>
+    <th>Donneur</th>
+        <th>Receveur</th>
+      <th>quantite Total</th>
+      <th>Quantite Recu</th>
+       <th>Emplacement du Don</th>
+       <th>Numero du donneur</th>
+      
+      
+  
+    </tr>
+  </thead>
+  <tbody>
+    {% if claims|length > 0 %}
+    {% for i in 0..claims|length-1 %}
+      <tr>
+         <td>{{ ClaimDonner[i] }}</td>
+        <td>{{ ClaimReceiver[i] }}</td> 
+        <td>{{ ClaimTotalQuantity[i] }}</td>
+        <td>{{ ClaimRemainingQuantity[i]}}</td>
+         <td><a href="{{ path('show_map2', {'id':  donationId[i]}) }}">Afficher l Emplacement</a></td>
+        <td>{{ DonnerNum[i]}}</td>
+        
+       
+
+       
+      </tr>
+    {% endfor %}
+    {% endif %}
+  </tbody>
+</table>
+ 
+
+
+
+
+
 
            {#  <div class="row g-2">
               <div class="col">

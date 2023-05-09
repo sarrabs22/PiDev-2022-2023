@@ -13,20 +13,24 @@ class Claim
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    private ?Don $donation = null;
+   
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    private ?User $donner = null;
-
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    private ?User $receiver = null;
+    
 
     #[ORM\Column]
     private ?int $total_quantity = null;
 
     #[ORM\Column]
     private ?int $received_quantity = null;
+
+    #[ORM\ManyToOne(inversedBy: 'claims')]
+    private ?User $donner = null;
+
+    #[ORM\ManyToOne(inversedBy: 'claims')]
+    private ?User $receiver = null;
+
+    #[ORM\ManyToOne(inversedBy: 'claims')]
+    private ?Don $donation = null;
 
     
 
@@ -35,41 +39,11 @@ class Claim
         return $this->id;
     }
 
-    public function getDonationId(): ?Don
-    {
-        return $this->donation;
-    }
+    
 
-    public function setDonationId(?Don $donation): self
-    {
-        $this->donation = $donation;
+    
 
-        return $this;
-    }
-
-    public function getDonnerId(): ?User
-    {
-        return $this->donner;
-    }
-
-    public function setDonnerId(?User $donner): self
-    {
-        $this->donner = $donner;
-
-        return $this;
-    }
-
-    public function getReceiverId(): ?User
-    {
-        return $this->receiver;
-    }
-
-    public function setReceiverId(?User $receiver): self
-    {
-        $this->receiver = $receiver;
-
-        return $this;
-    }
+    
 
     public function getTotalQuantity(): ?int
     {
@@ -91,6 +65,42 @@ class Claim
     public function setReceivedQuantity(int $received_quantity): self
     {
         $this->received_quantity = $received_quantity;
+
+        return $this;
+    }
+
+    public function getDonner(): ?User
+    {
+        return $this->donner;
+    }
+
+    public function setDonner(?User $donner): self
+    {
+        $this->donner = $donner;
+
+        return $this;
+    }
+
+    public function getReceiver(): ?User
+    {
+        return $this->receiver;
+    }
+
+    public function setReceiver(?User $receiver): self
+    {
+        $this->receiver = $receiver;
+
+        return $this;
+    }
+
+    public function getDonation(): ?Don
+    {
+        return $this->donation;
+    }
+
+    public function setDonation(?Don $donation): self
+    {
+        $this->donation = $donation;
 
         return $this;
     }

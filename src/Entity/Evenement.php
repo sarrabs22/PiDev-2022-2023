@@ -66,6 +66,9 @@ class Evenement
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'evenement')]
     private Collection $users;
 
+    #[ORM\ManyToOne(inversedBy: 'evenements')]
+    private ?User $User = null;
+
     public function __construct()
     {
         $this->cancelled = false;
@@ -196,6 +199,18 @@ class Evenement
         if ($this->users->removeElement($user)) {
             $user->removeEvenement($this);
         }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->User;
+    }
+
+    public function setUser(?User $User): self
+    {
+        $this->User = $User;
 
         return $this;
     }

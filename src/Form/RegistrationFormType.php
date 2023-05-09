@@ -77,6 +77,7 @@ class RegistrationFormType extends AbstractType
                 'choices' => [
                     'Donneur' => 'Donneur',
                     'Receveur' => 'Receveur',
+                    'Association' => 'Association',
                    
                 ],
                 

@@ -140,8 +140,10 @@
         }
     </script>
 <a href="{{ path('app_annonce_crud_index') }}"><button type="button" class="btn btn-outline-success" >Retour</button></a>
+{% if app.user.id == annonce.user.id %}
 <a href="{{ path('app_annonce_crud_edit', {'id': annonce.id}) }}"><button type="button" class="btn btn-outline-success" >Modifier</button></a>
-<a href="{{ path('detail', {'id': annonce.id}) }}"><button type="button" class="btn btn-secondary">Detail</button></a>
+{% endif %}
+<a href="{{ path('detail_annonce', {'id': annonce.id}) }}"><button type="button" class="btn btn-secondary">Detail</button></a>
 <a href="{{ path('show_map2', {'id': annonce.id}) }}"><button type="button" class="btn btn-secondary">Map</button></a>
 
     

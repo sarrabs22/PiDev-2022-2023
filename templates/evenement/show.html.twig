@@ -52,8 +52,9 @@
     </table>
 
     <a href="{{ path('app_evenement_index') }}"><input type="button" class="btn btn-outline-success" value="retour"</a>
-
+{% if app.user.id == evenement.user.id %}
     <a href="{{ path('app_evenement_edit', {'id': evenement.id}) }}"><input type="button" class="btn btn-outline-success" value="modifier"</a>
+    {% endif %}
     <a href="{{ path('show_map2', {'id': evenement.id}) }}"><input type="button" class="btn btn-outline-success" value="Afficher localisation"</a>
 
     {{ include('evenement/_delete_form.html.twig') }}

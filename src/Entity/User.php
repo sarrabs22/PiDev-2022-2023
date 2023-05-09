@@ -128,6 +128,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Membre::class)]
     private Collection $membres;
 
+    #[ORM\OneToMany(mappedBy: 'User', targetEntity: Evenement::class)]
+    private Collection $evenements;
+
+    #[ORM\OneToMany(mappedBy: 'donner', targetEntity: Claim::class)]
+    private Collection $claims;
+
   
 
    
@@ -142,6 +148,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->associations = new ArrayCollection();
         $this->dons = new ArrayCollection();
         $this->membres = new ArrayCollection();
+        $this->evenements = new ArrayCollection();
+        $this->claims = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -563,6 +571,44 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($membre->getUser() === $this) {
                 $membre->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Evenement>
+     */
+    public function getEvenements(): Collection
+    {
+        return $this->evenements;
+    }
+
+    /**
+     * @return Collection<int, Claim>
+     */
+    public function getClaims(): Collection
+    {
+        return $this->claims;
+    }
+
+    public function addClaim(Claim $claim): self
+    {
+        if (!$this->claims->contains($claim)) {
+            $this->claims->add($claim);
+            $claim->setDonner($this);
+        }
+
+        return $this;
+    }
+
+    public function removeClaim(Claim $claim): self
+    {
+        if ($this->claims->removeElement($claim)) {
+            // set the owning side to null (unless already changed)
+            if ($claim->getDonner() === $this) {
+                $claim->setDonner(null);
             }
         }
 

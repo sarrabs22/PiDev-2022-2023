@@ -8,6 +8,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\User;
+use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -15,15 +18,38 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class TestController extends AbstractController
 {
     #[Route('/test', name: 'app_test')]
-    public function index(): Response
+    public function index(UserRepository $userRepo,EntityManagerInterface $entityManager): Response
     {
   
        
        // $this->denyAccessUnlessGranted('ROLE_ADMIN');
         /* $profilePicture = $user->getImage(); */
+       //users list
+       $qb = $entityManager->createQueryBuilder();
+
+       $users = $qb->select('u.id', 'u.nom', 'u.prenom', 'u.image')
+                   ->from('App\Entity\User', 'u')
+                   ->where('u.type = :type')
+                   ->setParameter('type', 'Donneur')
+                   ->getQuery()
+                   ->getResult();
+       
+        $users = $qb->getQuery()->getResult();
+
+
+
+       
+    
+       
+   
+    
+
+   
+   ///////
 
         return $this->render('test/index.html.twig', [
             'controller_name' => 'TestController',
+            'users'=> $users
            
         ]);
     }

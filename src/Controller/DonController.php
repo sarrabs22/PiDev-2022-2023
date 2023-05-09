@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Don;
+use App\Entity\Claim;
 use App\Entity\GeocodingService;
 use App\Form\DonType;
 use App\Form\SearchDonType;
@@ -271,14 +272,16 @@ class DonController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
             $quantite = $data['quantite'];
-            $userType = $data['userType'];
-            if ($userType == 'receiver') {
+            $user = $userrepo->find($this->getUser()->getUserIdentifier());
+            $userType = $user->getType();
+            if ($userType == 'Receveur') {
                 if ($quantite < round($don->getQuantite()*0.1)) {
                     $don->setQuantite($don->getQuantite() - $quantite);
+                    
                 } else {
                     $this->addFlash('Error', 'It needs to be 1');
                 }
-            } elseif ($userType == 'association') {
+            } elseif ($userType == 'Association') {
                 if ($quantite < round($don->getQuantite()*0.2)) {
                     $don->setQuantite($don->getQuantite() - $quantite);
                 } else {
@@ -297,6 +300,16 @@ class DonController extends AbstractController
             $entityManager->flush();
             $Name = $don->getNameD();
             $Num = $don->getNumero();
+            //claim
+            $Claim = new Claim();
+
+            $Claim->setDonner($don->getUser());
+            $Claim->setReceiver($this->getUser());
+            $Claim->setTotalQuantity($don->getQuantite());
+            $Claim->setReceivedQuantity($quantite);
+            $Claim->setDonation($don);
+            $entityManager->persist($Claim);
+            $entityManager->flush();
            /*  $accountSid = 'AC904d482ced22b4c1943dfa6f347bc92b';
             $authToken = 'b9fba2dc9693993d02d1a8bdc9b65f83';
             $client = new Client($accountSid, $authToken);

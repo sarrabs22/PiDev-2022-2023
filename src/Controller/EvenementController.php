@@ -71,6 +71,7 @@ class EvenementController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $evenement->setUser($this->getUser());
             $evenementRepository->save($evenement, true);
              /** @var UploadedFile $uploadedFile */
              $uploadedFile = $form['Image_Event']->getData();
@@ -82,6 +83,7 @@ class EvenementController extends AbstractController
                  $newFile
                 );
                 $evenement->setImageEvent($newFile);
+                $evenement->setUser($this->getUser());
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($evenement);
         $entityManager->flush();
@@ -104,7 +106,7 @@ class EvenementController extends AbstractController
             'user' =>$user
         ]);
     }
-    #[Route('/map2/{id}', name: 'show_map2')]
+    /* #[Route('/map2/{id}', name: 'show_map')]
     public function map2($id, EvenementRepository $donRepository)
     {
         $entityManager = $this->getDoctrine()->getManager();
@@ -114,7 +116,7 @@ class EvenementController extends AbstractController
         return $this->render('evenement/test2.html.twig', [
             'evenement' => $don,
         ]);
-    }
+    } */
     
     
    

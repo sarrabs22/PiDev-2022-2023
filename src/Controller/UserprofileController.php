@@ -10,13 +10,14 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Entity\User;
 use App\Entity\Association;
 use App\Repository\AssociationRepository;
+use App\Repository\ClaimRepository;
 use App\Repository\MembreRepository;
 use App\Repository\ReclamationRepository;
 use Doctrine\ORM\EntityManagerInterface;
 class UserprofileController extends AbstractController
 {
     #[Route('/userprofile', name: 'app_userprofile')]
-    public function index(MembreRepository $memRepo,AssociationRepository $assorepo ,Request $request, EntityManagerInterface $entityManager,ReclamationRepository $RecRepo): Response
+    public function index(MembreRepository $memRepo,ClaimRepository $claimRepo,AssociationRepository $assorepo ,Request $request, EntityManagerInterface $entityManager,ReclamationRepository $RecRepo): Response
     {
 
         //getting user
@@ -48,6 +49,9 @@ class UserprofileController extends AbstractController
            ->where('m.User = :user')
            ->setParameter('user', $user);
         
+           
+
+
         $result = $qb->getQuery()->getResult();
         
         $associationIds = array_map(function($row) {
@@ -57,9 +61,26 @@ class UserprofileController extends AbstractController
         $associations = $assorepo->findBy(['id' => $associationIds]);
        // dd( $associations);
 
+    //Claim
+    $claims = $claimRepo->findBy(['receiver' => $this->getUser()]);
+    $ClaimDonner = [];
+    $ClaimReceiver = [];
+    $ClaimTotalQuantity = [];
+    $ClaimRemainingQuantity =[];
+    $donationId =[];
+    $DonnerNum =[];
+    foreach ($claims as $claim) {
+        $ClaimDonner[] = $claim->getDonner()->getNom();
+        $ClaimReceiver [] = $claim->getReceiver()->getNom();
+        $ClaimTotalQuantity [] = $claim->getTotalQuantity();
+        $ClaimRemainingQuantity [] = $claim->getReceivedQuantity();
+        $donationId []=  $claim->getDonation()->getId();
+        $DonnerNum [] = $claim->getDonner()->getNumTelephone();
+    }
 
-     
+    //dd($claims);
 // Convert the image data to a base64 string
+
 $base64 = base64_encode($user->getImage());
         return $this->render('userprofile/index.html.twig', [
             'controller_name' => 'UserprofileController',
@@ -68,7 +89,14 @@ $base64 = base64_encode($user->getImage());
             'reclamationStatuses' => $reclamationStatuses,
             'reclamationNames' =>   $reclamationNames,
             'reclamationDates' =>   $reclamationDates,
-            'associations' => $associations
+            'associations' => $associations,
+            'ClaimDonner' => $ClaimDonner,
+            'ClaimReceiver' =>   $ClaimReceiver,
+            'ClaimTotalQuantity' =>   $ClaimTotalQuantity,
+            'ClaimRemainingQuantity' =>   $ClaimRemainingQuantity,
+            'donationId' => $donationId,
+            'claims'=> $claims,
+            'DonnerNum' => $DonnerNum
         ]);
     }
 }

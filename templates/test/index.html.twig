@@ -309,37 +309,39 @@ button, input, optgroup, select, textarea {
 }
 
 </style>
-<div class="page-content page-container" id="page-content">
-    <div class="padding">
-        <div class="row container d-flex justify-content-center">
-<div class="col-md-6">
-            <div class="card card-bordered">
-              <div class="card-header">
-                <h4 class="card-title"><strong>Assistance Bot</strong></h4>
-                <a class="btn btn-xs btn-secondary" href="#" data-abc="true">Let's Chat App</a>
-              </div>
-
-
-               <div class="ps-container ps-theme-default ps-active-y" id="chat-content" style="overflow-y: scroll !important; height:400px !important;">
-                <div class="media media-chat">
-                  <img class="avatar" src="https://img.icons8.com/color/36/000000/administrator-male.png" alt="...">
-                  <div class="media-body" id="chat-display">
+{% block content %} 
+ 
+        
+        <div class="row">
+            <div class="col-md-8">
+                <ul class="cards">
+                    {% for user in users %}
+                    <li class="cards_item">
+                        <div class="card">
+                            <div class="img">
+                                <a href="{{ path('app_otheruser', {'id': user.id}) }}">
+                                    <img src="http://localhost/public/{{ user.image }}" width="500" height="300">
+                                </a>
+                            </div> 
+                            <div class="card_content">
+                                <h2 class="card_title"></h2>
+                                <p class="card_text">{{ user.nom }}</p>
+                                <a href="{{ path('app_otheruser', {'id': user.id}) }}">
+                                    <button type="button" class="btn card_btn">Afficher</button>
+                                </a>
+                            </div>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    
                    
-                    <p class="meta"><time datetime="2018">23:58</time></p>
-                  </div>
-                </div> 
+{% endblock %}
 
-               {#  <div class="media media-meta-day">Today</div>
 
-                <div class="media media-chat media-chat-reverse">
-                  <div class="media-body text-right" id="chat-display">
-                    <p>Hiii, I'm good.</p>
-                    
-                    <p class="meta"><time datetime="2018">00:06</time></p>
-                  </div>
-                </div> #}
-
-               
+    {% endblock %}
 
                 
 
@@ -347,62 +349,4 @@ button, input, optgroup, select, textarea {
 
                
 
-              <div class="ps-scrollbar-x-rail" style="left: 0px; bottom: 0px;"><div class="ps-scrollbar-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps-scrollbar-y-rail" style="top: 0px; height: 0px; right: 2px;"><div class="ps-scrollbar-y" tabindex="0" style="top: 0px; height: 2px;"></div></div></div>
-
-              <div class="publisher bt-1 border-light">
-                <img class="avatar avatar-xs" src="https://img.icons8.com/color/36/000000/administrator-male.png" alt="...">
-                <input class="publisher-input" type="text" placeholder="Write something" id="chat-input">
-                <span class="publisher-btn file-group">
-                  <i class="fa fa-paperclip file-browser"></i>
-                  <input type="file">
-                </span>
-                <a class="publisher-btn" href="#" data-abc="true"><i class="fa fa-smile"></i></a>
-                <a class="publisher-btn text-info" href="#" data-abc="true"><i class="fa fa-paper-plane"></i></a>
-              </div>
-
-             </div>
-          </div>
-          </div>
-          </div>
-          </div>
-<div id="chat">
-    <div id="chat-display"></div>
-    <input type="text" id="chat-input" placeholder="Type your message...">
-</div>
-
-<script>
-    var chatDisplay = document.getElementById('chat-display');
-    var chatInput = document.getElementById('chat-input');
-    var currentTime = new Date().toLocaleTimeString();
-    // Function to display bot response
-    function displayBotResponse(response) {
-        chatDisplay.innerHTML += '<p><strong>Robot:</strong> ' + response + '</p>';
-    }
-
-    // Add event listener to input field to send message to bot
-    chatInput.addEventListener('keydown', function(event) {
-        if (event.keyCode === 13) {
-            var message = chatInput.value;
-            chatInput.value = '';
-            chatDisplay.innerHTML += '<div class="media media-chat">' +
-                              '<div class="media-body">' +
-                              '<p><strong>Toi:</strong> ' + message + '</p>' +
-                              '<p class="meta"><time datetime="2018">'+ currentTime + '</time></p>' +
-                              '</div>' +
-                              '</div>';
-            // Send message to bot using AJAX
-            var xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-                    var response = xhr.responseText;
-                    displayBotResponse(response);
-                }
-            };
-            xhr.open('POST', '{{ path('app_test_message') }}');
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            xhr.send('message=' + encodeURIComponent(message));
-        }
-    });
-</script>
-
-{% endblock %}
+             

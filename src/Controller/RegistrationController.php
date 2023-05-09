@@ -44,7 +44,22 @@ class RegistrationController extends AbstractController
                     $form->get('password')->getData()
                 )
             );
+
+            //image 
+            $uploadedFile = $form['image']->getData();
+            $destination = 'C:\xampp\htdocs\public';
+            $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
+            $newFile = $originalFilename . '-' . uniqid() . '.' . $uploadedFile->guessExtension();
+            $uploadedFile->move(
+                $destination,
+                $newFile
+            );
+            $user->setImage($newFile);
             $user->setRoles(["ROLE_USER"]);
+            $user->setNbEtoile(0);
+            $user->setScore(0);
+            $user->setBlocked(0);
+
             $entityManager->persist($user);
             $entityManager->flush();
             //$verificationCode = uniqid(); // Generate a unique verification code
