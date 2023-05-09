@@ -1,4 +1,5 @@
 {% extends 'base.html.twig' %}
+{% block title %}Profil{% endblock %}
 
 
 
@@ -10,7 +11,7 @@
         <div class="card">
           <div class="rounded-top text-white d-flex flex-row" style="background-color: #044214; height:200px;">
             <div class="ms-5 mt-7 d-flex flex-column">
-             <img src="{{ asset('uploads/' ~ app.user.image) | imagine_filter('carre') }}" alt="User Profile Image" class="img-fluid img-thumbnail mt-4 mb-2" style="width: 150px;height:200px; z-index: 1">
+             <img src="{{ 'http://localhost/public/' ~ app.user.image | imagine_filter('carre') }}" alt="User Profile Image" class="img-fluid img-thumbnail mt-4 mb-2" style="width: 150px;height:200px; z-index: 1">
 
 
                 

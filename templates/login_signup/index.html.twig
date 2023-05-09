@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}Login/SignUp{% endblock %}
+
 {% block body %}
 	{% for label, messages in app.session.flashBag.all %}
 		{% for message in messages %}

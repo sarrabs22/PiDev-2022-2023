@@ -23,7 +23,30 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Twilio\Rest\Client;
 #[Route('/evenement')]
 class EvenementController extends AbstractController
+
 {
+
+    #[Route('/back', name: 'app_evenement_indexBack' , methods: ['GET'])]
+    public function indexBack(EvenementRepository $evenementRepository   , PaginatorInterface $paginator, Request $request): Response
+    {
+     $evenements=$evenementRepository->findAll();
+ 
+   /*   $evenements = $paginator->paginate(
+         $evenements, // Requête contenant les données à paginer (ici nos articles)
+         $request->query->getInt('page', 1), // Numéro de la page en cours, passé dans l'URL, 1 si aucune page
+         3 // Nombre de résultats par page
+     ); */
+     return $this->render('evenement/indexback.html.twig', [
+         'events' => $evenements,
+         
+         
+     ]);
+ 
+ 
+ 
+    }
+
+
     #[Route('/triAsc', name: 'app_evenement_tri' , methods: ['GET','POST'])]
     public function triAsc(EvenementRepository $evenementRepository  , Request $request, PaginatorInterface $paginator,SessionInterface $session,UserRepository $rep2): Response
     {
@@ -134,25 +157,7 @@ class EvenementController extends AbstractController
        return $this->json($resultats);
    } */
     
-   #[Route('/back', name: 'app_evenement_indexBack' , methods: ['GET'])]
-   public function indexBack(EvenementRepository $evenementRepository   , PaginatorInterface $paginator, Request $request): Response
-   {
-    $evenements=$evenementRepository->findAll();
-
-  /*   $evenements = $paginator->paginate(
-        $evenements, // Requête contenant les données à paginer (ici nos articles)
-        $request->query->getInt('page', 1), // Numéro de la page en cours, passé dans l'URL, 1 si aucune page
-        3 // Nombre de résultats par page
-    ); */
-    return $this->render('evenement/indexback.html.twig', [
-        'events' => $evenements,
-        
-        
-    ]);
-
-
-
-   }
+  
     
     
     

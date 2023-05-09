@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
    <title>{% block title %}Dashboard{% endblock %}</title>
@@ -47,7 +46,7 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
@@ -59,9 +58,9 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="{{ path('app_admin') }}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span></a>
+                    <span>Liste des utilisateurs</span></a>
             </li>
 
             <!-- Divider -->
@@ -85,6 +84,18 @@
                     
 
                     
+                    <a href="{{ path('app_test') }}" class="nav-link">Retour au Front</a>
+                     
+               
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                    aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="fas fa-fw fa-cog"></i>
+                     
+                    <a href="{{ path('app_don_Admin') }}" class="nav-link">Liste des Dons</a>
+                    <a href="{{ path('app_reclamation_index_admin') }}" class="nav-link">Liste des reclamations</a>
+                    <a href="{{ path('app_evenement_indexBack') }}" class="nav-link">Liste des evenements</a>
                     <a href="{{ path('app_test') }}" class="nav-link">Retour au Front</a>
                      
                
@@ -342,7 +353,7 @@
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{app.user.nom}}</span>
                                 <img class="img-profile rounded-circle"
-                                    src="{{ asset('uploads/' ~ app.user.image) | imagine_filter('carre') }}" >
+                                    src="{{ 'http://localhost/public/' ~ app.user.image | imagine_filter('carre') }}" >
                                     
                             </a>
                             <!-- Dropdown - User Information -->

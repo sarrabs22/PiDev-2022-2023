@@ -1,15 +1,17 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Reset Password{% endblock %}
+
+<title>{% block title %}Reset Password{% endblock %}</title>
+
 
 {% block body %}
 
  {% form_theme resetForm 'bootstrap_5_horizontal_layout.html.twig' %}  
 
 {{ form_start(resetForm) }}
-<div class="col-lg-5">
+{# <div class="col-lg-5">
 {{ form_row(resetForm.newpassword) }}
-</div>
+</div> #}
 <div class="col-lg-5">
 {{ form_row(resetForm.email) }}
 </div>

@@ -11,7 +11,7 @@ class ResetFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('newpassword')
+          //  ->add('newpassword')
             ->add('email')
         ;
     }

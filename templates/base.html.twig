@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
+<title>{% block title %}Acceuil{% endblock %}</title>
+
 {% block style %}
 <head>
      <!-- basic -->
@@ -75,7 +77,7 @@
                         <a class="nav-link" href="{{ path('app_association_index') }}">Association</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_evenement_index') }}">Events</a>
+                        <a class="nav-link" href="{{ path('app_evenement_index') }}">Evenements</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('app_reclamation_new') }}">Reclamer</a>
@@ -168,8 +170,8 @@
 
 
     <!-- Back to Top -->
-    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
-
+{#     <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+ #}
 
 
 

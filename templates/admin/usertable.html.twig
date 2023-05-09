@@ -36,7 +36,7 @@
                     <td><a href="{{ path('app_admin_delete', {'id': user.id}) }}">
 							<button type="button" class="btn btn-outline-success">Supprimer</button>
 						</a></td>
-                  <td> <img src="{{ asset('http://localhost/public/' ~ user.image)}}" class="img-fluid img-thumbnail mt-4 mb-2" style="width: 150px;height:150px;"></td>
+                  <td> <img src="{{ 'http://localhost/public/' ~ user.image }}" class="img-fluid img-thumbnail mt-4 mb-2" style="width: 150px;height:150px;"></td>
 				</tr>
 			{% else %}
 				<tr>
