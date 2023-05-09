@@ -252,7 +252,6 @@ button {
     color: #070707;
 }
 
-
 .navbar-light .navbar-nav .active>.nav-link,
 .navbar-light .navbar-nav .nav-link.active,
 .navbar-light .navbar-nav .nav-link.show,
@@ -348,8 +347,7 @@ button {
     width: 170px;
     float: left;
     margin-left: 20px;
-    color : #070707;
-
+    color: #070707;
 }
 
 .readmore_bt a {
@@ -499,6 +497,7 @@ button {
     font-weight: bold;
     font-family: 'Roboto', sans-serif;
 }
+
 .services_section_2 {
     width: 100%;
     float: left;
@@ -699,17 +698,6 @@ button {
     color: #ffffff;
     font-weight: bold;
     font-family: 'Roboto', sans-serif;
-}
-
-.contact_taital::after {
-    content: '';
-    position: absolute;
-    width: 193px;
-    height: 2px;
-    background-color: #ffffff;
-    left: initial;
-    right: 0px;
-    top: 44%;
 }
 
 .contact_text {

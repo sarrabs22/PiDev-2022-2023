@@ -312,30 +312,26 @@ button, input, optgroup, select, textarea {
 {% block content %} 
  
         
-        <div class="row">
-            <div class="col-md-8">
-                <ul class="cards">
-                    {% for user in users %}
-                    <li class="cards_item">
-                        <div class="card">
-                            <div class="img">
-                                <a href="{{ path('app_otheruser', {'id': user.id}) }}">
-                                    <img src="http://localhost/public/{{ user.image }}" width="500" height="300">
-                                </a>
-                            </div> 
-                            <div class="card_content">
-                                <h2 class="card_title"></h2>
-                                <p class="card_text">{{ user.nom }}</p>
-                                <a href="{{ path('app_otheruser', {'id': user.id}) }}">
-                                    <button type="button" class="btn card_btn">Afficher</button>
-                                </a>
-                            </div>
-                        </div>
-                    </li>
-                    {% endfor %}
-                </ul>
+      <div class="row">
+    {% for user in users %}
+    <div class="col-md-4">
+        <div class="card mb-4">
+            <img src="http://localhost/public/{{ user.image }}" class="card-img-top" alt="{{ user.nom }}">
+            <div class="card-body">
+                <h5 class="card-title">{{ user.nom }}</h5>
+                <a href="{{ path('app_otheruser', {'id': user.id}) }}" class="btn btn-secondary">Afficher</a>
             </div>
         </div>
+    </div>
+    {% endfor %}
+</div>
+
+
+
+
+
+
+
     
                    
 {% endblock %}
