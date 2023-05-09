@@ -69,7 +69,7 @@ h6 {
     padding: 0 0 10px 0;
     font-weight: normal;
     line-height: normal;
-    color: #111111;
+    color: #ffffff;
     margin: 0
 }
 
@@ -252,6 +252,7 @@ button {
     color: #070707;
 }
 
+
 .navbar-light .navbar-nav .active>.nav-link,
 .navbar-light .navbar-nav .nav-link.active,
 .navbar-light .navbar-nav .nav-link.show,
@@ -343,10 +344,12 @@ button {
     background-color: #13a25d;
 }
 
-.readmore_bt {
+.readmore_bt:hover {
     width: 170px;
     float: left;
     margin-left: 20px;
+    color : #070707;
+
 }
 
 .readmore_bt a {
@@ -697,7 +700,6 @@ button {
     font-weight: bold;
     font-family: 'Roboto', sans-serif;
 }
-<<<<<<< Updated upstream
 
 .contact_taital::after {
     content: '';
@@ -710,8 +712,6 @@ button {
     top: 44%;
 }
 
-=======
->>>>>>> Stashed changes
 .contact_text {
     width: 100%;
     float: left;
