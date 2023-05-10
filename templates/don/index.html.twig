@@ -73,12 +73,12 @@
 					<td>{{ don.categoryD.NameCa }}</td>
 					<td>
 						<a href="{{ path('app_don_show', {'id': don.id}) }}">
-							<button type="button" class="btn btn-outline-success">Show</button>
+							<button type="button" class="btn btn-outline-success">Afficher</button>
 
 						</a>
 						{% if app.user.id == don.user.id %}
 						<a href="{{ path('app_don_edit', {'id': don.id}) }}">
-							<button type="button" class="btn btn-outline-danger">Edit</button>
+							<button type="button" class="btn btn-outline-danger">Modifier</button>
 						</a>
 						<a href="{{ path('app_don_delete', {'id': don.id}) }}">
 							{{ include('don/_delete_form.html.twig') }}
@@ -101,7 +101,7 @@
 		<button type="button" class="btn btn-outline-primary">Create a new Category</button>
 	</a>
 	<a href="{{path('app_don_search')}}">
-		<button type="button" class="btn btn-outline-primary">Search Don</button>
+		<button type="button" class="btn btn-outline-primary">Rechercher un don</button>
 	</a>
 	<a href="{{ path('app_don_trie')}}">
 		<button type="button" class="btn btn-outline-primary">trie Par Nom</button>

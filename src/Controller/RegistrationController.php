@@ -46,7 +46,7 @@ class RegistrationController extends AbstractController
         $hasher = $factory->getPasswordHasher('common');
         $hash = $hasher->hash('plain');
 
-        dd($hash);
+       
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
             $user->setPassword(
@@ -65,6 +65,7 @@ class RegistrationController extends AbstractController
                 $destination,
                 $newFile
             );
+            
             $user->setImage($newFile);
             $user->setRoles(["ROLE_USER"]);
             $user->setNbEtoile(0);

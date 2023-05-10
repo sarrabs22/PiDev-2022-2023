@@ -257,7 +257,7 @@ class DonController extends AbstractController
     else
     {
         $form = $this->createFormBuilder()
-        ->add('userType', ChoiceType::class, ['choices' => ['Association' => 'association']])
+        
         ->add('quantite', IntegerType::class, [
             'label' => 'Quantité',
             'constraints' => [
@@ -275,14 +275,14 @@ class DonController extends AbstractController
             $user = $userrepo->find($this->getUser()->getUserIdentifier());
             $userType = $user->getType();
             if ($userType == 'Receveur') {
-                if ($quantite < round($don->getQuantite()*0.1)) {
+                if ($quantite < round($don->getQuantite()*0.4)) {
                     $don->setQuantite($don->getQuantite() - $quantite);
                     
                 } else {
                     $this->addFlash('Error', 'It needs to be 1');
                 }
             } elseif ($userType == 'Association') {
-                if ($quantite < round($don->getQuantite()*0.2)) {
+                if ($quantite < round($don->getQuantite()*0.6)) {
                     $don->setQuantite($don->getQuantite() - $quantite);
                 } else {
                     $this->addFlash('Error', 'It needs to be max 3');
@@ -296,18 +296,27 @@ class DonController extends AbstractController
                 return $this->redirectToRoute('app_don_index');
             }
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($don);
-            $entityManager->flush();
+            
             $Name = $don->getNameD();
             $Num = $don->getNumero();
             //claim
+            $don->getQuantite($don->getQuantite()-$quantite);
+            $entityManager->persist($don);
+            $entityManager->flush();
+
             $Claim = new Claim();
 
             $Claim->setDonner($don->getUser());
             $Claim->setReceiver($this->getUser());
-            $Claim->setTotalQuantity($don->getQuantite());
+            $Claim->setTotalQuantity($don->getQuantite()-$quantite);
             $Claim->setReceivedQuantity($quantite);
             $Claim->setDonation($don);
+           
+            if($user->getType() == 'Donneur')
+            {
+            $user->setNbEtoile($user->getScore()+50);
+            $user->setNbEtoile($user->getNbEtoile()+1);
+         }
             $entityManager->persist($Claim);
             $entityManager->flush();
            /*  $accountSid = 'AC904d482ced22b4c1943dfa6f347bc92b';

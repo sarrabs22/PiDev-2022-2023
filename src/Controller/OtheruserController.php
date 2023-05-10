@@ -28,7 +28,7 @@ class OtheruserController extends AbstractController
         $associationIds = array_map(function($row) {
             return $row['id'];
         }, $result);
-        
+       
         $associations = $assorepo->findBy(['id' => $associationIds]);
 
         return $this->render('otheruser/index.html.twig', [

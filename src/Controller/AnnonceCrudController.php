@@ -291,7 +291,7 @@ class AnnonceCrudController extends AbstractController
 
     // ************************** afficher map **************************
 
-    #[Route('/map2/{id}', name: 'show_map2')]
+    #[Route('/map2/{id}', name: 'show_map_annonce')]
     public function map2($id, AnnoncesRepository $annoncesRepository)
     {
         $entityManager = $this->getDoctrine()->getManager();

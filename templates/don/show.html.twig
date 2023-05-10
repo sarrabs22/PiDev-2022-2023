@@ -44,12 +44,12 @@
 	</table>
 
 	<a href="{{ path('app_don_index') }}">
-		<button type="button" class="btn btn-outline-success">Back to List</button>
+		<button type="button" class="btn btn-outline-success">Retour a la liste</button>
 	</a>
 </a>
 {% if app.user.id == don.user.id %}
 <a href="{{ path('app_don_edit', {'id': don.id}) }}">
-	<button type="button" class="btn btn-outline-success">Edit</button>
+	<button type="button" class="btn btn-outline-success">Modifier</button>
 </a>
 {% endif %}
 

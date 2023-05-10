@@ -57,16 +57,16 @@
                     {% if app.user %}
                    {% if (app.user.type == "Donneur") or (app.user.type == "Association") %} 
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_don_index') }}"> Donner des Dons</a>
+                        <a class="nav-link" href="{{ path('app_don_index') }}"> Donner  Dons</a>
                     </li>
                     {% if app.user.type == "Association"%}
                        <li class="nav-item">
-                         <a class="nav-link" href="{{ path('app_don_Client') }}">Recevoir des dons </a>
+                         <a class="nav-link" href="{{ path('app_don_Client') }}">Recevoir  dons </a>
                           </li>
                      {% endif %}
                     {% else %}
                   <li class="nav-item">
-                     <a class="nav-link" href="{{ path('app_don_Client') }}">Recevoir des Dons</a>
+                     <a class="nav-link" href="{{ path('app_don_Client') }}">Recevoir  Dons</a>
                      </li>
                     {% endif %}
                      {% endif %}
@@ -80,7 +80,7 @@
                         <a class="nav-link" href="{{ path('app_evenement_index') }}">Evenements</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_reclamation_new') }}">Reclamer</a>
+                        <a class="nav-link" href="{{ path('app_reclamation_index') }}">Reclamer</a>
                     </li>
                     <li class="nav-item">
                         {% if is_granted('ROLE_ADMIN') %}

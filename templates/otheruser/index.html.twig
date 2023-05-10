@@ -10,7 +10,7 @@
         <div class="card">
           <div class="rounded-top text-white d-flex flex-row" style="background-color: #044214; height:200px;">
             <div class="ms-5 mt-7 d-flex flex-column">
-             <img src="{{ 'http://localhost/public/' ~ otheruser.image | imagine_filter('carre') }}" alt="User Profile Image" class="img-fluid img-thumbnail mt-4 mb-2" style="width: 150px;height:200px; z-index: 1">
+             <img src="http://localhost/public/{{otheruser.image}}  " alt="User Profile Image" class="img-fluid img-thumbnail mt-4 mb-2" style="width: 150px;height:200px; z-index: 1">
 
 
                 
@@ -45,7 +45,7 @@
 
           <div class="card-body p-4 text-black">
             <div class="mb-5">
-              <p class="lead fw-normal mb-1">About</p>
+             {#  <p class="lead fw-normal mb-1">About</p> #}
               <div class="p-4" style="background-color: #f8f9fa;">
                 {# <p class="font-italic mb-1">Web Developer</p>
                 <p class="font-italic mb-1">Lives in New York</p>
@@ -53,8 +53,8 @@
               </div>
             </div>
             <div class="d-flex justify-content-between align-items-center mb-4">
-              <p class="lead fw-normal mb-0">Exploit</p>
-              <p class="mb-0"><a href="#!" class="text-muted">Afficher tous les exploits</a></p>
+              <p class="lead fw-normal mb-0">Associations Inscrits</p>
+             
             </div>
            {% for association in associations %}
     <div class="row g-2">
